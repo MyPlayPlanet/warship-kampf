@@ -5,6 +5,7 @@ import net.myplayplanet.commandframework.CommandArgs;
 import net.myplayplanet.commandframework.api.Command;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.ArenaConfig;
+import net.myplayplanet.wsk.objects.SetupManager;
 import net.myplayplanet.wsk.util.Logger;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -25,6 +26,14 @@ public class SetupCommand {
     public void mainCommand(CommandArgs args) {
         Player player = args.getSender(Player.class);
         player.sendMessage(WSK.PREFIX + "/wsk setup load - Lädt eine Arenaconfig");
+        player.sendMessage(WSK.PREFIX + "/wsk setup save - Speichert eine Arenaconfig");
+        player.sendMessage(WSK.PREFIX + "/wsk setup name - Benennt eine momentan bearbeitet Arena");
+        player.sendMessage(WSK.PREFIX + "/wsk setup spawn - Setzt den Spawn der Arena");
+        player.sendMessage(WSK.PREFIX + "/wsk setup spectatorspawn - Setzt den Spawn der Arena für Zuschauer");
+        player.sendMessage(WSK.PREFIX + "/wsk setup waterheight - Setzt die Wasserhöhe");
+        player.sendMessage(WSK.PREFIX + "/wsk setup pos1 - Setzt die erste Position der Arena");
+        player.sendMessage(WSK.PREFIX + "/wsk setup pos2 - Setzt die zweite Position der Arena");
+        player.sendMessage(WSK.PREFIX + "/wsk setup world - Benutzt die bennante Welt als Arenawelt");
     }
 
     @Command(name = "wsk.setup.load", permission = "wsk.setup", inGameOnly = true, description = "Lädt eine Arenaconfig", usage = "/wsk setup load <Name>")

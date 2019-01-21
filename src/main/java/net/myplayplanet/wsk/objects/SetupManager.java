@@ -1,4 +1,4 @@
-package net.myplayplanet.wsk.commands;
+package net.myplayplanet.wsk.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
