@@ -4,18 +4,43 @@ import lombok.AllArgsConstructor;
 import net.myplayplanet.commandframework.CommandArgs;
 import net.myplayplanet.commandframework.api.Command;
 import net.myplayplanet.wsk.WSK;
+import net.myplayplanet.wsk.arena.ArenaConfig;
+import net.myplayplanet.wsk.util.Logger;
+import org.apache.commons.io.FileUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import java.io.File;
+import java.io.IOException;
 
 @AllArgsConstructor
 public class SetupCommand {
 
     private final WSK wsk;
 
-    @Command(name = "wsk.setup", permission = "wsk.setup")
+    @Command(name = "wsk.setup", permission = "wsk.setup", inGameOnly = true)
     public void mainCommand(CommandArgs args) {
-        //TODO implement help
+        Player player = args.getSender(Player.class);
+        player.sendMessage(WSK.PREFIX + "/wsk setup load - Lädt eine Arenaconfig");
+    }
+
+    @Command(name = "wsk.setup.load", permission = "wsk.setup", inGameOnly = true, description = "Lädt eine Arenaconfig", usage = "/wsk setup load <Name>")
+    public void loadCommand(CommandArgs args) {
+        Player player = args.getSender(Player.class);
+        if (args.getArgumentCount() == 0) {
+            player.sendMessage(WSK.PREFIX + "§c/wsk setup load <Name>");
+            return;
+        }
+        String configName = args.getArgument(0);
+        SetupManager manager = SetupManager.getInstance(player.getUniqueId());
+
+        manager.setName(configName);
+        manager.setConfig(ArenaConfig.loadFromFile(new File(WSK.getInstance().getDataFolder(), "arenas/" + configName + ".json")));
+
+        player.sendMessage(WSK.PREFIX + "§aArenaconfig '" + configName + "' geladen");
     }
 
     @Command(name = "wsk.setup.save", permission = "wsk.setup", inGameOnly = true, description = "Speichert die Arenaconfig", usage = "/wsk setup save")
@@ -23,7 +48,7 @@ public class SetupCommand {
         Player player = args.getSender(Player.class);
         SetupManager manager = SetupManager.getInstance(player.getUniqueId());
         manager.getConfig().save("plugins/WSK/arenas/" + manager.getName() + ".json");
-        player.sendMessage(WSK.PREFIX + "Arenaconfig gespeichert");
+        player.sendMessage(WSK.PREFIX + "§aArenaconfig gespeichert");
     }
 
     @Command(name = "wsk.setup.name", permission = "wsk.setup", inGameOnly = true, description = "Setzt den Name der Arena", usage = "/wsk setup name <Name>")
@@ -100,8 +125,21 @@ public class SetupCommand {
             player.sendMessage(WSK.PREFIX + "§c/wsk setup world <Name>");
             return;
         }
+        String worldName = args.getArgument(0);
+        World world = Bukkit.getWorld(worldName);
+        if (world == null) {
+            player.sendMessage(WSK.PREFIX + "§cKeine Welt mit dem Namen '" + worldName + "' gefunden");
+            return;
+        }
         SetupManager manager = SetupManager.getInstance(player.getUniqueId());
-        manager.getConfig().setWorld(args.getArgument(0));
-        player.sendMessage(WSK.PREFIX + "Welt gesetzt");
+        manager.getConfig().setWorld(worldName);
+        File file = new File(Bukkit.getWorldContainer(), worldName);
+        try {
+            FileUtils.copyDirectory(file, new File(wsk.getDataFolder(), "arenas/" + worldName));
+            player.sendMessage(WSK.PREFIX + "Welt gesetzt");
+        } catch (IOException e) {
+            Logger.ERROR.log("Could not copy world at setup");
+            e.printStackTrace();
+        }
     }
 }

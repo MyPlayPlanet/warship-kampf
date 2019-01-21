@@ -47,7 +47,7 @@ public class ArenaConfig {
     }
 
     public static ArenaConfig loadFromFile(File file) {
-        Preconditions.checkArgument(!file.isFile(), "file object is not a file");
+        Preconditions.checkArgument(file.isFile(), "file object is not a file");
         final Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (InputStream in = new FileInputStream(file);
              JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"))) {
