@@ -1,0 +1,10 @@
+name: WSK
+author: Butzlabben
+version: ${project.version}
+
+main: net.myplayplanet.wsk.WSK
+
+api-version: 1.13
+
+depend:
+  - WorldEdit
