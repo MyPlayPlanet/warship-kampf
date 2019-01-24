@@ -2,13 +2,14 @@ package net.myplayplanet.wsk.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import net.myplayplanet.wsk.arena.Arena;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public class Team implements Iterable<WSKPlayer>{
 
