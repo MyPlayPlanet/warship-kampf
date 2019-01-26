@@ -39,6 +39,10 @@ public class ScoreboardManager {
         }
     }
 
+    public static ScoreboardManager getInstance() {
+        return instance;
+    }
+
     public void handleJoinEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         guestTeam.addEntry(player.getName());
