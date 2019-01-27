@@ -15,7 +15,7 @@ public class Arena {
 
     private final File config;
     private ArenaConfig arenaConfig;
-    private World gameWorld;
+    private GameWorld gameWorld;
     private ArenaState state = ArenaState.IDLE;
     private List<Team> teams;
 
@@ -26,5 +26,6 @@ public class Arena {
 
         // init teams
         teams = arenaConfig.getTeams().stream().map(tp -> new Team(tp, this)).collect(Collectors.toList());
+        gameWorld = new GameWorld(arenaConfig.getWorld());
     }
 }

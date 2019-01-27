@@ -49,9 +49,18 @@ public class ScoreboardManager {
     }
 
     public void handleQuitEvent(PlayerQuitEvent event) {
+        removeEntry(event.getPlayer().getName());
+    }
+
+    public void playerAddToTeam(net.myplayplanet.wsk.objects.Team team, WSKPlayer player) {
+        removeEntry(player.getPlayer().getName());
+        scoreboard.getTeam(team.getProperties().getName()).addEntry(player.getPlayer().getName());
+    }
+
+    private void removeEntry(String playerName) {
         scoreboard.getTeams().forEach(t -> {
-            if(t.getEntries().contains(event.getPlayer().getName()))
-                t.removeEntry(event.getPlayer().getName());
+            if(t.getEntries().contains(playerName))
+                t.removeEntry(playerName);
         });
     }
 }
