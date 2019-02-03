@@ -3,6 +3,7 @@ package net.myplayplanet.wsk.objects;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.event.TeamAddmemberArenaEvent;
 import net.myplayplanet.wsk.event.TeamDelmemberArenaEvent;
@@ -29,6 +30,18 @@ public class Team implements Iterable<WSKPlayer> {
         player.setTeam(this);
         if(members.size() == 0)
             player.setCaptain(true);
+
+        if(player.isCaptain()) {
+            Bukkit.broadcastMessage(WSK.PREFIX + properties.getColorCode() + player.getPlayer().getName() + " §eist nun Kapitän von " +
+                    properties.getName());
+        } else {
+            Bukkit.broadcastMessage(WSK.PREFIX + properties.getColorCode() + player.getPlayer().getName() + " §eist nun Mitglied von " +
+                    properties.getName());
+        }
+
+        player.getPlayer().setDisplayName(properties.getColorCode() + player.getPlayer().getDisplayName());
+
+        ScoreboardManager.getInstance().playerAddToTeam(this, event.getPlayer());
     }
 
     public void removeMember(WSKPlayer player) {

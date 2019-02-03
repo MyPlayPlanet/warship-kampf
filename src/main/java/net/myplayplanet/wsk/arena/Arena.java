@@ -26,6 +26,7 @@ public class Arena {
 
         // init teams
         teams = arenaConfig.getTeams().stream().map(tp -> new Team(tp, this)).collect(Collectors.toList());
+
         gameWorld = new GameWorld(arenaConfig.getWorld());
     }
 }
