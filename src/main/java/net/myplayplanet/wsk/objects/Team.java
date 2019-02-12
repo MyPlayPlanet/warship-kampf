@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Getter
@@ -61,6 +62,28 @@ public class Team implements Iterable<WSKPlayer> {
         members.remove(event.getPlayer());
         player.setTeam(null);
         player.setCaptain(false);
+    }
+
+    public void setCaptain(WSKPlayer player) {
+        Objects.requireNonNull(player);
+        Preconditions.checkArgument(members.contains(player), "player must be member of team");
+
+        WSKPlayer captain = getCaptain();
+        Preconditions.checkArgument(!captain.equals(player), "player is already captain");
+
+        if (captain != null) {
+            TeamCaptainRemoveArenaEvent captainRemoveArenaEvent = new TeamCaptainRemoveArenaEvent(arena, this, captain);
+            Bukkit.getPluginManager().callEvent(captainRemoveArenaEvent);
+            captain.setCaptain(false);
+        }
+
+        player.setCaptain(true);
+        TeamCaptainSetArenaEvent captainSetArenaEvent = new TeamCaptainSetArenaEvent(arena, this, player);
+        Bukkit.getPluginManager().callEvent(captainSetArenaEvent);
+    }
+
+    public WSKPlayer getCaptain() {
+        return members.stream().filter(WSKPlayer::isCaptain).collect(Collectors.toList()).get(0);
     }
 
     public Iterator<WSKPlayer> iterator() {

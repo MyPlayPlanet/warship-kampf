@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 public class TeamCommand {
 
     private WSK wsk;
+
     @Command(name = "wsk.team.captain", usage = "/wsk team captain <Spieler>", permission = "wsk.team.captain", description = "Sets a captain of a specfic team")
     public void captainCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);
@@ -39,8 +40,13 @@ public class TeamCommand {
             return;
         }
 
-        wskPlayer.getTeam().removeMember(wskPlayer);
-        sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " aus seinem Team entfernt");
+        if(wskPlayer.isCaptain()) {
+            sender.sendMessage(WSK.PREFIX + "§cDieser Spieler ist bereits Captain");
+            return;
+        }
+
+        wskPlayer.getTeam().setCaptain(wskPlayer);
+        sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " als Captain gesetzt");
     }
 
     @Command(name = "wsk.team.remove", usage = "/wsk team remove <Spieler>", permission = "wsk.team.remove", description = "Removes a player from his team")
