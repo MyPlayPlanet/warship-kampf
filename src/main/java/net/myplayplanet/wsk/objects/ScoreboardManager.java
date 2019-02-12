@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -22,6 +24,7 @@ public class ScoreboardManager {
 
         Arena arena = ArenaManager.getInstance().getCurrentArena();
         if (arena != null) {
+            scoreboard.getTeams().forEach(Team::unregister);
             arena.getTeams().forEach((t) -> {
                 Team team = scoreboard.getTeam(t.getProperties().getName());
                 if (team != null)
@@ -57,7 +60,7 @@ public class ScoreboardManager {
         scoreboard.getTeam(team.getProperties().getName()).addEntry(player.getPlayer().getName());
     }
 
-    private void removeEntry(String playerName) {
+    public void removeEntry(String playerName) {
         scoreboard.getTeams().forEach(t -> {
             if(t.getEntries().contains(playerName))
                 t.removeEntry(playerName);

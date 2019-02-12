@@ -3,12 +3,11 @@ package net.myplayplanet.wsk.objects;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.event.TeamAddmemberArenaEvent;
 import net.myplayplanet.wsk.event.TeamCaptainRemoveArenaEvent;
 import net.myplayplanet.wsk.event.TeamCaptainSetArenaEvent;
-import net.myplayplanet.wsk.event.TeamDelmemberArenaEvent;
+import net.myplayplanet.wsk.event.TeamRemovememberArenaEvent;
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
@@ -27,37 +26,40 @@ public class Team implements Iterable<WSKPlayer> {
 
     public void addMember(WSKPlayer player) {
         Objects.requireNonNull(player);
-        Preconditions.checkArgument(player.getTeam() != null, "Player must not be in a team");
+        Preconditions.checkArgument(player.getTeam() == null, "Player must not be in a team");
 
         TeamAddmemberArenaEvent event = new TeamAddmemberArenaEvent(arena, this, player);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
 
-        members.add(event.getPlayer());
-        player.setTeam(this);
         if (members.size() == 0)
             player.setCaptain(true);
 
-        TeamCaptainSetArenaEvent captainArenaEvent = new TeamCaptainSetArenaEvent(arena, this, player);
-        Bukkit.getPluginManager().callEvent(captainArenaEvent);
+        members.add(event.getPlayer());
+        player.setTeam(this);
+
+        if (player.isCaptain()) {
+            TeamCaptainSetArenaEvent captainArenaEvent = new TeamCaptainSetArenaEvent(arena, this, player);
+            Bukkit.getPluginManager().callEvent(captainArenaEvent);
+        }
 
         player.getPlayer().setDisplayName(properties.getColorCode() + player.getPlayer().getDisplayName());
-
-        ScoreboardManager.getInstance().playerAddToTeam(this, event.getPlayer());
     }
 
     public void removeMember(WSKPlayer player) {
         Objects.requireNonNull(player);
         Preconditions.checkArgument(members.contains(player), "player must be member of team");
 
-        TeamDelmemberArenaEvent event = new TeamDelmemberArenaEvent(arena, this, player);
+        TeamRemovememberArenaEvent event = new TeamRemovememberArenaEvent(arena, this, player);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
 
-        TeamCaptainRemoveArenaEvent captainArenaEvent = new TeamCaptainRemoveArenaEvent(arena, this, player);
-        Bukkit.getPluginManager().callEvent(captainArenaEvent);
+        if (player.isCaptain()) {
+            TeamCaptainRemoveArenaEvent captainArenaEvent = new TeamCaptainRemoveArenaEvent(arena, this, player);
+            Bukkit.getPluginManager().callEvent(captainArenaEvent);
+        }
 
         members.remove(event.getPlayer());
         player.setTeam(null);

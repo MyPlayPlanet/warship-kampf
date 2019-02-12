@@ -1,6 +1,5 @@
 package net.myplayplanet.wsk.event;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.objects.Team;
@@ -24,6 +23,10 @@ public class TeamCaptainSetArenaEvent extends ArenaEvent {
 
     @Override
     public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public final static HandlerList getHandlerList() {
         return handlers;
     }
 }

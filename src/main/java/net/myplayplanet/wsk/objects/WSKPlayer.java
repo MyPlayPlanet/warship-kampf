@@ -30,7 +30,11 @@ public class WSKPlayer {
     }
 
     public static void handle(PlayerJoinEvent event) {
-        UUID uuid = event.getPlayer().getUniqueId();
+        add(event.getPlayer());
+    }
+
+    public static void add(Player player) {
+        UUID uuid = player.getUniqueId();
         if(!instances.containsKey(uuid))
             instances.put(uuid, new WSKPlayer(uuid));
     }

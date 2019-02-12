@@ -25,4 +25,8 @@ public class TeamCaptainRemoveArenaEvent extends ArenaEvent {
     public HandlerList getHandlers() {
         return handlers;
     }
+
+    public final static HandlerList getHandlerList() {
+        return handlers;
+    }
 }

@@ -18,7 +18,19 @@ public class TeamCommand {
 
     private WSK wsk;
 
-    @Command(name = "wsk.team.captain", usage = "/wsk team captain <Spieler>", permission = "wsk.team.captain", description = "Sets a captain of a specfic team")
+    @Command(name = "wsk.team")
+    public void teamCommand(CommandArgs args) {
+        CommandSender sender = args.getSender(CommandSender.class);
+
+        if (sender.hasPermission("wsk.team.captain"))
+            sender.sendMessage(WSK.PREFIX + "/wsk team captain - Setzt jemanden zum Captain");
+        if (sender.hasPermission("wsk.team.put"))
+            sender.sendMessage(WSK.PREFIX + "/wsk team put - Setzt jemanden in ein Team");
+        if (sender.hasPermission("wsk.team.remove"))
+            sender.sendMessage(WSK.PREFIX + "/wsk team remove - Entfernt den Spieler aus seinem Team");
+    }
+
+    @Command(name = "wsk.team.captain", usage = "/wsk team captain <Spieler>", permission = "wsk.team.captain", description = "Setzt jemanden zum Captain")
     public void captainCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);
 
@@ -40,7 +52,7 @@ public class TeamCommand {
             return;
         }
 
-        if(wskPlayer.isCaptain()) {
+        if (wskPlayer.isCaptain()) {
             sender.sendMessage(WSK.PREFIX + "§cDieser Spieler ist bereits Captain");
             return;
         }
@@ -49,7 +61,7 @@ public class TeamCommand {
         sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " als Captain gesetzt");
     }
 
-    @Command(name = "wsk.team.remove", usage = "/wsk team remove <Spieler>", permission = "wsk.team.remove", description = "Removes a player from his team")
+    @Command(name = "wsk.team.remove", usage = "/wsk team remove <Spieler>", permission = "wsk.team.remove", description = "Entfernt den Spieler aus seinem Team")
     public void removeCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);
 
@@ -75,7 +87,7 @@ public class TeamCommand {
         sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " aus seinem Team entfernt");
     }
 
-    @Command(name = "wsk.team.put", usage = "/wsk team put <Spieler> <Team>", permission = "wsk.team.put", description = "Puts a player in the specified team")
+    @Command(name = "wsk.team.put", usage = "/wsk team put <Spieler> <Team>", permission = "wsk.team.put", description = "Setzt jemanden in ein Team")
     public void putCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);
 
@@ -101,6 +113,6 @@ public class TeamCommand {
             wskPlayer.getTeam().removeMember(wskPlayer);
 
         team.addMember(WSKPlayer.getPlayer(player));
-        sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " zu " + team.getProperties().getColorCode() + team.getProperties().getName());
+        sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " zu " + team.getProperties().getColorCode() + team.getProperties().getName() + " §ehinzugefügt");
     }
 }

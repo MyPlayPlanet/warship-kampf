@@ -11,6 +11,8 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
+        event.getPlayer().setScoreboard(ScoreboardManager.getInstance().getScoreboard());
+
         WSKPlayer.handle(event);
         ScoreboardManager.getInstance().handleJoinEvent(event);
     }

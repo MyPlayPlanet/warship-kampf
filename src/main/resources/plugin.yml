@@ -8,3 +8,22 @@ api-version: 1.13
 
 depend:
   - WorldEdit
+
+
+permissions:
+  wsk.*:
+    default: op
+    children:
+      - wsk.team.*
+  wsk.team.*:
+    default: op
+    children:
+      - wsk.team.captain
+      - wsk.team.remove
+      - wsk.team.put
+  wsk.team.captain:
+    default: op
+  wsk.team.remove:
+    default: op
+  wsk.team.put:
+    default: op

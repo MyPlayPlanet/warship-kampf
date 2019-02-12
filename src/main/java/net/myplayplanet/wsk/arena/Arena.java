@@ -18,7 +18,7 @@ public class Arena {
     private List<Team> teams;
 
     public Arena(File config) {
-        Preconditions.checkArgument(!config.exists(), "config does not exist");
+        Preconditions.checkArgument(config.exists(), "config does not exist");
         this.config = config;
         arenaConfig = ArenaConfig.loadFromFile(config);
 
