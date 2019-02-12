@@ -34,7 +34,7 @@ public class Ship {
 
     protected void resetShip() {
         new Thread(() -> {
-            BukkitWorld world = new BukkitWorld(team.getArena().getGameWorld());
+            BukkitWorld world = new BukkitWorld(team.getArena().getGameWorld().getWorld());
             EditSession es = FaweAPI.getEditSessionBuilder(world).build();
             for (BlockVector v : new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()), BlockProcessor.getVec(team.getProperties().getPos2()))) {
                 try {
@@ -54,7 +54,7 @@ public class Ship {
         new Thread(() -> {
             if (Bukkit.getOnlinePlayers().size() <= 0)
                 return;
-            Set<Location> locs = BlockProcessor.getLocs(BlockProcessor.getVec(team.getProperties().getPos1()), BlockProcessor.getVec(team.getProperties().getPos2()), team.getArena().getGameWorld());
+            Set<Location> locs = BlockProcessor.getLocs(BlockProcessor.getVec(team.getProperties().getPos1()), BlockProcessor.getVec(team.getProperties().getPos2()),team.getArena().getGameWorld().getWorld());
             new BukkitRunnable() {
                 @Override
                 public void run() {

@@ -3,8 +3,6 @@ package net.myplayplanet.wsk.arena;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import net.myplayplanet.wsk.objects.Team;
-import net.myplayplanet.wsk.objects.TeamProperties;
-import org.bukkit.World;
 
 import java.io.File;
 import java.util.List;
@@ -28,5 +26,18 @@ public class Arena {
         teams = arenaConfig.getTeams().stream().map(tp -> new Team(tp, this)).collect(Collectors.toList());
 
         gameWorld = new GameWorld(arenaConfig.getWorld());
+    }
+
+    public Team getTeam(String name) {
+        Team team = null;
+
+        for(Team t : teams) {
+            if(t.getProperties().getName().equalsIgnoreCase(name)) {
+                team = t;
+                break;
+            }
+        }
+
+        return team;
     }
 }

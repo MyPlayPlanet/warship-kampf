@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.myplayplanet.commandframework.CommandFramework;
 import net.myplayplanet.wsk.arena.ArenaManager;
 import net.myplayplanet.wsk.commands.SetupCommand;
+import net.myplayplanet.wsk.commands.TeamCommand;
 import net.myplayplanet.wsk.commands.WSKCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,6 +23,7 @@ public class WSK extends JavaPlugin {
         framework = new CommandFramework(this);
         framework.registerCommands(new WSKCommand(this));
         framework.registerCommands(new SetupCommand(this));
+        framework.registerCommands(new TeamCommand(this));
 
         // Create arenas folder
         File file = new File(getDataFolder(), "arenas");
