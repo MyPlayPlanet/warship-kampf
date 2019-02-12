@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Setter
 @Getter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, of = "uuid")
+@EqualsAndHashCode(of = "uuid")
 @RequiredArgsConstructor
 public class WSKPlayer {
     private Team team;
