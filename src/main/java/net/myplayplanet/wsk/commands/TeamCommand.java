@@ -17,12 +17,12 @@ import org.bukkit.entity.Player;
 public class TeamCommand {
 
     private WSK wsk;
-    @Command(name = "ws.team.captain", usage = "/ws team captain <Spieler>", permission = "ws.team.captain", description = "Sets a captain of a specfic team")
+    @Command(name = "wsk.team.captain", usage = "/wsk team captain <Spieler>", permission = "wsk.team.captain", description = "Sets a captain of a specfic team")
     public void captainCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);
 
         if (args.getArgumentCount() != 1) {
-            sender.sendMessage(WSK.PREFIX + "§c/ws team captain <Spieler>");
+            sender.sendMessage(WSK.PREFIX + "§c/wsk team captain <Spieler>");
             return;
         }
 
@@ -43,12 +43,12 @@ public class TeamCommand {
         sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " aus seinem Team entfernt");
     }
 
-    @Command(name = "ws.team.remove", usage = "/ws team remove <Spieler>", permission = "ws.team.remove", description = "Removes a player from his team")
+    @Command(name = "wsk.team.remove", usage = "/wsk team remove <Spieler>", permission = "wsk.team.remove", description = "Removes a player from his team")
     public void removeCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);
 
         if (args.getArgumentCount() != 1) {
-            sender.sendMessage(WSK.PREFIX + "§c/ws team remove <Spieler>");
+            sender.sendMessage(WSK.PREFIX + "§c/wsk team remove <Spieler>");
             return;
         }
 
@@ -69,12 +69,12 @@ public class TeamCommand {
         sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " aus seinem Team entfernt");
     }
 
-    @Command(name = "ws.team.put", usage = "/ws team put <Spieler> <Team>", permission = "ws.team.put", description = "Puts a player in the specified team")
+    @Command(name = "wsk.team.put", usage = "/wsk team put <Spieler> <Team>", permission = "wsk.team.put", description = "Puts a player in the specified team")
     public void putCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);
 
         if (args.getArgumentCount() != 2) {
-            sender.sendMessage(WSK.PREFIX + "§c/ws team put <Spieler> <Team>");
+            sender.sendMessage(WSK.PREFIX + "§c/wsk team put <Spieler> <Team>");
             return;
         }
 
