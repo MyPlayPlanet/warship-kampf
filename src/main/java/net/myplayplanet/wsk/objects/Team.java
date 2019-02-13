@@ -43,8 +43,6 @@ public class Team implements Iterable<WSKPlayer> {
             TeamCaptainSetArenaEvent captainArenaEvent = new TeamCaptainSetArenaEvent(arena, this, player);
             Bukkit.getPluginManager().callEvent(captainArenaEvent);
         }
-
-        player.getPlayer().setDisplayName(properties.getColorCode() + player.getPlayer().getDisplayName());
     }
 
     public void removeMember(WSKPlayer player) {

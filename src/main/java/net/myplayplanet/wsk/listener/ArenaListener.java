@@ -1,6 +1,7 @@
 package net.myplayplanet.wsk.listener;
 
 import net.myplayplanet.wsk.WSK;
+import net.myplayplanet.wsk.arena.ArenaManager;
 import net.myplayplanet.wsk.event.TeamAddmemberArenaEvent;
 import net.myplayplanet.wsk.event.TeamCaptainRemoveArenaEvent;
 import net.myplayplanet.wsk.event.TeamCaptainSetArenaEvent;
@@ -36,8 +37,11 @@ public class ArenaListener implements Listener {
     public void onMemberRemove(TeamRemovememberArenaEvent event) {
         WSKPlayer player = event.getPlayer();
         Team team = event.getTeam();
-        ScoreboardManager.getInstance().removeEntry(player.getPlayer().getName());
+        ScoreboardManager.getInstance().getScoreboard().getPlayerTeam(player.getPlayer()).removePlayer(player.getPlayer());
         ScoreboardManager.getInstance().getGuestTeam().addEntry(player.getPlayer().getName());
+        player.getPlayer().setDisplayName("§7" + player.getPlayer().getName() + "§r");
+
+        player.getPlayer().teleport(ArenaManager.getInstance().getCurrentArena().getArenaConfig().getSpawn());
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
@@ -45,5 +49,8 @@ public class ArenaListener implements Listener {
         WSKPlayer player = event.getPlayer();
         Team team = event.getTeam();
         ScoreboardManager.getInstance().playerAddToTeam(team, player);
+        player.getPlayer().setDisplayName(team.getProperties().getColorCode() + player.getPlayer().getName() + "§r");
+
+        player.getPlayer().teleport(team.getProperties().getSpawn());
     }
 }

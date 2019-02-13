@@ -43,11 +43,14 @@ public class WSK extends JavaPlugin {
 
         // Register listeners
         PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new PlayerListener(), this);
-        pm.registerEvents(new ArenaListener(), this);
+        if (!Config.isSetup()) {
+            pm.registerEvents(new PlayerListener(), this);
+            pm.registerEvents(new ArenaListener(), this);
+        }
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             WSKPlayer.add(player);
+            ScoreboardManager.getInstance().getGuestTeam().addPlayer(player);
         }
 
         // Initialize ArenaManager with WSK instance

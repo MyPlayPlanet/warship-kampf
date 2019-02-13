@@ -93,4 +93,11 @@ public class GameWorld {
     public World getWorld() {
         return Bukkit.getWorld(worldName);
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        sendPlayersBack();
+        unload();
+        delete();
+    }
 }

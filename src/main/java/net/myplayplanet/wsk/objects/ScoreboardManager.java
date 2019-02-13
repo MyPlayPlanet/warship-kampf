@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -32,6 +33,7 @@ public class ScoreboardManager {
 
                 team = scoreboard.registerNewTeam(t.getProperties().getName());
                 team.setPrefix(t.getProperties().getColorCode());
+                team.setColor(ChatColor.getByChar(t.getProperties().getColorCode().charAt(1)));
             });
             guestTeam  = scoreboard.getTeam("9999Guest");
             if(guestTeam != null)
@@ -39,6 +41,7 @@ public class ScoreboardManager {
 
             guestTeam = scoreboard.registerNewTeam("9999Guest");
             guestTeam.setPrefix("§7");
+            guestTeam.setColor(ChatColor.getByChar("7"));
         }
     }
 
@@ -48,7 +51,7 @@ public class ScoreboardManager {
 
     public void handleJoinEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        guestTeam.addEntry(player.getName());
+        guestTeam.addPlayer(player);
     }
 
     public void handleQuitEvent(PlayerQuitEvent event) {
@@ -56,7 +59,7 @@ public class ScoreboardManager {
     }
 
     public void playerAddToTeam(net.myplayplanet.wsk.objects.Team team, WSKPlayer player) {
-        removeEntry(player.getPlayer().getName());
+        scoreboard.getPlayerTeam(player.getPlayer()).removePlayer(player.getPlayer());
         scoreboard.getTeam(team.getProperties().getName()).addEntry(player.getPlayer().getName());
     }
 
