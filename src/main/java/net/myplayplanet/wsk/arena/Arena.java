@@ -33,6 +33,7 @@ public class Arena {
         World world = Bukkit.getWorld(arenaConfig.getWorld());
         if(world != null) {
             arenaConfig.getSpawn().setWorld(Bukkit.getWorld(arenaConfig.getWorld()));
+            arenaConfig.getSpectatorSpawn().setWorld(Bukkit.getWorld(arenaConfig.getWorld()));
 
             teams.forEach(t -> t.getProperties().getSpawn().setWorld(world));
         }

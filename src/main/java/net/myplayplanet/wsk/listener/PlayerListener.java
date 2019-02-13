@@ -1,5 +1,6 @@
 package net.myplayplanet.wsk.listener;
 
+import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaManager;
 import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.WSKPlayer;
@@ -22,7 +23,11 @@ public class PlayerListener implements Listener {
 
         player.setDisplayName("§7" + player.getName() + "§r");
 
-        player.teleport(ArenaManager.getInstance().getCurrentArena().getArenaConfig().getSpawn());
+        Arena arena = ArenaManager.getInstance().getCurrentArena();
+        if (!arena.getState().isInGame())
+            player.teleport(ArenaManager.getInstance().getCurrentArena().getArenaConfig().getSpawn());
+        else
+            player.teleport(ArenaManager.getInstance().getCurrentArena().getArenaConfig().getSpectatorSpawn());
     }
 
     @EventHandler

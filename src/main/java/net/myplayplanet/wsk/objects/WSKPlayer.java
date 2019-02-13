@@ -1,6 +1,7 @@
 package net.myplayplanet.wsk.objects;
 
 import lombok.*;
+import net.myplayplanet.wsk.role.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -13,8 +14,10 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "uuid")
 @RequiredArgsConstructor
 public class WSKPlayer {
+
     private Team team;
     private final UUID uuid;
+    private Role role;
     boolean captain;
 
     public Player getPlayer() {
