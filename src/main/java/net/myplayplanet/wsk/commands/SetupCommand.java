@@ -47,7 +47,7 @@ public class SetupCommand {
         SetupManager manager = SetupManager.getInstance(player.getUniqueId());
 
         manager.setName(configName);
-        manager.setConfig(ArenaConfig.loadFromFile(new File(WSK.getInstance().getDataFolder(), "arenas/" + configName + ".json")));
+        manager.setConfig(ArenaConfig.loadFromFile(new File(wsk.getDataFolder(), "arenas/" + configName + ".json")));
 
         player.sendMessage(WSK.PREFIX + "§aArenaconfig '" + configName + "' geladen");
     }

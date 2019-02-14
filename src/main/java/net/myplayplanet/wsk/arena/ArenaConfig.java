@@ -28,9 +28,9 @@ public class ArenaConfig {
     private int waterHeight = 50;
 
     private List<TeamProperties> teams = Arrays.asList(
-            new TeamProperties("Team1", "§e", new Location(null, 0, 0, 0),
+            new TeamProperties("Team1", "§c", new Location(null, 0, 0, 0),
                     new Vector(0, 0, 0), new Vector(0, 0, 0)),
-            new TeamProperties("Team2", "§a", new Location(null, 0, 0, 0),
+            new TeamProperties("Team2", "§9", new Location(null, 0, 0, 0),
                     new Vector(0, 0, 0), new Vector(0, 0, 0)));
 
     private Vector pos1 = new Vector();

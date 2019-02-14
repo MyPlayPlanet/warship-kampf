@@ -20,30 +20,30 @@ public class ArenaCommand {
 
     @Command(name = "wsk.arena.info", permission = "wsk.arena.info", description = "Zeigt Informationen über die momentane Arena")
     public void infoCommand(CommandArgs args) {
-        CommandSender cs = args.getSender(CommandSender.class);
+        CommandSender sender = args.getSender(CommandSender.class);
 
         Arena arena = ArenaManager.getInstance().getCurrentArena();
 
-        cs.sendMessage(WSK.PREFIX + "===[ §6" + arena.getArenaConfig().getName() + "§e]===");
-        cs.sendMessage(WSK.PREFIX + "Status: §c" + arena.getState());
+        sender.sendMessage(WSK.PREFIX + "===[ §6" + arena.getArenaConfig().getName() + " §e]===");
+        sender.sendMessage(WSK.PREFIX + "Status: §c" + arena.getState());
 
         arena.getTeams().forEach((team) -> {
-            cs.sendMessage(WSK.PREFIX + "= " + team.getProperties().getFullname() + " §e=");
+            sender.sendMessage(WSK.PREFIX + "=== " + team.getProperties().getFullname() + " §e===");
             if (team.getMembers().size() > 0) {
-                cs.sendMessage(WSK.PREFIX + "Kapitän: §c" + team.getCaptain().getPlayer().getName());
-                cs.sendMessage(WSK.PREFIX + "Teamgröße: §c" + team.getMembers().size());
+                sender.sendMessage(WSK.PREFIX + "Kapitän: §c" + team.getCaptain().getPlayer().getName());
+                sender.sendMessage(WSK.PREFIX + "Teamgröße: §c" + team.getMembers().size());
             }
         });
     }
 
     @Command(name = "wsk.arena.start", permission = "wsk.arena.start", description = "Startet den Kampf")
     public void startCommand(CommandArgs args) {
-        CommandSender cs = args.getSender(CommandSender.class);
+        CommandSender sender = args.getSender(CommandSender.class);
 
         Arena arena = ArenaManager.getInstance().getCurrentArena();
 
         if (arena.getState() != ArenaState.SETUP) {
-            cs.sendMessage(WSK.PREFIX + "§cDer Fight kann gerade nicht gestartet werden");
+            sender.sendMessage(WSK.PREFIX + "§cDer Kampf kann gerade nicht gestartet werden");
             return;
         }
 

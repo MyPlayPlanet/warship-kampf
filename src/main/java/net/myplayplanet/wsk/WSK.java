@@ -51,19 +51,20 @@ public class WSK extends JavaPlugin {
             pm.registerEvents(new ArenaListener(), this);
         }
 
+        // Initialize ArenaManager with WSK instance
+        new ArenaManager(this);
+
         for (Player player : Bukkit.getOnlinePlayers()) {
             WSKPlayer.add(player);
             ScoreboardManager.getInstance().getGuestTeam().addPlayer(player);
         }
 
-        // Initialize ArenaManager with WSK instance
-        new ArenaManager(this);
-
         ScoreboardManager.getInstance();
     }
 
-//    public static WSK getInstance() {
-//        return instance;
-//    }
 
+    @Override
+    public void onDisable() {
+
+    }
 }

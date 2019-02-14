@@ -27,7 +27,9 @@ public class ArenaManager {
 
     private static ArenaManager instance;
 
+
     public static ArenaManager getInstance() {
         return instance;
+
     }
 }

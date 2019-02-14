@@ -14,7 +14,7 @@ public class WSKCommand {
     @Command(name = "wsk", inGameOnly = true)
     public void mainCommand(CommandArgs args) {
         Player player = args.getSender(Player.class);
-        player.sendMessage(WSK.PREFIX + "WSK v" + WSK.getInstance().getDescription().getVersion() + " by Butzlabben");
+        player.sendMessage(WSK.PREFIX + "WSK v" + wsk.getDescription().getVersion() + " by Butzlabben");
         player.sendMessage(WSK.PREFIX + "Hilfe: §a/wsk help");
     }
 }

@@ -57,6 +57,11 @@ public class TeamCommand {
             return;
         }
 
+        if (ArenaManager.getInstance().getCurrentArena().getState().isInGame()) {
+            sender.sendMessage(WSK.PREFIX + "§cDer Kampf läuft bereits");
+            return;
+        }
+
         wskPlayer.getTeam().setCaptain(wskPlayer);
         sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " als Captain gesetzt");
     }
@@ -83,6 +88,11 @@ public class TeamCommand {
             return;
         }
 
+        if (ArenaManager.getInstance().getCurrentArena().getState().isInGame()) {
+            sender.sendMessage(WSK.PREFIX + "§cDer Kampf läuft bereits");
+            return;
+        }
+
         wskPlayer.getTeam().removeMember(wskPlayer);
         sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " aus seinem Team entfernt");
     }
@@ -105,6 +115,11 @@ public class TeamCommand {
         Team team = ArenaManager.getInstance().getCurrentArena().getTeam(args.getArgument(1));
         if (team == null) {
             sender.sendMessage(WSK.PREFIX + "§cDieses Team existiert nicht");
+            return;
+        }
+
+        if (ArenaManager.getInstance().getCurrentArena().getState().isInGame()) {
+            sender.sendMessage(WSK.PREFIX + "§cDer Kampf läuft bereits");
             return;
         }
 
