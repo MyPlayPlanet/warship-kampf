@@ -2,20 +2,19 @@ package net.myplayplanet.wsk.event;
 
 import lombok.Getter;
 import net.myplayplanet.wsk.arena.Arena;
-import net.myplayplanet.wsk.objects.Team;
-import net.myplayplanet.wsk.objects.WSKPlayer;
+import net.myplayplanet.wsk.arena.ArenaState;
 import org.bukkit.event.HandlerList;
 
 @Getter
-public class TeamAddmemberArenaEvent extends ArenaEvent {
+public class ArenaStateChangeEvent extends ArenaEvent {
 
-    private final Team team;
-    private final WSKPlayer player;
+    private final ArenaState oldState;
+    private final ArenaState newState;
 
-    public TeamAddmemberArenaEvent(Arena arena, Team team, WSKPlayer player) {
+    public ArenaStateChangeEvent(ArenaState oldState, ArenaState newState, Arena arena) {
         super(arena);
-        this.team = team;
-        this.player = player;
+        this.oldState = oldState;
+        this.newState = newState;
     }
 
     public final static HandlerList handlers = new HandlerList();
@@ -28,5 +27,4 @@ public class TeamAddmemberArenaEvent extends ArenaEvent {
     public final static HandlerList getHandlerList() {
         return handlers;
     }
-
 }

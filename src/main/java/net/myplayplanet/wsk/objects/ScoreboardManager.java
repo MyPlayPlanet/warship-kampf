@@ -8,8 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -35,8 +33,8 @@ public class ScoreboardManager {
                 team.setPrefix(t.getProperties().getColorCode());
                 team.setColor(ChatColor.getByChar(t.getProperties().getColorCode().charAt(1)));
             });
-            guestTeam  = scoreboard.getTeam("9999Guest");
-            if(guestTeam != null)
+            guestTeam = scoreboard.getTeam("9999Guest");
+            if (guestTeam != null)
                 guestTeam.unregister();
 
             guestTeam = scoreboard.registerNewTeam("9999Guest");
@@ -65,7 +63,7 @@ public class ScoreboardManager {
 
     public void removeEntry(String playerName) {
         scoreboard.getTeams().forEach(t -> {
-            if(t.getEntries().contains(playerName))
+            if (t.getEntries().contains(playerName))
                 t.removeEntry(playerName);
         });
     }

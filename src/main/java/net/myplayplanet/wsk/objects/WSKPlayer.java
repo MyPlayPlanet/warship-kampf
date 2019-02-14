@@ -1,6 +1,9 @@
 package net.myplayplanet.wsk.objects;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.myplayplanet.wsk.role.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -38,7 +41,7 @@ public class WSKPlayer {
 
     public static void add(Player player) {
         UUID uuid = player.getUniqueId();
-        if(!instances.containsKey(uuid))
+        if (!instances.containsKey(uuid))
             instances.put(uuid, new WSKPlayer(uuid));
     }
 }

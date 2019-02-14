@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class GunnerRole extends AbstractRole {
-    
+
     @Override
     protected void setInventory() {
         addItem(0, new ItemStack(Material.WOODEN_SWORD));

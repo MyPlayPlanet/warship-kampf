@@ -14,7 +14,7 @@ public class Config {
     private static YamlConfiguration cfg;
 
     public static void load() {
-        if(!configFile.exists() || !configFile.isFile()) {
+        if (!configFile.exists() || !configFile.isFile()) {
             configFile.getParentFile().mkdirs();
             try {
                 configFile.createNewFile();

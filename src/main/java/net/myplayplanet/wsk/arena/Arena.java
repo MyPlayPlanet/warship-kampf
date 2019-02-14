@@ -2,6 +2,7 @@ package net.myplayplanet.wsk.arena;
 
 import com.google.common.base.Preconditions;
 import lombok.Getter;
+import lombok.Setter;
 import net.myplayplanet.wsk.objects.Team;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -16,6 +17,7 @@ public class Arena {
     private final File config;
     private ArenaConfig arenaConfig;
     private GameWorld gameWorld;
+    @Setter
     private ArenaState state = ArenaState.IDLE;
     private List<Team> teams;
 
@@ -31,7 +33,7 @@ public class Arena {
         gameWorld.load();
 
         World world = Bukkit.getWorld(arenaConfig.getWorld());
-        if(world != null) {
+        if (world != null) {
             arenaConfig.getSpawn().setWorld(Bukkit.getWorld(arenaConfig.getWorld()));
             arenaConfig.getSpectatorSpawn().setWorld(Bukkit.getWorld(arenaConfig.getWorld()));
 
@@ -43,8 +45,8 @@ public class Arena {
     public Team getTeam(String name) {
         Team team = null;
 
-        for(Team t : teams) {
-            if(t.getProperties().getName().equalsIgnoreCase(name)) {
+        for (Team t : teams) {
+            if (t.getProperties().getName().equalsIgnoreCase(name)) {
                 team = t;
                 break;
             }

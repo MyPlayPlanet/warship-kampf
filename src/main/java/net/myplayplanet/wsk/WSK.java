@@ -3,6 +3,7 @@ package net.myplayplanet.wsk;
 import lombok.Getter;
 import net.myplayplanet.commandframework.CommandFramework;
 import net.myplayplanet.wsk.arena.ArenaManager;
+import net.myplayplanet.wsk.commands.ArenaCommand;
 import net.myplayplanet.wsk.commands.SetupCommand;
 import net.myplayplanet.wsk.commands.TeamCommand;
 import net.myplayplanet.wsk.commands.WSKCommand;
@@ -34,8 +35,10 @@ public class WSK extends JavaPlugin {
         framework = new CommandFramework(this);
         framework.registerCommands(new WSKCommand(this));
         framework.registerCommands(new SetupCommand(this));
-        if (!Config.isSetup())
+        if (!Config.isSetup()) {
             framework.registerCommands(new TeamCommand(this));
+            framework.registerCommands(new ArenaCommand(this));
+        }
 
         // Create arenas folder
         File file = new File(getDataFolder(), "arenas");
@@ -59,8 +62,8 @@ public class WSK extends JavaPlugin {
         ScoreboardManager.getInstance();
     }
 
-    public static WSK getInstance() {
-        return instance;
-    }
+//    public static WSK getInstance() {
+//        return instance;
+//    }
 
 }

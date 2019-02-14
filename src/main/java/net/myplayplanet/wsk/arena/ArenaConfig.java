@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @Setter
 public class ArenaConfig {
 
+    private String name = "";
     private String world = "";
     private Location spawn = new Location(null, 0, 0, 0);
     private Location spectatorSpawn = new Location(null, 0, 0, 0);
@@ -38,7 +40,7 @@ public class ArenaConfig {
         Preconditions.checkNotNull(file);
         final Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (OutputStream out = new FileOutputStream(file);
-             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"))) {
+             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8))) {
             writer.setIndent("  ");
             gson.toJson(this, ArenaConfig.class, writer);
         } catch (IOException e) {
@@ -50,7 +52,7 @@ public class ArenaConfig {
         Preconditions.checkArgument(file.isFile(), file.getAbsolutePath() + " is not a file");
         final Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (InputStream in = new FileInputStream(file);
-             JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"))) {
+             JsonReader reader = new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
             return gson.fromJson(reader, ArenaConfig.class);
         } catch (IOException e) {
             e.printStackTrace();

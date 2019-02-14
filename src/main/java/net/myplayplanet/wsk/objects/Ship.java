@@ -54,7 +54,7 @@ public class Ship {
         new Thread(() -> {
             if (Bukkit.getOnlinePlayers().size() <= 0)
                 return;
-            Set<Location> locs = BlockProcessor.getLocs(BlockProcessor.getVec(team.getProperties().getPos1()), BlockProcessor.getVec(team.getProperties().getPos2()),team.getArena().getGameWorld().getWorld());
+            Set<Location> locs = BlockProcessor.getLocs(BlockProcessor.getVec(team.getProperties().getPos1()), BlockProcessor.getVec(team.getProperties().getPos2()), team.getArena().getGameWorld().getWorld());
             new BukkitRunnable() {
                 @Override
                 public void run() {

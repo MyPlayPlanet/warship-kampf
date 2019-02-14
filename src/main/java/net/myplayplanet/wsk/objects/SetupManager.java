@@ -24,5 +24,6 @@ public class SetupManager {
         return instances.get(uuid);
     }
 
-    private SetupManager() {}
+    private SetupManager() {
+    }
 }

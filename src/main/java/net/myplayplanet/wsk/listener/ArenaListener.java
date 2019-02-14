@@ -1,11 +1,10 @@
 package net.myplayplanet.wsk.listener;
 
 import net.myplayplanet.wsk.WSK;
+import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaManager;
-import net.myplayplanet.wsk.event.TeamAddmemberArenaEvent;
-import net.myplayplanet.wsk.event.TeamCaptainRemoveArenaEvent;
-import net.myplayplanet.wsk.event.TeamCaptainSetArenaEvent;
-import net.myplayplanet.wsk.event.TeamRemovememberArenaEvent;
+import net.myplayplanet.wsk.arena.ArenaState;
+import net.myplayplanet.wsk.event.*;
 import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
@@ -17,6 +16,12 @@ import org.bukkit.event.Listener;
 
 public class ArenaListener implements Listener {
 
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    public void onStateChange(ArenaStateChangeEvent event) {
+        event.getArena().setState(event.getNewState());
+
+
+    }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onCaptainSet(TeamCaptainSetArenaEvent event) {
@@ -48,6 +53,7 @@ public class ArenaListener implements Listener {
 
         player.getPlayer().teleport(ArenaManager.getInstance().getCurrentArena().getArenaConfig().getSpawn());
         player.setRole(null);
+        checkState(event.getArena());
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
@@ -59,5 +65,26 @@ public class ArenaListener implements Listener {
 
         player.getPlayer().teleport(team.getProperties().getSpawn());
         player.setRole(Role.GUNNER);
+        checkState(event.getArena());
+    }
+
+    private void checkState(Arena arena) {
+        if (!arena.getState().isInGame()) {
+            if (arena.getState() == ArenaState.IDLE) {
+                for (Team team : arena.getTeams()) {
+                    if (team.getMembers().size() > 0) {
+                        ArenaStateChangeEvent changeEvent = new ArenaStateChangeEvent(arena.getState(), ArenaState.SETUP, arena);
+                        Bukkit.getPluginManager().callEvent(changeEvent);
+                        return;
+                    }
+                }
+            } else if (arena.getState() == ArenaState.SETUP) {
+                for (Team team : arena.getTeams()) {
+                    if (team.getMembers().size() > 0) return;
+                }
+                ArenaStateChangeEvent changeEvent = new ArenaStateChangeEvent(arena.getState(), ArenaState.IDLE, arena);
+                Bukkit.getPluginManager().callEvent(changeEvent);
+            }
+        }
     }
 }

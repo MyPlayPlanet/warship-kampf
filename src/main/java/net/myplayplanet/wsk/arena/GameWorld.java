@@ -41,7 +41,7 @@ public class GameWorld {
     public void sendPlayersBack() {
         synchronized (lock) {
             World w = Bukkit.getWorld(worldName);
-            if(w == null)
+            if (w == null)
                 return;
             w.getEntities().stream().filter((f) -> f instanceof Player).forEach(p -> p.teleport(Config.getSpawn()));
         }
@@ -50,7 +50,7 @@ public class GameWorld {
     public void unload() {
         synchronized (lock) {
             World w = Bukkit.getWorld(worldName);
-            if(w == null)
+            if (w == null)
                 return;
             for (Entity e : w.getEntities()) {
                 if (e instanceof Player) {
