@@ -15,6 +15,18 @@ permissions:
     default: op
     children:
       - wsk.team.*
+
+  wsk.arena.*:
+    default: op
+    children:
+      - wsk.arena.info
+      - wsk.arena.start
+
+  wsk.arena.info:
+    default: op
+  wsk.arena.start:
+    default: op
+
   wsk.team.*:
     default: op
     children:

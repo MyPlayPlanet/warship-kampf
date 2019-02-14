@@ -16,3 +16,5 @@ This is a plugin to manage simple warship fights, as MrCreativeIV invented them.
 - /wsk setup pos1
 - /wsk setup pos2
 - /wsk setup world
+- /wsk arena info
+- /wsk arena start
