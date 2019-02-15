@@ -1,9 +1,7 @@
 package net.myplayplanet.wsk.listener;
 
+import lombok.AllArgsConstructor;
 import net.myplayplanet.wsk.WSK;
-import net.myplayplanet.wsk.arena.Arena;
-import net.myplayplanet.wsk.arena.ArenaManager;
-import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.event.*;
 import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.Team;
@@ -14,7 +12,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
+@AllArgsConstructor
 public class ArenaListener implements Listener {
+
+    private final WSK wsk;
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onStateChange(ArenaStateChangeEvent event) {
@@ -49,7 +50,7 @@ public class ArenaListener implements Listener {
         ScoreboardManager.getInstance().getGuestTeam().addEntry(player.getPlayer().getName());
         player.getPlayer().setDisplayName("§7" + player.getPlayer().getName() + "§r");
 
-        player.getPlayer().teleport(ArenaManager.getInstance().getCurrentArena().getArenaConfig().getSpawn());
+        player.getPlayer().teleport(wsk.getArenaManager().getCurrentArena().getArenaConfig().getSpawn());
         player.setRole(null);
     }
 

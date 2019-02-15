@@ -7,8 +7,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.concurrent.ForkJoinPool;
 
 public abstract class AbstractRole {
@@ -22,6 +24,9 @@ public abstract class AbstractRole {
     27-35: Bottom row, from left to right
      */
     protected HashMap<Integer, ItemStack> invItems = new HashMap<>();
+
+    // Permanent effects a player has
+    protected HashSet<PotionEffect> permanentEffects = new HashSet<>();
 
     protected abstract void setInventory();
 

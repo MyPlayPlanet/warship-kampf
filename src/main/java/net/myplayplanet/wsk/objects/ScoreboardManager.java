@@ -1,8 +1,8 @@
 package net.myplayplanet.wsk.objects;
 
 import lombok.Getter;
+import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
-import net.myplayplanet.wsk.arena.ArenaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -18,10 +18,12 @@ public class ScoreboardManager {
     private Scoreboard scoreboard;
     private Team guestTeam;
 
-    private ScoreboardManager() {
+    private ScoreboardManager() {}
+
+    public void init(WSK wsk) {
         scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
-        Arena arena = ArenaManager.getInstance().getCurrentArena();
+        Arena arena = wsk.getArenaManager().getCurrentArena();
         if (arena != null) {
             scoreboard.getTeams().forEach(Team::unregister);
             arena.getTeams().forEach((t) -> {

@@ -7,7 +7,9 @@ import lombok.Getter;
 @Getter
 public enum Role {
 
-    CAPTAIN(new CaptainRole()), GUNNER(new GunnerRole());
+    CAPTAIN(new CaptainRole()),
+    GUNNER(new GunnerRole()),
+    SPECIALFORCE(new SpecialforceRole());
 
     final AbstractRole role;
 }

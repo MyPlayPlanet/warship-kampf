@@ -23,6 +23,8 @@ public class WSK extends JavaPlugin {
     @Getter
     private CommandFramework framework;
     private static WSK instance;
+    @Getter
+    private ArenaManager arenaManager;
     public static final String PREFIX = "§8[§6WSK§8] §e";
 
     @Override
@@ -47,19 +49,21 @@ public class WSK extends JavaPlugin {
         // Register listeners
         PluginManager pm = Bukkit.getPluginManager();
         if (!Config.isSetup()) {
-            pm.registerEvents(new PlayerListener(), this);
-            pm.registerEvents(new ArenaListener(), this);
+            pm.registerEvents(new PlayerListener(this), this);
+            pm.registerEvents(new ArenaListener(this), this);
         }
 
         // Initialize ArenaManager with WSK instance
-        new ArenaManager(this);
+        arenaManager = new ArenaManager(this);
+
+        // Init Scoreboard to get all new teams
+        ScoreboardManager.getInstance().init(this);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             WSKPlayer.add(player);
             ScoreboardManager.getInstance().getGuestTeam().addPlayer(player);
         }
 
-        ScoreboardManager.getInstance();
     }
 
 

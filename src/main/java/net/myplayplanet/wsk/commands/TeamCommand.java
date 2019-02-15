@@ -4,13 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.myplayplanet.commandframework.CommandArgs;
 import net.myplayplanet.commandframework.api.Command;
+import net.myplayplanet.commandframework.api.Completer;
 import net.myplayplanet.wsk.WSK;
-import net.myplayplanet.wsk.arena.ArenaManager;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -57,7 +61,7 @@ public class TeamCommand {
             return;
         }
 
-        if (ArenaManager.getInstance().getCurrentArena().getState().isInGame()) {
+        if (wsk.getArenaManager().getCurrentArena().getState().isInGame()) {
             sender.sendMessage(WSK.PREFIX + "§cDer Kampf läuft bereits");
             return;
         }
@@ -88,13 +92,23 @@ public class TeamCommand {
             return;
         }
 
-        if (ArenaManager.getInstance().getCurrentArena().getState().isInGame()) {
+        if (wsk.getArenaManager().getCurrentArena().getState().isInGame()) {
             sender.sendMessage(WSK.PREFIX + "§cDer Kampf läuft bereits");
             return;
         }
 
         wskPlayer.getTeam().removeMember(wskPlayer);
         sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " aus seinem Team entfernt");
+    }
+
+    @Completer(name = "wsk.team.put")
+    public List<String> complete(CommandArgs args) {
+        List<String> completions = new ArrayList<>();
+        System.out.println(args.length());
+        if (args.length() > 1) {
+            completions.addAll(wsk.getArenaManager().getCurrentArena().getTeams().stream().map(t -> t.getProperties().getName()).collect(Collectors.toList()));
+        }
+        return completions;
     }
 
     @Command(name = "wsk.team.put", usage = "/wsk team put <Spieler> <Team>", permission = "wsk.team.put", description = "Setzt jemanden in ein Team")
@@ -112,13 +126,13 @@ public class TeamCommand {
             return;
         }
 
-        Team team = ArenaManager.getInstance().getCurrentArena().getTeam(args.getArgument(1));
+        Team team = wsk.getArenaManager().getCurrentArena().getTeam(args.getArgument(1));
         if (team == null) {
             sender.sendMessage(WSK.PREFIX + "§cDieses Team existiert nicht");
             return;
         }
 
-        if (ArenaManager.getInstance().getCurrentArena().getState().isInGame()) {
+        if (wsk.getArenaManager().getCurrentArena().getState().isInGame()) {
             sender.sendMessage(WSK.PREFIX + "§cDer Kampf läuft bereits");
             return;
         }

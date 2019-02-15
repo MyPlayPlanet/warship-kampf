@@ -6,7 +6,6 @@ import net.myplayplanet.commandframework.CommandArgs;
 import net.myplayplanet.commandframework.api.Command;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
-import net.myplayplanet.wsk.arena.ArenaManager;
 import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.event.ArenaStateChangeEvent;
 import org.bukkit.Bukkit;
@@ -22,7 +21,7 @@ public class ArenaCommand {
     public void infoCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);
 
-        Arena arena = ArenaManager.getInstance().getCurrentArena();
+        Arena arena = wsk.getArenaManager().getCurrentArena();
 
         sender.sendMessage(WSK.PREFIX + "===[ §6" + arena.getArenaConfig().getName() + " §e]===");
         sender.sendMessage(WSK.PREFIX + "Status: §c" + arena.getState());
@@ -40,7 +39,7 @@ public class ArenaCommand {
     public void startCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);
 
-        Arena arena = ArenaManager.getInstance().getCurrentArena();
+        Arena arena = wsk.getArenaManager().getCurrentArena();
 
         if (arena.getState() != ArenaState.SETUP) {
             sender.sendMessage(WSK.PREFIX + "§cDer Kampf kann gerade nicht gestartet werden");
