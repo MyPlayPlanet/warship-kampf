@@ -104,7 +104,7 @@ public class TeamCommand {
     @Completer(name = "wsk.team.put")
     public List<String> complete(CommandArgs args) {
         List<String> completions = new ArrayList<>();
-        System.out.println(args.length());
+
         if (args.length() > 1) {
             completions.addAll(wsk.getArenaManager().getCurrentArena().getTeams().stream().map(t -> t.getProperties().getName()).collect(Collectors.toList()));
         }
