@@ -3,11 +3,13 @@ package net.myplayplanet.wsk.arena;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.Setter;
+import net.myplayplanet.wsk.arena.timer.Timer;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.util.ColorConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.List;
@@ -22,6 +24,8 @@ public class Arena {
     @Setter
     private ArenaState state = ArenaState.IDLE;
     private List<Team> teams;
+    @Setter
+    private BukkitRunnable timer;
 
     public Arena(File config) {
         Preconditions.checkArgument(config.exists(), "config does not exist");

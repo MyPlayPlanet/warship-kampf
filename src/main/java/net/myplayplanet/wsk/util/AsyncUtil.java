@@ -7,6 +7,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.concurrent.ForkJoinPool;
 
 public class AsyncUtil {
+
     private AsyncUtil() {
     }
 

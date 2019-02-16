@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
+import net.myplayplanet.wsk.arena.timer.PrerunningTimer;
 import net.myplayplanet.wsk.event.*;
 import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.Team;
@@ -16,6 +17,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 @AllArgsConstructor
 public class ArenaListener implements Listener {
@@ -28,6 +30,8 @@ public class ArenaListener implements Listener {
 
         ArenaState state = event.getNewState();
         Arena arena = event.getArena();
+        arena.getTimer().cancel();
+
         if (state == ArenaState.PRERUNNING) {
             // Teleport players and set inventory
             WSKPlayer.getPlayers().stream().filter(WSKPlayer::isInTeam).forEach((player) -> {
@@ -43,11 +47,17 @@ public class ArenaListener implements Listener {
 
             // Replace obsidian and bedrock
             arena.getTeams().forEach(team -> team.getShip().replaceObsidianAndBedrock());
+
+            arena.setTimer(new PrerunningTimer(arena));
         } else if (state == ArenaState.SHOOTING) {
             arena.getTeams().forEach(team -> team.getShip().setInitBlock(() -> {
 
             }));
         }
+
+        // Run timer if game is running
+        if (state.isInGame())
+            arena.getTimer().runTaskTimer(JavaPlugin.getPlugin(WSK.class), 1, 1);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)

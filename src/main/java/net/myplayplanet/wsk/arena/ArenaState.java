@@ -8,7 +8,13 @@ import lombok.Getter;
 public enum ArenaState {
 
 
-    IDLE, SETUP, PRERUNNING(true), SHOOTING(true), ENTER(true), ENTER_ALL(true), SPECTATE(true);
+    IDLE,
+    SETUP,
+    PRERUNNING(true),
+    SHOOTING(true),
+    ENTER(true),
+    ENTER_ALL(true),
+    SPECTATE(true);
 
     boolean inGame;
 
