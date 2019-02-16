@@ -4,8 +4,10 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.Setter;
 import net.myplayplanet.wsk.objects.Team;
+import net.myplayplanet.wsk.util.ColorConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
 
 import java.io.File;
 import java.util.List;
@@ -38,8 +40,11 @@ public class Arena {
             arenaConfig.getSpectatorSpawn().setWorld(Bukkit.getWorld(arenaConfig.getWorld()));
 
             teams.forEach(t -> t.getProperties().getSpawn().setWorld(world));
-        }
 
+            // Set spawn blocks
+            teams.forEach((team) -> team.getProperties().getSpawn().getBlock().getRelative(BlockFace.DOWN)
+                    .setType(ColorConverter.getConcreteFromColorCode(team.getProperties().getColorCode())));
+        }
     }
 
     public Team getTeam(String name) {

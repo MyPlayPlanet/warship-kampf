@@ -9,7 +9,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -25,6 +27,10 @@ public class WSKPlayer {
 
     public Player getPlayer() {
         return Bukkit.getPlayer(uuid);
+    }
+
+    public boolean isInTeam() {
+        return team != null;
     }
 
     // Static instance stuff down below
@@ -43,5 +49,9 @@ public class WSKPlayer {
         UUID uuid = player.getUniqueId();
         if (!instances.containsKey(uuid))
             instances.put(uuid, new WSKPlayer(uuid));
+    }
+
+    public static List<WSKPlayer> getPlayers() {
+        return new ArrayList<>(instances.values());
     }
 }

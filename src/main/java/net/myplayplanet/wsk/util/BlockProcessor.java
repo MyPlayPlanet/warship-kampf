@@ -13,20 +13,27 @@ import java.util.stream.Collectors;
 public class BlockProcessor {
 
     public static Set<Location> filter(Set<Location> locs, Set<Material> toRemove) {
-        Set<Location> l = new HashSet<>(locs.size());
+        Set<Location> l;
         l = locs.stream().filter(loc -> !toRemove.contains(loc.getBlock().getType())).collect(Collectors.toSet());
         return l;
     }
 
+    // Only return locs with this materials
+    public static Set<Location> toHave(Set<Location> locs, Set<Material> toHave) {
+        Set<Location> l;
+        l = locs.stream().filter(loc -> toHave.contains(loc.getBlock().getType())).collect(Collectors.toSet());
+        return l;
+    }
+
     public static Set<Location> filter(Set<Location> locs, Material material) {
-        Set<Location> l = new HashSet<>(locs.size());
+        Set<Location> l;
         l = locs.stream().filter(loc -> loc.getBlock().getType() == material).collect(Collectors.toSet());
         return l;
     }
 
     @SuppressWarnings("deprecation")
     public static Set<Location> filter(Set<Location> locs, byte data) {
-        Set<Location> l = new HashSet<>(locs.size());
+        Set<Location> l;
         l = locs.stream().filter(loc -> loc.getBlock().getData() == data).collect(Collectors.toSet());
         return l;
     }

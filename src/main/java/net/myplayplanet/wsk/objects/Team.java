@@ -21,6 +21,7 @@ public class Team implements Iterable<WSKPlayer> {
     private List<WSKPlayer> members = new ArrayList<>();
     private final TeamProperties properties;
     private final Arena arena;
+    private final Ship ship = new Ship(this);
 
     public void addMember(WSKPlayer player) {
         Objects.requireNonNull(player);
