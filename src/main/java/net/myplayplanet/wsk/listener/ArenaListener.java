@@ -5,6 +5,7 @@ import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.arena.timer.PrerunningTimer;
+import net.myplayplanet.wsk.arena.timer.ShootingTimer;
 import net.myplayplanet.wsk.event.*;
 import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.Team;
@@ -30,7 +31,9 @@ public class ArenaListener implements Listener {
 
         ArenaState state = event.getNewState();
         Arena arena = event.getArena();
-        arena.getTimer().cancel();
+
+        if (arena.getTimer() != null && !arena.getTimer().isCancelled())
+            arena.getTimer().cancel();
 
         if (state == ArenaState.PRERUNNING) {
             // Teleport players and set inventory
@@ -53,11 +56,13 @@ public class ArenaListener implements Listener {
             arena.getTeams().forEach(team -> team.getShip().setInitBlock(() -> {
 
             }));
+
+            arena.setTimer(new ShootingTimer(arena));
         }
 
         // Run timer if game is running
         if (state.isInGame())
-            arena.getTimer().runTaskTimer(JavaPlugin.getPlugin(WSK.class), 1, 1);
+            arena.getTimer().runTaskTimer(JavaPlugin.getPlugin(WSK.class), 0, 20);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)

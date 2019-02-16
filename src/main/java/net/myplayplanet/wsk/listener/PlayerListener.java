@@ -21,6 +21,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
 
         player.setScoreboard(ScoreboardManager.getInstance().getScoreboard());
+        player.getInventory().clear();
 
         WSKPlayer.handle(event);
         ScoreboardManager.getInstance().handleJoinEvent(event);
