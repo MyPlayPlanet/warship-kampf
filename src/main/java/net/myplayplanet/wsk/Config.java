@@ -39,16 +39,10 @@ public class Config {
     }
 
     public static boolean isSetup() {
-        return cfg.getBoolean("setup", false);
+        return cfg.getBoolean("setup", true);
     }
 
     public static String getDefaultArena() {
         return cfg.getString("default_arena", "arena");
-    }
-
-    public static Location getSpawn() {
-
-        // TODO
-        return null;
     }
 }

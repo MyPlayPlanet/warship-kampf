@@ -31,7 +31,7 @@ public class Arena {
         // init teams
         teams = arenaConfig.getTeams().stream().map(tp -> new Team(tp, this)).collect(Collectors.toList());
 
-        gameWorld = new GameWorld(arenaConfig.getWorld());
+        gameWorld = new GameWorld(arenaConfig.getWorld(), this);
         gameWorld.load();
 
         World world = Bukkit.getWorld(arenaConfig.getWorld());

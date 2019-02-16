@@ -10,6 +10,7 @@ import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import net.myplayplanet.wsk.role.Role;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -31,6 +32,7 @@ public class ArenaListener implements Listener {
             // Teleport players and set inventory
             WSKPlayer.getPlayers().stream().filter(WSKPlayer::isInTeam).forEach((player) -> {
                 player.getPlayer().teleport(player.getTeam().getProperties().getSpawn());
+                player.getPlayer().setGameMode(GameMode.SURVIVAL);
                 player.getPlayer().getInventory().clear();
                 player.getRole().getRole().setItems(player.getPlayer());
             });

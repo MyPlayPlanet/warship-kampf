@@ -33,7 +33,7 @@ public class SetupCommand {
         player.sendMessage(WSK.PREFIX + "/wsk setup waterheight - Setzt die Wasserhöhe");
         player.sendMessage(WSK.PREFIX + "/wsk setup pos1 - Setzt die erste Position der Arena");
         player.sendMessage(WSK.PREFIX + "/wsk setup pos2 - Setzt die zweite Position der Arena");
-        player.sendMessage(WSK.PREFIX + "/wsk setup world - Benutzt die bennante Welt als Arenawelt");
+        player.sendMessage(WSK.PREFIX + "/wsk setup world - Benutzt die benannte Welt als Arenawelt");
     }
 
     @Command(name = "wsk.setup.load", permission = "wsk.setup", inGameOnly = true, description = "Lädt eine Arenaconfig", usage = "/wsk setup load <Name>")
@@ -69,6 +69,7 @@ public class SetupCommand {
         }
         SetupManager manager = SetupManager.getInstance(player.getUniqueId());
         manager.setName(args.getArgument(0));
+        manager.getConfig().setName(args.getArgument(0));
         player.sendMessage(WSK.PREFIX + "Name gesetzt");
     }
 
@@ -77,6 +78,9 @@ public class SetupCommand {
         Player player = args.getSender(Player.class);
         SetupManager manager = SetupManager.getInstance(player.getUniqueId());
         Location location = player.getLocation();
+        // Set world to null because of serialization
+        location.setWorld(null);
+
         manager.getConfig().setSpawn(location);
         player.sendMessage(WSK.PREFIX + "Spawn gesetzt");
     }
@@ -86,6 +90,9 @@ public class SetupCommand {
         Player player = args.getSender(Player.class);
         SetupManager manager = SetupManager.getInstance(player.getUniqueId());
         Location location = player.getLocation();
+        // Set world to null because of serialization
+        location.setWorld(null);
+
         manager.getConfig().setSpectatorSpawn(location);
         player.sendMessage(WSK.PREFIX + "Spawn gesetzt");
     }
@@ -144,7 +151,11 @@ public class SetupCommand {
         manager.getConfig().setWorld(worldName);
         File file = new File(Bukkit.getWorldContainer(), worldName);
         try {
-            FileUtils.copyDirectory(file, new File(wsk.getDataFolder(), "arenas/" + worldName));
+            File worldDir = new File(wsk.getDataFolder(), "arenas/" + worldName);
+            FileUtils.copyDirectory(file, worldDir);
+            File uid = new File(worldDir, "uid.dat");
+            if(uid.isFile())
+                FileUtils.deleteQuietly(uid);
             player.sendMessage(WSK.PREFIX + "Welt gesetzt");
         } catch (IOException e) {
             Logger.ERROR.log("Could not copy world at setup");

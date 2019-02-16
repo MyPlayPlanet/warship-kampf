@@ -19,6 +19,7 @@ public class ArenaManager {
         }
         this.wsk = wsk;
         arenaFolder = new File(wsk.getDataFolder(), "arenas");
+
         if (!Config.isSetup())
             currentArena = new Arena(new File(arenaFolder, Config.getDefaultArena()));
     }

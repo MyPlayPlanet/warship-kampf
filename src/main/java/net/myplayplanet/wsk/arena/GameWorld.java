@@ -1,6 +1,7 @@
 package net.myplayplanet.wsk.arena;
 
 import net.myplayplanet.wsk.Config;
+import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.util.Logger;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -17,10 +18,12 @@ public class GameWorld {
 
     private final String templateName;
     private final String worldName;
+    private final Arena arena;
 
     private final Object lock = new Object();
 
-    private GameWorld(String templateName, boolean randomName) {
+    private GameWorld(String templateName, boolean randomName, Arena arena) {
+        this.arena = arena;
         this.templateName = templateName;
         if (!randomName)
             worldName = templateName;
@@ -34,8 +37,8 @@ public class GameWorld {
         return world.getName().equals(worldName);
     }
 
-    public GameWorld(String templateName) {
-        this(templateName, false);
+    public GameWorld(String templateName, Arena arena) {
+        this(templateName, false, arena);
     }
 
     public void sendPlayersBack() {
@@ -43,7 +46,7 @@ public class GameWorld {
             World w = Bukkit.getWorld(worldName);
             if (w == null)
                 return;
-            w.getEntities().stream().filter((f) -> f instanceof Player).forEach(p -> p.teleport(Config.getSpawn()));
+            w.getEntities().stream().filter((f) -> f instanceof Player).forEach(p -> ((Player) p).kickPlayer(WSK.PREFIX + "§cInaktivität"));
         }
     }
 
@@ -76,7 +79,6 @@ public class GameWorld {
 
     public void load() {
         synchronized (lock) {
-            //TODO gameworld path from
             File newFile = new File("plugins/WSK/arenas/" + templateName);
             File file = new File(worldName);
 
@@ -95,7 +97,11 @@ public class GameWorld {
     }
 
     @Override
-    protected void finalize() throws Throwable {
+    protected void finalize() {
+        unloadCompletly();
+    }
+
+    public void unloadCompletly() {
         sendPlayersBack();
         unload();
         delete();

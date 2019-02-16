@@ -37,7 +37,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.ow2.asm:asm-analysis:6.1.1" level="project" />
     <orderEntry type="library" name="Maven: net.myplayplanet:CommandFramework:2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.boydti:fawe-api:latest" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: com.sk98q:worldedit:7.0.0-SNAPSHOT">
         <CLASSES>

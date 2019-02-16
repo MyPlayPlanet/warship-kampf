@@ -11,18 +11,22 @@ import net.myplayplanet.wsk.listener.ArenaListener;
 import net.myplayplanet.wsk.listener.PlayerListener;
 import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.WSKPlayer;
+import net.myplayplanet.wsk.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.concurrent.ForkJoinPool;
 
 public class WSK extends JavaPlugin {
 
     @Getter
     private CommandFramework framework;
     private static WSK instance;
+    @Getter
+    private static boolean fawe;
     @Getter
     private ArenaManager arenaManager;
     public static final String PREFIX = "§8[§6WSK§8] §e";
@@ -32,8 +36,12 @@ public class WSK extends JavaPlugin {
         instance = this;
 
         // Load config
+        Logger.BOOT.log("Loading config...");
         Config.load();
 
+        fawe = Bukkit.getPluginManager().getPlugin("FastAsyncWorldEdit") != null;
+
+        Logger.BOOT.log("Registering commands");
         framework = new CommandFramework(this);
         framework.registerCommands(new WSKCommand(this));
         framework.registerCommands(new SetupCommand(this));
@@ -54,6 +62,7 @@ public class WSK extends JavaPlugin {
         }
 
         // Initialize ArenaManager with WSK instance
+        Logger.BOOT.log("Initialize arena...");
         arenaManager = new ArenaManager(this);
 
         // Init Scoreboard to get all new teams
@@ -64,11 +73,13 @@ public class WSK extends JavaPlugin {
             ScoreboardManager.getInstance().getGuestTeam().addPlayer(player);
         }
 
+        Logger.BOOT.log("Async threads will be executed with a parallelism of: " + ForkJoinPool.getCommonPoolParallelism());
+        Logger.NORMAL.log("WSK v" + getDescription().getVersion() + " by Butzlabben was successfully enabled");
     }
-
 
     @Override
     public void onDisable() {
-
+        if(arenaManager.getCurrentArena() != null)
+        arenaManager.getCurrentArena().getGameWorld().unloadCompletly();
     }
 }

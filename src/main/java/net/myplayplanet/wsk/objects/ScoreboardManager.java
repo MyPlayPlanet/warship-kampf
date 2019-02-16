@@ -35,14 +35,15 @@ public class ScoreboardManager {
                 team.setPrefix(t.getProperties().getColorCode());
                 team.setColor(ChatColor.getByChar(t.getProperties().getColorCode().charAt(1)));
             });
-            guestTeam = scoreboard.getTeam("9999Guest");
-            if (guestTeam != null)
-                guestTeam.unregister();
-
-            guestTeam = scoreboard.registerNewTeam("9999Guest");
-            guestTeam.setPrefix("§7");
-            guestTeam.setColor(ChatColor.getByChar("7"));
         }
+
+        guestTeam = scoreboard.getTeam("9999Guest");
+        if (guestTeam != null)
+            guestTeam.unregister();
+
+        guestTeam = scoreboard.registerNewTeam("9999Guest");
+        guestTeam.setPrefix("§7");
+        guestTeam.setColor(ChatColor.getByChar("7"));
     }
 
     public static ScoreboardManager getInstance() {

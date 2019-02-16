@@ -6,6 +6,9 @@ main: net.myplayplanet.wsk.WSK
 
 api-version: 1.13
 
+loadbefore:
+  - FastAsyncWorldEdit
+
 depend:
   - WorldEdit
 

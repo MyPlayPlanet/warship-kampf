@@ -1,6 +1,7 @@
 package net.myplayplanet.wsk.util;
 
-import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,34 +39,34 @@ public class BlockProcessor {
         return l;
     }
 
-    public static Set<Location> getLocs(Vector l1, Vector l2, World w) {
-        CuboidRegion cr = new CuboidRegion(l1, l2);
+    public static Set<Location> getLocs(Vector3 l1, Vector3 l2, World w) {
+        CuboidRegion cr = new CuboidRegion(l1.toBlockPoint(), l2.toBlockPoint());
         Set<Location> locs = new HashSet<>();
-        for (Vector v : cr) {
-            locs.add(getLoc(v, w));
+        for (BlockVector3 v : cr) {
+            locs.add(getLoc(v.toVector3(), w));
         }
         return locs;
     }
 
     public static Set<Location> getLocs(Location l1, Location l2) {
-        CuboidRegion cr = new CuboidRegion(getVec(l1), getVec(l2));
+        CuboidRegion cr = new CuboidRegion(getVec(l1).toBlockPoint(), getVec(l2).toBlockPoint());
         Set<Location> locs = new HashSet<>();
         World w = l1.getWorld();
-        for (Vector v : cr) {
-            locs.add(getLoc(v, w));
+        for (BlockVector3 v : cr) {
+            locs.add(getLoc(v.toVector3(), w));
         }
         return locs;
     }
 
-    public static Location getLoc(Vector v, World w) {
-        return new Location(w, v.getX(), v.getBlockY(), v.getBlockZ());
+    public static Location getLoc(Vector3 v, World w) {
+        return new Location(w, v.getX(), v.getY(), v.getZ());
     }
 
-    public static Vector getVec(Location loc) {
-        return new Vector(loc.getX(), loc.getY(), loc.getZ());
+    public static Vector3 getVec(Location loc) {
+        return Vector3.at(loc.getX(), loc.getY(), loc.getZ());
     }
 
-    public static Vector getVec(org.bukkit.util.Vector loc) {
-        return new Vector(loc.getX(), loc.getY(), loc.getZ());
+    public static Vector3 getVec(org.bukkit.util.Vector loc) {
+        return Vector3.at(loc.getX(), loc.getY(), loc.getZ());
     }
 }
