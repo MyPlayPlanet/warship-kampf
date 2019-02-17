@@ -1,6 +1,7 @@
 package net.myplayplanet.wsk.listener;
 
 import lombok.AllArgsConstructor;
+import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.objects.ScoreboardManager;
@@ -11,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 @AllArgsConstructor
 public class PlayerListener implements Listener {
@@ -51,5 +53,17 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event) {
+        if(Config.isSetup())
+            return;
+        Arena arena = wsk.getArenaManager().getCurrentArena();
+
+        if(arena.getState().isInGame())
+            event.setRespawnLocation(arena.getArenaConfig().getSpectatorSpawn());
+        else
+            event.setRespawnLocation(arena.getArenaConfig().getSpawn());
     }
 }
