@@ -1,0 +1,45 @@
+name: WSK
+author: Butzlabben
+version: ${project.version}
+
+main: net.myplayplanet.wsk.WSK
+
+api-version: 1.13
+
+loadbefore:
+  - FastAsyncWorldEdit
+
+depend:
+  - WorldEdit
+  - WorldGuard
+
+
+permissions:
+  wsk.*:
+    default: op
+    children:
+      - wsk.team.*
+
+  wsk.arena.*:
+    default: op
+    children:
+      - wsk.arena.info
+      - wsk.arena.start
+
+  wsk.arena.info:
+    default: op
+  wsk.arena.start:
+    default: op
+
+  wsk.team.*:
+    default: op
+    children:
+      - wsk.team.captain
+      - wsk.team.remove
+      - wsk.team.put
+  wsk.team.captain:
+    default: op
+  wsk.team.remove:
+    default: op
+  wsk.team.put:
+    default: op
