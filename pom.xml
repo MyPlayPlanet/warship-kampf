@@ -42,6 +42,10 @@
 
     <repositories>
         <repository>
+            <id>sk89q-repo</id>
+            <url>http://maven.sk89q.com/repo/</url>
+        </repository>
+        <repository>
             <id>destroystokyo-repo</id>
             <url>https://repo.destroystokyo.com/repository/maven-public/</url>
         </repository>
@@ -52,10 +56,6 @@
         <repository>
             <id>fawe-repo</id>
             <url>http://ci.athion.net/job/FastAsyncWorldEdit/ws/mvn/</url>
-        </repository>
-        <repository>
-            <id>we-repo</id>
-            <url>http://maven.sk89q.com/repo/</url>
         </repository>
     </repositories>
 
@@ -94,6 +94,20 @@
             <scope>system</scope>
             <version>7.0.0-SNAPSHOT</version>
             <systemPath>C:/Programmieren/worldedit-7.0.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-core</artifactId>
+            <version>7.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-legacy</artifactId>
+            <version>7.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

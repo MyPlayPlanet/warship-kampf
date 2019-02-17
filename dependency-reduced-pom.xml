@@ -35,6 +35,10 @@
   </build>
   <repositories>
     <repository>
+      <id>sk89q-repo</id>
+      <url>http://maven.sk89q.com/repo/</url>
+    </repository>
+    <repository>
       <id>destroystokyo-repo</id>
       <url>https://repo.destroystokyo.com/repository/maven-public/</url>
     </repository>
@@ -45,10 +49,6 @@
     <repository>
       <id>fawe-repo</id>
       <url>http://ci.athion.net/job/FastAsyncWorldEdit/ws/mvn/</url>
-    </repository>
-    <repository>
-      <id>we-repo</id>
-      <url>http://maven.sk89q.com/repo/</url>
     </repository>
   </repositories>
   <dependencies>
@@ -105,6 +105,34 @@
       <artifactId>lombok</artifactId>
       <version>1.18.4</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sk89q</groupId>
+      <artifactId>worldguard</artifactId>
+      <version>6.1.1-SNAPSHOT</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>worldedit</artifactId>
+          <groupId>com.sk89q</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bukkit-classloader-check</artifactId>
+          <groupId>com.sk89q.spigot</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bukkit</artifactId>
+          <groupId>org.bukkit</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commandbook</artifactId>
+          <groupId>com.sk89q</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jsr305</artifactId>
+          <groupId>com.google.code.findbugs</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.sk98q</groupId>

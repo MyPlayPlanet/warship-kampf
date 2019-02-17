@@ -12,6 +12,7 @@ import net.myplayplanet.wsk.listener.PlayerListener;
 import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import net.myplayplanet.wsk.util.Logger;
+import net.myplayplanet.wsk.util.RegionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -29,6 +30,7 @@ public class WSK extends JavaPlugin {
     private static boolean fawe;
     @Getter
     private ArenaManager arenaManager;
+    private RegionUtil regionUtil;
     public static final String PREFIX = "§8[§6WSK§8] §e";
 
     @Override
@@ -64,6 +66,9 @@ public class WSK extends JavaPlugin {
         // Initialize ArenaManager with WSK instance
         Logger.BOOT.log("Initialize arena...");
         arenaManager = new ArenaManager(this);
+
+        if(!Config.isSetup())
+            regionUtil = new RegionUtil(this);
 
         // Init Scoreboard to get all new teams
         ScoreboardManager.getInstance().init(this);

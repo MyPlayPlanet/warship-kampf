@@ -11,6 +11,7 @@ loadbefore:
 
 depend:
   - WorldEdit
+  - WorldGuard
 
 
 permissions:
