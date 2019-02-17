@@ -38,11 +38,11 @@ public class RegionUtil implements Listener {
         global = manager.getRegion("__global__");
 
 
-        if (!manager.hasRegion("region"))
-            manager.addRegion(new ProtectedCuboidRegion("region", BlockProcessor.getVec(arena.getArenaConfig().getPos1()).toBlockPoint(),
+        if (!manager.hasRegion("arena"))
+            manager.addRegion(new ProtectedCuboidRegion("arena", BlockProcessor.getVec(arena.getArenaConfig().getPos1()).toBlockPoint(),
                     BlockProcessor.getVec(arena.getArenaConfig().getPos2()).toBlockPoint()));
 
-        region = (ProtectedCuboidRegion) manager.getRegion("region");
+        region = (ProtectedCuboidRegion) manager.getRegion("arena");
 
         global.setFlag(Flags.DENY_MESSAGE, WSK.PREFIX + "§cDas darfst du hier nicht");
         global.setFlag(Flags.INVINCIBILITY, StateFlag.State.ALLOW);

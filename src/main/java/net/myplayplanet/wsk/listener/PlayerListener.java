@@ -8,6 +8,7 @@ import net.myplayplanet.wsk.objects.WSKPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -24,6 +25,7 @@ public class PlayerListener implements Listener {
         player.setScoreboard(ScoreboardManager.getInstance().getScoreboard());
         player.getInventory().clear();
         player.setHealth(20);
+        player.setFoodLevel(20);
 
         WSKPlayer.handle(event);
         ScoreboardManager.getInstance().handleJoinEvent(event);
@@ -44,5 +46,10 @@ public class PlayerListener implements Listener {
         WSKPlayer player = WSKPlayer.getPlayer(event.getPlayer());
         if (player.getTeam() != null)
             player.getTeam().removeMember(player);
+    }
+
+    @EventHandler
+    public void onFoodLevelChange(FoodLevelChangeEvent event) {
+        event.setCancelled(true);
     }
 }
