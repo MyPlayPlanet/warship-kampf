@@ -81,19 +81,25 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.boydti</groupId>-->
-            <!--<artifactId>fawe-api</artifactId>-->
-            <!--<version>latest</version>-->
-            <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-bukkit</artifactId>
+            <version>7.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
-            <groupId>com.sk98q</groupId>
-            <artifactId>worldedit</artifactId>
-            <scope>system</scope>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-core</artifactId>
             <version>7.0.0-SNAPSHOT</version>
-            <systemPath>C:/Programmieren/worldedit-7.0.0.jar</systemPath>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.boydti</groupId>
+            <artifactId>fawe-api</artifactId>
+            <version>latest</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

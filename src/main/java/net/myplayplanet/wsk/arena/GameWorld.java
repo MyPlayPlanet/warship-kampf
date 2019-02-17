@@ -1,6 +1,6 @@
 package net.myplayplanet.wsk.arena;
 
-import net.myplayplanet.wsk.Config;
+import lombok.Getter;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.util.Logger;
 import org.apache.commons.io.FileUtils;
@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+@Getter
 public class GameWorld {
 
     private final String templateName;

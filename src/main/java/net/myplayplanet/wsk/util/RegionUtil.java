@@ -29,10 +29,13 @@ public class RegionUtil implements Listener {
         RegionManager manager = WorldGuard.getInstance().getPlatform().getRegionContainer()
                 .get(new BukkitWorld(wskArena.getGameWorld().getWorld()));
 
-        if (manager.hasRegion("__global__"))
-            global = manager.getRegion("__global__");
-        else
-            throw new IllegalStateException("No __global__ region found");
+        if (!manager.hasRegion("__global__"))
+            // WorldGuard does not create the __global__ region until a flag gets changed.
+            // Unfortunately it is not possible to do the first change via the api
+            // You have to use the command
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rg flag -w  " + wskArena.getGameWorld().getWorldName() + "  __global__ pvp deny");
+
+        global = manager.getRegion("__global__");
 
 
         if (!manager.hasRegion("arena"))
