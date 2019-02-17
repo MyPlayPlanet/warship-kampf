@@ -19,11 +19,12 @@ import org.bukkit.event.Listener;
 public class RegionUtil implements Listener {
 
     private final WSK wsk;
-    private ProtectedRegion arena;
+    private ProtectedCuboidRegion arena;
     private ProtectedRegion global;
 
     public RegionUtil(WSK wsk) {
         this.wsk = wsk;
+
         Arena wskArena = wsk.getArenaManager().getCurrentArena();
 
         RegionManager manager = WorldGuard.getInstance().getPlatform().getRegionContainer()
@@ -42,7 +43,7 @@ public class RegionUtil implements Listener {
             manager.addRegion(new ProtectedCuboidRegion("arena", BlockProcessor.getVec(wsk.getArenaManager().getCurrentArena().getArenaConfig().getPos1()).toBlockPoint(),
                     BlockProcessor.getVec(wsk.getArenaManager().getCurrentArena().getArenaConfig().getPos2()).toBlockPoint()));
 
-        arena = manager.getRegion("arena");
+        arena = (ProtectedCuboidRegion) manager.getRegion("arena");
 
         global.setFlag(Flags.DENY_MESSAGE, WSK.PREFIX + "§cDas darfst du hier nicht");
         global.setFlag(Flags.INVINCIBILITY, StateFlag.State.DENY);
@@ -57,6 +58,12 @@ public class RegionUtil implements Listener {
         global.setFlag(Flags.BLOCK_PLACE, StateFlag.State.DENY);
 
         // Edit arena region
+
+        // Correct positions
+        arena.setMinimumPoint(BlockProcessor.getVec(wsk.getArenaManager().getCurrentArena().getArenaConfig().getPos1()).toBlockPoint());
+        arena.setMaximumPoint(BlockProcessor.getVec(wsk.getArenaManager().getCurrentArena().getArenaConfig().getPos2()).toBlockPoint());
+
+
         arena.setFlag(Flags.TNT, StateFlag.State.DENY);
         arena.setFlag(Flags.INVINCIBILITY, StateFlag.State.ALLOW);
         arena.setFlag(Flags.FIRE_SPREAD, StateFlag.State.DENY);
@@ -69,6 +76,8 @@ public class RegionUtil implements Listener {
         arena.setFlag(Flags.BLOCK_PLACE, StateFlag.State.DENY);
 
         arena.setFlag(Flags.EXIT_DENY_MESSAGE, WSK.PREFIX + "§cDu darfst die Arena nicht verlassen");
+
+        arena.setPriority(1);
 
         Bukkit.getPluginManager().registerEvents(this, wsk);
     }
