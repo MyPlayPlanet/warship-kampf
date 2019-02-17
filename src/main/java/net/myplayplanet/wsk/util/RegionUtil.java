@@ -46,7 +46,7 @@ public class RegionUtil implements Listener {
         arena = (ProtectedCuboidRegion) manager.getRegion("arena");
 
         global.setFlag(Flags.DENY_MESSAGE, WSK.PREFIX + "§cDas darfst du hier nicht");
-        global.setFlag(Flags.INVINCIBILITY, StateFlag.State.DENY);
+        global.setFlag(Flags.INVINCIBILITY, StateFlag.State.ALLOW);
         global.setFlag(Flags.ITEM_PICKUP, StateFlag.State.DENY);
         global.setFlag(Flags.FIRE_SPREAD, StateFlag.State.DENY);
 
@@ -55,7 +55,6 @@ public class RegionUtil implements Listener {
         global.setFlag(Flags.CHEST_ACCESS, StateFlag.State.DENY);
 
         global.setFlag(Flags.PVP, StateFlag.State.DENY);
-        global.setFlag(Flags.BLOCK_PLACE, StateFlag.State.DENY);
 
         // Edit arena region
 

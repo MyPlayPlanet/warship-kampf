@@ -91,7 +91,8 @@ public class ArenaListener implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onMemberRemove(TeamRemovememberArenaEvent event) {
         WSKPlayer player = event.getPlayer();
-        ScoreboardManager.getInstance().getScoreboard().getPlayerTeam(player.getPlayer()).removePlayer(player.getPlayer());
+        if (ScoreboardManager.getInstance().getScoreboard().getPlayerTeam(player.getPlayer()) != null)
+            ScoreboardManager.getInstance().getScoreboard().getPlayerTeam(player.getPlayer()).removePlayer(player.getPlayer());
         ScoreboardManager.getInstance().getGuestTeam().addEntry(player.getPlayer().getName());
         player.getPlayer().setDisplayName("§7" + player.getPlayer().getName() + "§r");
 
