@@ -30,7 +30,6 @@ public class WSK extends JavaPlugin {
     private static boolean fawe;
     @Getter
     private ArenaManager arenaManager;
-    private RegionUtil regionUtil;
     public static final String PREFIX = "§8[§6WSK§8] §e";
 
     @Override
@@ -66,9 +65,6 @@ public class WSK extends JavaPlugin {
         // Initialize ArenaManager with WSK instance
         Logger.BOOT.log("Initialize arena...");
         arenaManager = new ArenaManager(this);
-
-        if(!Config.isSetup())
-            regionUtil = new RegionUtil(this);
 
         // Init Scoreboard to get all new teams
         ScoreboardManager.getInstance().init(this);

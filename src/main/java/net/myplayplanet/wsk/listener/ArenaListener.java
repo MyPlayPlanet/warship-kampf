@@ -53,11 +53,18 @@ public class ArenaListener implements Listener {
 
             arena.setTimer(new PrerunningTimer(arena));
         } else if (state == ArenaState.SHOOTING) {
+            WaterRemoveListener remover = new WaterRemoveListener(wsk);
+            wsk.getServer().getPluginManager().registerEvents(remover, wsk);
+            remover.start();
+
             arena.getTeams().forEach(team -> team.getShip().setInitBlock(() -> {
 
             }));
 
             arena.setTimer(new ShootingTimer(arena));
+        } else if (state == ArenaState.ENTER) {
+
+            arena.setTimer(new PrerunningTimer(arena));
         }
 
         // Run timer if game is running

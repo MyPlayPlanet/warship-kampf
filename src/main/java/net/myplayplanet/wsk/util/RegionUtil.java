@@ -15,35 +15,34 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class RegionUtil implements Listener {
 
-    private final WSK wsk;
-    private ProtectedCuboidRegion arena;
+
+    private ProtectedCuboidRegion region;
     private ProtectedRegion global;
 
-    public RegionUtil(WSK wsk) {
-        this.wsk = wsk;
+    public RegionUtil(Arena arena) {
 
-        Arena wskArena = wsk.getArenaManager().getCurrentArena();
 
         RegionManager manager = WorldGuard.getInstance().getPlatform().getRegionContainer()
-                .get(new BukkitWorld(wskArena.getGameWorld().getWorld()));
+                .get(new BukkitWorld(arena.getGameWorld().getWorld()));
 
         if (!manager.hasRegion("__global__"))
             // WorldGuard does not create the __global__ region until a flag gets changed.
             // Unfortunately it is not possible to do the first change via the api
             // You have to use the command
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rg flag -w  " + wskArena.getGameWorld().getWorldName() + "  __global__ pvp deny");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rg flag -w  " + arena.getGameWorld().getWorldName() + "  __global__ pvp deny");
 
         global = manager.getRegion("__global__");
 
 
-        if (!manager.hasRegion("arena"))
-            manager.addRegion(new ProtectedCuboidRegion("arena", BlockProcessor.getVec(wsk.getArenaManager().getCurrentArena().getArenaConfig().getPos1()).toBlockPoint(),
-                    BlockProcessor.getVec(wsk.getArenaManager().getCurrentArena().getArenaConfig().getPos2()).toBlockPoint()));
+        if (!manager.hasRegion("region"))
+            manager.addRegion(new ProtectedCuboidRegion("region", BlockProcessor.getVec(arena.getArenaConfig().getPos1()).toBlockPoint(),
+                    BlockProcessor.getVec(arena.getArenaConfig().getPos2()).toBlockPoint()));
 
-        arena = (ProtectedCuboidRegion) manager.getRegion("arena");
+        region = (ProtectedCuboidRegion) manager.getRegion("region");
 
         global.setFlag(Flags.DENY_MESSAGE, WSK.PREFIX + "§cDas darfst du hier nicht");
         global.setFlag(Flags.INVINCIBILITY, StateFlag.State.ALLOW);
@@ -56,47 +55,47 @@ public class RegionUtil implements Listener {
 
         global.setFlag(Flags.PVP, StateFlag.State.DENY);
 
-        // Edit arena region
+        // Edit region region
 
         // Correct positions
-        arena.setMinimumPoint(BlockProcessor.getVec(wsk.getArenaManager().getCurrentArena().getArenaConfig().getPos1()).toBlockPoint());
-        arena.setMaximumPoint(BlockProcessor.getVec(wsk.getArenaManager().getCurrentArena().getArenaConfig().getPos2()).toBlockPoint());
+        region.setMinimumPoint(BlockProcessor.getVec(arena.getArenaConfig().getPos1()).toBlockPoint());
+        region.setMaximumPoint(BlockProcessor.getVec(arena.getArenaConfig().getPos2()).toBlockPoint());
 
 
-        arena.setFlag(Flags.TNT, StateFlag.State.DENY);
-        arena.setFlag(Flags.INVINCIBILITY, StateFlag.State.ALLOW);
-        arena.setFlag(Flags.FIRE_SPREAD, StateFlag.State.DENY);
-        arena.setFlag(Flags.EXIT, StateFlag.State.DENY);
-        arena.setFlag(Flags.BUILD, StateFlag.State.DENY);
-        arena.setFlag(Flags.BLOCK_BREAK, StateFlag.State.DENY);
-        arena.setFlag(Flags.CHEST_ACCESS, StateFlag.State.ALLOW);
-        arena.setFlag(Flags.PVP, StateFlag.State.DENY);
-        arena.setFlag(Flags.EXIT_VIA_TELEPORT, StateFlag.State.ALLOW);
-        arena.setFlag(Flags.BLOCK_PLACE, StateFlag.State.DENY);
+        region.setFlag(Flags.TNT, StateFlag.State.DENY);
+        region.setFlag(Flags.INVINCIBILITY, StateFlag.State.ALLOW);
+        region.setFlag(Flags.FIRE_SPREAD, StateFlag.State.DENY);
+        region.setFlag(Flags.EXIT, StateFlag.State.DENY);
+        region.setFlag(Flags.BUILD, StateFlag.State.DENY);
+        region.setFlag(Flags.BLOCK_BREAK, StateFlag.State.DENY);
+        region.setFlag(Flags.CHEST_ACCESS, StateFlag.State.ALLOW);
+        region.setFlag(Flags.PVP, StateFlag.State.DENY);
+        region.setFlag(Flags.EXIT_VIA_TELEPORT, StateFlag.State.ALLOW);
+        region.setFlag(Flags.BLOCK_PLACE, StateFlag.State.DENY);
 
-        arena.setFlag(Flags.EXIT_DENY_MESSAGE, WSK.PREFIX + "§cDu darfst die Arena nicht verlassen");
+        region.setFlag(Flags.EXIT_DENY_MESSAGE, WSK.PREFIX + "§cDu darfst die Arena nicht verlassen");
 
-        arena.setPriority(1);
+        region.setPriority(1);
 
-        Bukkit.getPluginManager().registerEvents(this, wsk);
+        Bukkit.getPluginManager().registerEvents(this, JavaPlugin.getPlugin(WSK.class));
     }
 
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onArenaChange(ArenaStateChangeEvent event) {
         if (event.getNewState() == ArenaState.SHOOTING) {
-            arena.setFlag(Flags.TNT, StateFlag.State.ALLOW);
-            arena.setFlag(Flags.INVINCIBILITY, StateFlag.State.DENY);
-            arena.setFlag(Flags.FIRE_SPREAD, StateFlag.State.ALLOW);
+            region.setFlag(Flags.TNT, StateFlag.State.ALLOW);
+            region.setFlag(Flags.INVINCIBILITY, StateFlag.State.DENY);
+            region.setFlag(Flags.FIRE_SPREAD, StateFlag.State.ALLOW);
 
             // Allow world interaction
-            arena.setFlag(Flags.BUILD, StateFlag.State.ALLOW);
-            arena.setFlag(Flags.BLOCK_BREAK, StateFlag.State.ALLOW);
-            arena.setFlag(Flags.BLOCK_PLACE, StateFlag.State.ALLOW);
-            arena.setFlag(Flags.PVP, StateFlag.State.ALLOW);
+            region.setFlag(Flags.BUILD, StateFlag.State.ALLOW);
+            region.setFlag(Flags.BLOCK_BREAK, StateFlag.State.ALLOW);
+            region.setFlag(Flags.BLOCK_PLACE, StateFlag.State.ALLOW);
+            region.setFlag(Flags.PVP, StateFlag.State.ALLOW);
 
-            arena.setFlag(Flags.ITEM_PICKUP, StateFlag.State.ALLOW);
-            arena.setFlag(Flags.ITEM_DROP, StateFlag.State.DENY);
+            region.setFlag(Flags.ITEM_PICKUP, StateFlag.State.ALLOW);
+            region.setFlag(Flags.ITEM_DROP, StateFlag.State.DENY);
         }
     }
 }

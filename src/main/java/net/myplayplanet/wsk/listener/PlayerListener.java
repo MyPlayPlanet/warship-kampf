@@ -16,12 +16,14 @@ public class PlayerListener implements Listener {
 
     private final WSK wsk;
 
+
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
         player.setScoreboard(ScoreboardManager.getInstance().getScoreboard());
         player.getInventory().clear();
+        player.setHealth(20);
 
         WSKPlayer.handle(event);
         ScoreboardManager.getInstance().handleJoinEvent(event);

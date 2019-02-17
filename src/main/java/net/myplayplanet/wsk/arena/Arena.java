@@ -7,6 +7,7 @@ import net.myplayplanet.wsk.arena.timer.PrerunningTimer;
 import net.myplayplanet.wsk.arena.timer.Timer;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.util.ColorConverter;
+import net.myplayplanet.wsk.util.RegionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
@@ -27,6 +28,7 @@ public class Arena {
     private List<Team> teams;
     @Setter
     private BukkitRunnable timer;
+    private RegionUtil util = new RegionUtil(this);
 
     public Arena(File config) {
         Preconditions.checkArgument(config.exists(), "config does not exist");
