@@ -1,7 +1,6 @@
 package net.myplayplanet.wsk;
 
 import net.myplayplanet.wsk.util.Logger;
-import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,6 +28,7 @@ public class Config {
 
         cfg.addDefault("default_arena", "arena.json");
         cfg.addDefault("setup", true);
+        cfg.addDefault("auto_remove_ship", false);
 
         try {
             cfg.save(configFile);
@@ -45,4 +45,6 @@ public class Config {
     public static String getDefaultArena() {
         return cfg.getString("default_arena", "arena");
     }
+
+    public static boolean isAutoRemoveShip() { return cfg.getBoolean("auto_remove_ship", false); }
 }

@@ -5,11 +5,10 @@ import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
-import com.sk89q.worldedit.world.block.BaseBlock;
 import com.sk89q.worldedit.world.block.BlockTypes;
-import com.sk89q.worldedit.world.registry.BlockMaterial;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.util.AsyncUtil;
 import net.myplayplanet.wsk.util.BlockProcessor;
@@ -43,6 +42,8 @@ public class Ship {
     }
 
     public void resetShip() {
+        if (!Config.isAutoRemoveShip())
+            return;
         AsyncUtil.executeDependOnFawe(() -> {
             BukkitWorld world = new BukkitWorld(team.getArena().getGameWorld().getWorld());
             EditSession es = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(team.getArena().getGameWorld().getWorld()), -1);

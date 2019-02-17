@@ -57,11 +57,12 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
-        if(Config.isSetup())
+        if (Config.isSetup())
             return;
+
         Arena arena = wsk.getArenaManager().getCurrentArena();
 
-        if(arena.getState().isInGame())
+        if (arena.getState().isInGame())
             event.setRespawnLocation(arena.getArenaConfig().getSpectatorSpawn());
         else
             event.setRespawnLocation(arena.getArenaConfig().getSpawn());
