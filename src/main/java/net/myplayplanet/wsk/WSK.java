@@ -12,7 +12,6 @@ import net.myplayplanet.wsk.listener.PlayerListener;
 import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import net.myplayplanet.wsk.util.Logger;
-import net.myplayplanet.wsk.util.RegionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -81,6 +80,6 @@ public class WSK extends JavaPlugin {
     @Override
     public void onDisable() {
         if(arenaManager.getCurrentArena() != null)
-        arenaManager.getCurrentArena().getGameWorld().unloadCompletly();
+        arenaManager.getCurrentArena().getGameWorld().unloadCompletely();
     }
 }

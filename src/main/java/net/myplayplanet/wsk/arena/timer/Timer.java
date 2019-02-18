@@ -9,7 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public abstract class Timer extends BukkitRunnable {
 
     @Getter
-    protected int seconds = 1260;
+    protected int seconds;
     protected final Arena arena;
 
     @Override

@@ -99,10 +99,10 @@ public class GameWorld {
 
     @Override
     protected void finalize() {
-        unloadCompletly();
+        unloadCompletely();
     }
 
-    public void unloadCompletly() {
+    public void unloadCompletely() {
         sendPlayersBack();
         unload();
         delete();
