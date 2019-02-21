@@ -1,5 +1,6 @@
 package net.myplayplanet.wsk.util;
 
+import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
@@ -39,11 +40,11 @@ public class BlockProcessor {
         return l;
     }
 
-    public static Set<Location> getLocs(Vector3 l1, Vector3 l2, World w) {
-        CuboidRegion cr = new CuboidRegion(l1.toBlockPoint(), l2.toBlockPoint());
+    public static Set<Location> getLocs(Vector v1, Vector v2, World w) {
+        CuboidRegion cr = new CuboidRegion(v1, v2);
         Set<Location> locs = new HashSet<>();
-        for (BlockVector3 v : cr) {
-            locs.add(getLoc(v.toVector3(), w));
+        for (Vector v : cr) {
+            locs.add(getLoc(v, w));
         }
         return locs;
     }
@@ -52,21 +53,25 @@ public class BlockProcessor {
         CuboidRegion cr = new CuboidRegion(getVec(l1).toBlockPoint(), getVec(l2).toBlockPoint());
         Set<Location> locs = new HashSet<>();
         World w = l1.getWorld();
-        for (BlockVector3 v : cr) {
-            locs.add(getLoc(v.toVector3(), w));
+        for (Vector v : cr) {
+            locs.add(getLoc(v, w));
         }
         return locs;
     }
 
-    public static Location getLoc(Vector3 v, World w) {
+    public static Location getLoc(Vector v, World w) {
         return new Location(w, v.getX(), v.getY(), v.getZ());
     }
 
-    public static Vector3 getVec(Location loc) {
-        return Vector3.at(loc.getX(), loc.getY(), loc.getZ());
+    public static Vector getVec(Location loc) {
+        return new Vector(loc.getX(), loc.getY(), loc.getZ());
     }
 
-    public static Vector3 getVec(org.bukkit.util.Vector loc) {
-        return Vector3.at(loc.getX(), loc.getY(), loc.getZ());
+    public static Vector getVec(org.bukkit.util.Vector loc) {
+        return new Vector(loc.getX(), loc.getY(), loc.getZ());
+    }
+
+    public static BlockVector3 getBlockVector(org.bukkit.util.Vector loc) {
+        return Vector3.at(loc.getX(), loc.getY(), loc.getZ()).toBlockPoint();
     }
 }

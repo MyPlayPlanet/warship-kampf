@@ -9,8 +9,8 @@ import net.myplayplanet.wsk.commands.TeamCommand;
 import net.myplayplanet.wsk.commands.WSKCommand;
 import net.myplayplanet.wsk.listener.ArenaListener;
 import net.myplayplanet.wsk.listener.PlayerListener;
-import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.WSKPlayer;
+import net.myplayplanet.wsk.objects.scoreboard.ScoreboardManager;
 import net.myplayplanet.wsk.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -79,7 +79,7 @@ public class WSK extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if(arenaManager.getCurrentArena() != null)
-        arenaManager.getCurrentArena().getGameWorld().unloadCompletely();
+        if (arenaManager.getCurrentArena() != null)
+            arenaManager.getCurrentArena().getGameWorld().unloadCompletely();
     }
 }

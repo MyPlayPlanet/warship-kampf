@@ -38,9 +38,10 @@ public class RegionUtil implements Listener {
         global = manager.getRegion("__global__");
 
 
-        if (!manager.hasRegion("arena"))
-            manager.addRegion(new ProtectedCuboidRegion("arena", BlockProcessor.getVec(arena.getArenaConfig().getPos1()).toBlockPoint(),
-                    BlockProcessor.getVec(arena.getArenaConfig().getPos2()).toBlockPoint()));
+        if (!manager.hasRegion("arena")) {
+            Logger.WARN.log("No WorldGuard region named \"arena\" found. Regions will not be updated");
+            return;
+        }
 
         region = (ProtectedCuboidRegion) manager.getRegion("arena");
 
@@ -56,11 +57,6 @@ public class RegionUtil implements Listener {
         global.setFlag(Flags.PVP, StateFlag.State.DENY);
 
         // Edit region region
-
-        // Correct positions
-        region.setMinimumPoint(BlockProcessor.getVec(arena.getArenaConfig().getPos1()).toBlockPoint());
-        region.setMaximumPoint(BlockProcessor.getVec(arena.getArenaConfig().getPos2()).toBlockPoint());
-
 
         region.setFlag(Flags.TNT, StateFlag.State.DENY);
         region.setFlag(Flags.INVINCIBILITY, StateFlag.State.ALLOW);

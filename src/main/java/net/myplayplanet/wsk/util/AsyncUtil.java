@@ -28,7 +28,7 @@ public class AsyncUtil {
     }
 
     public static void runSync(Runnable runnable) {
-        new BukkitRunnable(){
+        new BukkitRunnable() {
             @Override
             public void run() {
                 runnable.run();

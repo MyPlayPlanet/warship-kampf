@@ -1,7 +1,10 @@
 package net.myplayplanet.wsk.objects;
 
+import com.boydti.fawe.FaweAPI;
 import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
@@ -46,19 +49,18 @@ public class Ship {
             return;
         AsyncUtil.executeDependOnFawe(() -> {
             BukkitWorld world = new BukkitWorld(team.getArena().getGameWorld().getWorld());
-            EditSession es = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(team.getArena().getGameWorld().getWorld()), -1);
-            for (BlockVector3 v : new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()).toBlockPoint(), BlockProcessor.getVec(team.getProperties().getPos2()).toBlockPoint())) {
+            EditSession es = FaweAPI.getEditSessionBuilder(world).build();
+            for (Vector v : new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()).toBlockPoint(), BlockProcessor.getVec(team.getProperties().getPos2()).toBlockPoint())) {
                 try {
                     if (v.getY() <= team.getArena().getArenaConfig().getWaterHeight())
-                        es.setBlock(v, BlockTypes.WATER.getDefaultState().toBaseBlock());
+                        es.setBlock(v, new BaseBlock(9));
                     else
-                        es.setBlock(v, BlockTypes.AIR.getDefaultState().toBaseBlock());
+                        es.setBlock(v, new BaseBlock(0));
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
             }
             es.commit();
-            es.close();
         });
     }
 

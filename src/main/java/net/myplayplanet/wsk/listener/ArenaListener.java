@@ -7,9 +7,9 @@ import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.arena.timer.PrerunningTimer;
 import net.myplayplanet.wsk.arena.timer.ShootingTimer;
 import net.myplayplanet.wsk.event.*;
-import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
+import net.myplayplanet.wsk.objects.scoreboard.ScoreboardManager;
 import net.myplayplanet.wsk.role.Role;
 import net.myplayplanet.wsk.util.AsyncUtil;
 import org.bukkit.Bukkit;
@@ -103,8 +103,6 @@ public class ArenaListener implements Listener {
             ScoreboardManager.getInstance().getScoreboard().getPlayerTeam(player.getPlayer()).removePlayer(player.getPlayer());
         ScoreboardManager.getInstance().getGuestTeam().addEntry(player.getPlayer().getName());
 
-        AsyncUtil.runSync(() -> ScoreboardManager.getInstance().updateSetupSidebar());
-
         player.getPlayer().setDisplayName("§7" + player.getPlayer().getName() + "§r");
 
         player.getPlayer().teleport(wsk.getArenaManager().getCurrentArena().getArenaConfig().getSpawn());
@@ -117,7 +115,6 @@ public class ArenaListener implements Listener {
         Team team = event.getTeam();
 
         ScoreboardManager.getInstance().playerAddToTeam(team, player);
-        AsyncUtil.runSync(() -> ScoreboardManager.getInstance().updateSetupSidebar());
 
         player.getPlayer().setDisplayName(team.getProperties().getColorCode() + player.getPlayer().getName() + "§r");
 

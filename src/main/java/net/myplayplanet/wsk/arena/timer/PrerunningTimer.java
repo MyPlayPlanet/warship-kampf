@@ -10,7 +10,7 @@ public class PrerunningTimer extends Timer {
 
     @Override
     public void run() {
-        if((seconds % 10 == 0 && (seconds / 10) < 4&& (seconds / 10) > 0) || (seconds > 3 && seconds < 10) || seconds == 60)
+        if ((seconds % 10 == 0 && (seconds / 10) < 4 && (seconds / 10) > 0) || (seconds > 3 && seconds < 10) || seconds == 60)
             Bukkit.broadcastMessage(WSK.PREFIX + "Der Kampf startet in " + seconds + " Sekunden");
 
         if (seconds == 3) {

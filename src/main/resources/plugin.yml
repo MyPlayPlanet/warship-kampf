@@ -10,7 +10,6 @@ loadbefore:
   - FastAsyncWorldEdit
 
 depend:
-  - WorldEdit
   - WorldGuard
 
 

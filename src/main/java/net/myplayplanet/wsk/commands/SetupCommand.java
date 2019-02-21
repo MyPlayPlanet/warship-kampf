@@ -154,7 +154,7 @@ public class SetupCommand {
             File worldDir = new File(wsk.getDataFolder(), "arenas/" + worldName);
             FileUtils.copyDirectory(file, worldDir);
             File uid = new File(worldDir, "uid.dat");
-            if(uid.isFile())
+            if (uid.isFile())
                 FileUtils.deleteQuietly(uid);
             player.sendMessage(WSK.PREFIX + "Welt gesetzt");
         } catch (IOException e) {

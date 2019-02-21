@@ -46,5 +46,7 @@ public class Config {
         return cfg.getString("default_arena", "arena");
     }
 
-    public static boolean isAutoRemoveShip() { return cfg.getBoolean("auto_remove_ship", false); }
+    public static boolean isAutoRemoveShip() {
+        return cfg.getBoolean("auto_remove_ship", false);
+    }
 }
