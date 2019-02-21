@@ -3,6 +3,7 @@ package net.myplayplanet.wsk.objects;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.event.*;
@@ -38,10 +39,10 @@ public class Team implements Iterable<WSKPlayer> {
             else
                 factor = foreigenInitBlocks / initBlocks;
 
-            if (factor < 0.4)
-                factor = 0.4;
-            if (factor > 1)
-                factor = 1;
+            if (factor < Config.getMinFactor())
+                factor = Config.getMinFactor();
+            if (factor > Config.getMaxFactor())
+                factor = Config.getMaxFactor();
 
             if (foreigenInitBlocks < initBlocks) {
                 maxPercentage = 20;

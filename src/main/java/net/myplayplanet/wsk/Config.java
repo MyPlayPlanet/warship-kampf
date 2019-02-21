@@ -30,12 +30,23 @@ public class Config {
         cfg.addDefault("setup", true);
         cfg.addDefault("auto_remove_ship", false);
 
+        cfg.addDefault("factor.min", 0.4);
+        cfg.addDefault("factor.max", 1);
+
         try {
             cfg.save(configFile);
         } catch (IOException e) {
             Logger.ERROR.log("Could not save config.yml");
             e.printStackTrace();
         }
+    }
+
+    public static double getMaxFactor() {
+        return cfg.getDouble("factor.max");
+    }
+
+    public static double getMinFactor() {
+        return cfg.getDouble("factor.min");
     }
 
     public static boolean isSetup() {
