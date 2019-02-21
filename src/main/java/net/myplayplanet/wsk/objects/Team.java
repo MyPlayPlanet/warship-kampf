@@ -23,6 +23,35 @@ public class Team implements Iterable<WSKPlayer> {
     private final Arena arena;
     private final Ship ship = new Ship(this);
     private int points;
+    private double maxPercentage;
+    private double pointsPerPercentage;
+
+    public void setCalculations() {
+        Team thisTeam = this;
+        arena.getTeams().stream().filter(t -> t != thisTeam).forEach((team) -> {
+            double factor;
+
+            double initBlocks = ship.getInitBlocks();
+            double foreigenInitBlocks = team.getShip().getInitBlocks();
+            if (initBlocks < foreigenInitBlocks)
+                factor = initBlocks / foreigenInitBlocks;
+            else
+                factor = foreigenInitBlocks / initBlocks;
+
+            if (factor < 0.4)
+                factor = 0.4;
+            if (factor > 1)
+                factor = 1;
+
+            if (foreigenInitBlocks < initBlocks) {
+                maxPercentage = 20;
+                pointsPerPercentage = Math.round(100 / factor);
+            } else {
+                maxPercentage = Math.round(20 / factor);
+                pointsPerPercentage = 100;
+            }
+        });
+    }
 
     public void addMember(WSKPlayer player) {
         Objects.requireNonNull(player);
@@ -46,6 +75,7 @@ public class Team implements Iterable<WSKPlayer> {
 
         checkState(arena);
     }
+
 
     public void removeMember(WSKPlayer player) {
         Objects.requireNonNull(player);
