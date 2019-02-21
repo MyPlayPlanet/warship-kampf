@@ -6,6 +6,7 @@ This is a plugin to manage simple warship fights, as MrCreativeIV invented them.
 2. Move the jar in the plugins folder
 3. Start the server
 4. Create a region in WorldGuard named "arena"
+5. Set up your arena with the "/ws setup" command
 
 # Dependencies
 - WorldGuard
