@@ -37,8 +37,6 @@ public class Ship {
 
 
     public double getBlocks() {
-        calculateBlocks();
-
         if (storage <= 0)
             storage = 1;
         return storage;
@@ -75,7 +73,6 @@ public class Ship {
                     storage = filter(locs).size();
                 }
             }.runTask(JavaPlugin.getPlugin(WSK.class));
-
         });
     }
 

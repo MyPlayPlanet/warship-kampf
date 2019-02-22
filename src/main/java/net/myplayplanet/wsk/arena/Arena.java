@@ -3,6 +3,7 @@ package net.myplayplanet.wsk.arena;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.Setter;
+import net.myplayplanet.wsk.arena.timer.Timer;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.util.ColorConverter;
 import net.myplayplanet.wsk.util.Logger;
@@ -26,7 +27,7 @@ public class Arena {
     private ArenaState state = ArenaState.IDLE;
     private List<Team> teams;
     @Setter
-    private BukkitRunnable timer;
+    private Timer timer;
     private RegionUtil util;
 
     public Arena(File config) {

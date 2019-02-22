@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.myplayplanet.wsk.arena.Arena;
+import net.myplayplanet.wsk.arena.ArenaState;
+import net.myplayplanet.wsk.event.ArenaStateChangeEvent;
 import net.myplayplanet.wsk.event.TeamAddmemberArenaEvent;
 import net.myplayplanet.wsk.event.TeamRemovememberArenaEvent;
 import net.myplayplanet.wsk.util.AsyncUtil;
@@ -21,7 +23,7 @@ public class Sidebar implements Listener {
     private final Scoreboard scoreboard;
     private Objective currentObjective;
     @Setter
-    private ObjectiveWorker worker = new SetupSidebar();
+    private ObjectiveWorker worker = new AllTeamCountSidebar();
 
     public void updateScoreboard() {
         cleanScoreboard();
@@ -29,6 +31,9 @@ public class Sidebar implements Listener {
     }
 
     public void cleanScoreboard() {
+        if (currentObjective != null)
+            currentObjective.unregister();
+
         currentObjective = scoreboard.getObjective(DisplaySlot.SIDEBAR);
         if (currentObjective != null)
             currentObjective.unregister();
@@ -44,6 +49,13 @@ public class Sidebar implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTeamRemoveMember(TeamRemovememberArenaEvent event) {
+        updateLater();
+    }
+
+    @EventHandler
+    public void onArenaStateChange(ArenaStateChangeEvent event) {
+        if(event.getNewState() == ArenaState.SHOOTING)
+            setWorker(new FullInformationSidebar());
         updateLater();
     }
 

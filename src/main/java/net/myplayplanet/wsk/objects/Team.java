@@ -3,6 +3,7 @@ package net.myplayplanet.wsk.objects;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
@@ -23,9 +24,27 @@ public class Team implements Iterable<WSKPlayer> {
     private final TeamProperties properties;
     private final Arena arena;
     private final Ship ship = new Ship(this);
-    private int points;
+    @Setter
+    private int points = 0;
     private double maxPercentage;
     private double pointsPerPercentage;
+
+    public double getPercentDamage() {
+        double blocks = ship.getBlocks();
+        double diff = (ship.getInitBlocks() - blocks) / ship.getInitBlocks();
+        double ret = diff * 100;
+        if (ret < 0)
+            return 0;
+        if (ret > maxPercentage)
+            return maxPercentage;
+        return ret;
+    }
+
+    public int calculatePoints() {
+        int points = this.points;
+        points += pointsPerPercentage * getPercentDamage();
+        return points;
+    }
 
     public void setCalculations() {
         Team thisTeam = this;
@@ -43,7 +62,6 @@ public class Team implements Iterable<WSKPlayer> {
                 factor = Config.getMinFactor();
             if (factor > Config.getMaxFactor())
                 factor = Config.getMaxFactor();
-
             if (foreigenInitBlocks < initBlocks) {
                 maxPercentage = 20;
                 pointsPerPercentage = Math.round(100 / factor);
