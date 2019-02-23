@@ -3,14 +3,15 @@ package net.myplayplanet.wsk.arena;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.Setter;
-import net.myplayplanet.wsk.arena.timer.PrerunningTimer;
 import net.myplayplanet.wsk.arena.timer.Timer;
 import net.myplayplanet.wsk.objects.Team;
+import net.myplayplanet.wsk.objects.scoreboard.ScoreboardManager;
 import net.myplayplanet.wsk.util.ColorConverter;
+import net.myplayplanet.wsk.util.Logger;
+import net.myplayplanet.wsk.util.RegionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.List;
@@ -26,7 +27,9 @@ public class Arena {
     private ArenaState state = ArenaState.IDLE;
     private List<Team> teams;
     @Setter
-    private BukkitRunnable timer;
+    private Timer timer;
+    private RegionUtil util;
+    private ScoreboardManager scoreboardManager;
 
     public Arena(File config) {
         Preconditions.checkArgument(config.exists(), "config does not exist");
@@ -49,7 +52,12 @@ public class Arena {
             // Set spawn blocks
             teams.forEach((team) -> team.getProperties().getSpawn().getBlock().getRelative(BlockFace.DOWN)
                     .setType(ColorConverter.getConcreteFromColorCode(team.getProperties().getColorCode())));
-        }
+
+            util = new RegionUtil(this);
+        } else
+            Logger.ERROR.log("World could not be loaded");
+
+        scoreboardManager = new ScoreboardManager(this);
     }
 
     public Team getTeam(String name) {

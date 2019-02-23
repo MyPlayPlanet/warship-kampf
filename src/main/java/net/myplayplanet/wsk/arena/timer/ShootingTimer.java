@@ -13,7 +13,7 @@ public class ShootingTimer extends Timer {
         if (seconds == 300)
             Bukkit.broadcastMessage(WSK.PREFIX + "In 5 Minuten ist das Entern erlaubt");
 
-        if ((seconds % 10 == 0 && (seconds / 10) < 4) || (seconds > 3 && seconds < 10) || seconds == 60)
+        if ((seconds % 10 == 0 && (seconds / 10) < 4 && (seconds / 10) > 0) || (seconds > 3 && seconds < 10) || seconds == 60)
             Bukkit.broadcastMessage(WSK.PREFIX + "In " + seconds + " Sekunden ist das Entern erlaubt");
 
         if (seconds == 3) {

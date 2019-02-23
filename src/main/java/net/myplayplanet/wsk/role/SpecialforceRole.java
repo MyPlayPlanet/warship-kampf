@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class SpecialforceRole extends AbstractRole{
+public class SpecialforceRole extends AbstractRole {
 
     @Override
     protected void setInventory() {

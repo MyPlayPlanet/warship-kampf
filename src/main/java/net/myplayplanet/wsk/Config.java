@@ -1,7 +1,6 @@
 package net.myplayplanet.wsk;
 
 import net.myplayplanet.wsk.util.Logger;
-import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,6 +28,10 @@ public class Config {
 
         cfg.addDefault("default_arena", "arena.json");
         cfg.addDefault("setup", true);
+        cfg.addDefault("auto_remove_ship", false);
+
+        cfg.addDefault("factor.min", 0.4);
+        cfg.addDefault("factor.max", 1);
 
         try {
             cfg.save(configFile);
@@ -38,11 +41,23 @@ public class Config {
         }
     }
 
+    public static double getMaxFactor() {
+        return cfg.getDouble("factor.max");
+    }
+
+    public static double getMinFactor() {
+        return cfg.getDouble("factor.min");
+    }
+
     public static boolean isSetup() {
         return cfg.getBoolean("setup", true);
     }
 
     public static String getDefaultArena() {
         return cfg.getString("default_arena", "arena");
+    }
+
+    public static boolean isAutoRemoveShip() {
+        return cfg.getBoolean("auto_remove_ship", false);
     }
 }

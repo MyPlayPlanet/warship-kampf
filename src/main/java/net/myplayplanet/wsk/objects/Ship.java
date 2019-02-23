@@ -1,16 +1,16 @@
 package net.myplayplanet.wsk.objects;
 
+import com.boydti.fawe.FaweAPI;
 import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
-import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
-import com.sk89q.worldedit.world.block.BaseBlock;
-import com.sk89q.worldedit.world.block.BlockTypes;
-import com.sk89q.worldedit.world.registry.BlockMaterial;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.WSK;
+import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.util.AsyncUtil;
 import net.myplayplanet.wsk.util.BlockProcessor;
 import org.bukkit.Bukkit;
@@ -35,33 +35,34 @@ public class Ship {
 
 
     public double getBlocks() {
-        calculateBlocks();
-
         if (storage <= 0)
             storage = 1;
         return storage;
     }
 
     public void resetShip() {
+        if (!Config.isAutoRemoveShip())
+            return;
         AsyncUtil.executeDependOnFawe(() -> {
             BukkitWorld world = new BukkitWorld(team.getArena().getGameWorld().getWorld());
-            EditSession es = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(team.getArena().getGameWorld().getWorld()), -1);
-            for (BlockVector3 v : new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()).toBlockPoint(), BlockProcessor.getVec(team.getProperties().getPos2()).toBlockPoint())) {
+            EditSession es = FaweAPI.getEditSessionBuilder(world).build();
+            for (Vector v : new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()).toBlockPoint(), BlockProcessor.getVec(team.getProperties().getPos2()).toBlockPoint())) {
                 try {
                     if (v.getY() <= team.getArena().getArenaConfig().getWaterHeight())
-                        es.setBlock(v, BlockTypes.WATER.getDefaultState().toBaseBlock());
+                        es.setBlock(v, new BaseBlock(9));
                     else
-                        es.setBlock(v, BlockTypes.AIR.getDefaultState().toBaseBlock());
+                        es.setBlock(v, new BaseBlock(0));
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
             }
             es.commit();
-            es.close();
         });
     }
 
     private void calculateBlocks() {
+        if(team.getArena().getState() != ArenaState.SHOOTING)
+            return;
         ForkJoinPool.commonPool().execute(() -> {
             if (Bukkit.getOnlinePlayers().size() <= 0)
                 return;
@@ -72,7 +73,6 @@ public class Ship {
                     storage = filter(locs).size();
                 }
             }.runTask(JavaPlugin.getPlugin(WSK.class));
-
         });
     }
 

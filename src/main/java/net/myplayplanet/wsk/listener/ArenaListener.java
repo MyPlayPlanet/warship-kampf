@@ -7,7 +7,6 @@ import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.arena.timer.PrerunningTimer;
 import net.myplayplanet.wsk.arena.timer.ShootingTimer;
 import net.myplayplanet.wsk.event.*;
-import net.myplayplanet.wsk.objects.ScoreboardManager;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import net.myplayplanet.wsk.role.Role;
@@ -53,11 +52,16 @@ public class ArenaListener implements Listener {
 
             arena.setTimer(new PrerunningTimer(arena));
         } else if (state == ArenaState.SHOOTING) {
-            arena.getTeams().forEach(team -> team.getShip().setInitBlock(() -> {
+            WaterRemoveListener remover = new WaterRemoveListener(wsk);
+            wsk.getServer().getPluginManager().registerEvents(remover, wsk);
+            remover.start();
 
-            }));
+            arena.getTeams().forEach(team -> team.getShip().setInitBlock(arena.getScoreboardManager().getSidebar()::updateScoreboard));
 
             arena.setTimer(new ShootingTimer(arena));
+        } else if (state == ArenaState.ENTER) {
+
+            arena.setTimer(new PrerunningTimer(arena));
         }
 
         // Run timer if game is running
@@ -91,9 +95,10 @@ public class ArenaListener implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onMemberRemove(TeamRemovememberArenaEvent event) {
         WSKPlayer player = event.getPlayer();
-        if (ScoreboardManager.getInstance().getScoreboard().getPlayerTeam(player.getPlayer()) != null)
-            ScoreboardManager.getInstance().getScoreboard().getPlayerTeam(player.getPlayer()).removePlayer(player.getPlayer());
-        ScoreboardManager.getInstance().getGuestTeam().addEntry(player.getPlayer().getName());
+        if (event.getArena().getScoreboardManager().getScoreboard().getPlayerTeam(player.getPlayer()) != null)
+            event.getArena().getScoreboardManager().getScoreboard().getPlayerTeam(player.getPlayer()).removePlayer(player.getPlayer());
+        event.getArena().getScoreboardManager().getGuestTeam().addEntry(player.getPlayer().getName());
+
         player.getPlayer().setDisplayName("§7" + player.getPlayer().getName() + "§r");
 
         player.getPlayer().teleport(wsk.getArenaManager().getCurrentArena().getArenaConfig().getSpawn());
@@ -104,7 +109,9 @@ public class ArenaListener implements Listener {
     public void onMemberAdd(TeamAddmemberArenaEvent event) {
         WSKPlayer player = event.getPlayer();
         Team team = event.getTeam();
-        ScoreboardManager.getInstance().playerAddToTeam(team, player);
+
+        event.getArena().getScoreboardManager().playerAddToTeam(team, player);
+
         player.getPlayer().setDisplayName(team.getProperties().getColorCode() + player.getPlayer().getName() + "§r");
 
         player.getPlayer().teleport(team.getProperties().getSpawn());

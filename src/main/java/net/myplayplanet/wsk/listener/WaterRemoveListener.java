@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WaterRemoveListener implements Listener {
+
     private List<AbstractMap.SimpleEntry<Location, Integer>> explBlocks;
     private List<Block> waterList;
     private BukkitTask task;
@@ -33,12 +34,9 @@ public class WaterRemoveListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
         explBlocks = new ArrayList<>();
         waterList = new ArrayList<>();
-        task = Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
-            @Override
-            public void run() {
-                waterCheck();
-                removeWater();
-            }
+        task = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            waterCheck();
+            removeWater();
         }, 0, 20);
     }
 
@@ -50,7 +48,7 @@ public class WaterRemoveListener implements Listener {
     }
 
     public void add(Location loc) {
-        this.explBlocks.add(new AbstractMap.SimpleEntry<Location, Integer>(loc, 15));
+        this.explBlocks.add(new AbstractMap.SimpleEntry<>(loc, 15));
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

@@ -1,29 +1,28 @@
-package net.myplayplanet.wsk.objects;
+package net.myplayplanet.wsk.objects.scoreboard;
 
 import lombok.Getter;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
+import net.myplayplanet.wsk.objects.WSKPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 @Getter
 public class ScoreboardManager {
 
-    private static ScoreboardManager instance = new ScoreboardManager();
     private Scoreboard scoreboard;
     private Team guestTeam;
+    private Sidebar sidebar;
 
-    private ScoreboardManager() {}
-
-    public void init(WSK wsk) {
+    public ScoreboardManager(Arena arena) {
         scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
-        Arena arena = wsk.getArenaManager().getCurrentArena();
         if (arena != null) {
             scoreboard.getTeams().forEach(Team::unregister);
             arena.getTeams().forEach((t) -> {
@@ -35,6 +34,9 @@ public class ScoreboardManager {
                 team.setPrefix(t.getProperties().getColorCode());
                 team.setColor(ChatColor.getByChar(t.getProperties().getColorCode().charAt(1)));
             });
+
+            sidebar = new Sidebar(arena, scoreboard);
+            Bukkit.getPluginManager().registerEvents(sidebar, JavaPlugin.getPlugin(WSK.class));
         }
 
         guestTeam = scoreboard.getTeam("9999Guest");
@@ -44,10 +46,6 @@ public class ScoreboardManager {
         guestTeam = scoreboard.registerNewTeam("9999Guest");
         guestTeam.setPrefix("§7");
         guestTeam.setColor(ChatColor.getByChar("7"));
-    }
-
-    public static ScoreboardManager getInstance() {
-        return instance;
     }
 
     public void handleJoinEvent(PlayerJoinEvent event) {
@@ -63,6 +61,7 @@ public class ScoreboardManager {
         scoreboard.getPlayerTeam(player.getPlayer()).removePlayer(player.getPlayer());
         scoreboard.getTeam(team.getProperties().getName()).addEntry(player.getPlayer().getName());
     }
+
 
     public void removeEntry(String playerName) {
         scoreboard.getTeams().forEach(t -> {

@@ -3,6 +3,8 @@ package net.myplayplanet.wsk.objects;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.event.*;
@@ -22,6 +24,53 @@ public class Team implements Iterable<WSKPlayer> {
     private final TeamProperties properties;
     private final Arena arena;
     private final Ship ship = new Ship(this);
+    @Setter
+    private int points = 0;
+    private double maxPercentage;
+    private double pointsPerPercentage;
+
+    public double getPercentDamage() {
+        double blocks = ship.getBlocks();
+        double diff = (ship.getInitBlocks() - blocks) / ship.getInitBlocks();
+        double ret = diff * 100;
+        if (ret < 0)
+            return 0;
+        if (ret > maxPercentage)
+            return maxPercentage;
+        return ret;
+    }
+
+    public int calculatePoints() {
+        int points = this.points;
+        points += pointsPerPercentage * getPercentDamage();
+        return points;
+    }
+
+    public void setCalculations() {
+        Team thisTeam = this;
+        arena.getTeams().stream().filter(t -> t != thisTeam).forEach((team) -> {
+            double factor;
+
+            double initBlocks = ship.getInitBlocks();
+            double foreigenInitBlocks = team.getShip().getInitBlocks();
+            if (initBlocks < foreigenInitBlocks)
+                factor = initBlocks / foreigenInitBlocks;
+            else
+                factor = foreigenInitBlocks / initBlocks;
+
+            if (factor < Config.getMinFactor())
+                factor = Config.getMinFactor();
+            if (factor > Config.getMaxFactor())
+                factor = Config.getMaxFactor();
+            if (foreigenInitBlocks < initBlocks) {
+                maxPercentage = 20;
+                pointsPerPercentage = Math.round(100 / factor);
+            } else {
+                maxPercentage = Math.round(20 / factor);
+                pointsPerPercentage = 100;
+            }
+        });
+    }
 
     public void addMember(WSKPlayer player) {
         Objects.requireNonNull(player);
@@ -45,6 +94,7 @@ public class Team implements Iterable<WSKPlayer> {
 
         checkState(arena);
     }
+
 
     public void removeMember(WSKPlayer player) {
         Objects.requireNonNull(player);

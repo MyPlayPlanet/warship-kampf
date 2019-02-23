@@ -26,4 +26,13 @@ public class AsyncUtil {
                 }
             }.runTask(JavaPlugin.getPlugin(WSK.class));
     }
+
+    public static void runSync(Runnable runnable) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                runnable.run();
+            }
+        }.runTask(JavaPlugin.getPlugin(WSK.class));
+    }
 }
