@@ -47,7 +47,7 @@ public class FullInformationSidebar implements ObjectiveWorker {
             int teamSize = (int) team.getMembers().stream().filter(WSKPlayer::isAlive).count();
             String color = team.getProperties().getColorCode();
             int points = team.calculatePoints();
-            if(arena.getState() == ArenaState.SPECTATE)
+            if (arena.getState() == ArenaState.SPECTATE)
                 points = team.getPoints();
 
             objective.getScore(color + "Mitglieder §8» §7" + teamSize).setScore(currentScoreIndex--);

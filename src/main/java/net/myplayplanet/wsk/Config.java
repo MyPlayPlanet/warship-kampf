@@ -63,5 +63,7 @@ public class Config {
         return cfg.getBoolean("auto_remove_ship", false);
     }
 
-    public static boolean isRestartAfterFight() {return cfg.getBoolean("restart_after_fight", true);}
+    public static boolean isRestartAfterFight() {
+        return cfg.getBoolean("restart_after_fight", true);
+    }
 }

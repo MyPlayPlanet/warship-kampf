@@ -145,9 +145,9 @@ public class ArenaListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public void onTeamWin(TeamWinEvent event){
-        for(Player player : Bukkit.getOnlinePlayers()) {
-            player.sendTitle(event.getTeam().getProperties().getFullname() + " §7hat gewonnen", "", 3 * 20, 5 * 20, 3* 20);
+    public void onTeamWin(TeamWinEvent event) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.sendTitle(event.getTeam().getProperties().getFullname() + " §7hat gewonnen", "", 3 * 20, 5 * 20, 3 * 20);
         }
     }
 }

@@ -29,7 +29,6 @@ public class WSKCommand {
     }
 
 
-
     @Command(name = "wsk.role", permission = "wsk.role", usage = "/wsk role <Spieler> <Rolle>", description = "Setzt Rolle für einen Spieler")
     public void roleCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);

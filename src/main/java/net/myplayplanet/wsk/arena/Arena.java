@@ -3,6 +3,8 @@ package net.myplayplanet.wsk.arena;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.Setter;
+import net.myplayplanet.wsk.WSK;
+import net.myplayplanet.wsk.arena.timer.SpectateTimer;
 import net.myplayplanet.wsk.arena.timer.Timer;
 import net.myplayplanet.wsk.event.TeamDrawEvent;
 import net.myplayplanet.wsk.event.TeamLoseEvent;
@@ -17,6 +19,7 @@ import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -84,7 +87,7 @@ public class Arena {
     }
 
     public void stop(Team winningTeam) {
-        timer = null;
+        timer = new SpectateTimer(this);
 
         if (winningTeam != null) {
             Bukkit.getPluginManager().callEvent(new TeamWinEvent(this, winningTeam));
@@ -99,6 +102,8 @@ public class Arena {
             player.teleport(getArenaConfig().getSpectatorSpawn());
             player.getActivePotionEffects().clear();
         }
+
+        timer.runTaskTimer(JavaPlugin.getPlugin(WSK.class), 0, 20);
     }
 
     public Team getTeam(String name) {

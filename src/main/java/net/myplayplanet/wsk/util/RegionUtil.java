@@ -102,7 +102,7 @@ public class RegionUtil implements Listener {
     public static boolean isInShip(Team team, Location location) {
         CuboidRegion region = new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()),
                 BlockProcessor.getVec(team.getProperties().getPos2()));
-        if(region.contains(BlockProcessor.getVec(location)))
+        if (region.contains(BlockProcessor.getVec(location)))
             return true;
         return false;
     }
@@ -118,7 +118,7 @@ public class RegionUtil implements Listener {
         region.setPos1(min.add(-16, 0, -16));
         region.setPos2(max.add(16, 0, 16));
 
-        if(region.contains(BlockProcessor.getVec(location)))
+        if (region.contains(BlockProcessor.getVec(location)))
             return true;
         return false;
     }
@@ -133,7 +133,7 @@ public class RegionUtil implements Listener {
         region.setPos1(min.add(-5, 0, -5));
         region.setPos2(max.add(5, 0, 5));
 
-        if(region.contains(BlockProcessor.getVec(location)))
+        if (region.contains(BlockProcessor.getVec(location)))
             return true;
         return false;
     }
