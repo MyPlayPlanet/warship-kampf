@@ -17,12 +17,8 @@ public class OneTeamSidebar implements ObjectiveWorker {
 
         String color = team.getProperties().getColorCode();
 
-        final int memberCount = team.getMembers().size();
-
-        int currentIndex = memberCount - 1;
-        for (int i = 0; i < memberCount; i++) {
-            WSKPlayer player = team.getMembers().get(i);
-            objective.getScore(color + player.getPlayer().getName()).setScore(currentIndex--);
+        for (WSKPlayer player : team.getMembers()) {
+            objective.getScore(color + player.getPlayer().getName()).setScore((int) Math.ceil(player.getPlayer().getHealth()));
         }
     }
 }

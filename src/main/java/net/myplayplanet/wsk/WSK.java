@@ -65,12 +65,8 @@ public class WSK extends JavaPlugin {
         Logger.BOOT.log("Initialize arena...");
         arenaManager = new ArenaManager(this);
 
-        // Init Scoreboard to get all new teams
-        ScoreboardManager.getInstance().init(this);
-
         for (Player player : Bukkit.getOnlinePlayers()) {
             WSKPlayer.add(player);
-            ScoreboardManager.getInstance().getGuestTeam().addPlayer(player);
         }
 
         Logger.BOOT.log("Async threads will be executed with a parallelism of: " + ForkJoinPool.getCommonPoolParallelism());

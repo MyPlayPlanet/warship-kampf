@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
+import net.myplayplanet.wsk.arena.ArenaManager;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import net.myplayplanet.wsk.objects.scoreboard.ScoreboardManager;
 import org.bukkit.entity.Player;
@@ -24,13 +25,13 @@ public class PlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        player.setScoreboard(ScoreboardManager.getInstance().getScoreboard());
+        player.setScoreboard(wsk.getArenaManager().getCurrentArena().getScoreboardManager().getScoreboard());
         player.getInventory().clear();
         player.setHealth(20);
         player.setFoodLevel(20);
 
         WSKPlayer.handle(event);
-        ScoreboardManager.getInstance().handleJoinEvent(event);
+        wsk.getArenaManager().getCurrentArena().getScoreboardManager().handleJoinEvent(event);
 
         player.setDisplayName("§7" + player.getName() + "§r");
 
@@ -43,7 +44,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        ScoreboardManager.getInstance().handleQuitEvent(event);
+        wsk.getArenaManager().getCurrentArena().getScoreboardManager().handleQuitEvent(event);
 
         WSKPlayer player = WSKPlayer.getPlayer(event.getPlayer());
         if (player.getTeam() != null)
