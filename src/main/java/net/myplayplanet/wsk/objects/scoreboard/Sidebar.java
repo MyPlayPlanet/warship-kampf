@@ -8,6 +8,7 @@ import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.event.ArenaStateChangeEvent;
 import net.myplayplanet.wsk.event.TeamAddmemberArenaEvent;
+import net.myplayplanet.wsk.event.TeamMemberDieEvent;
 import net.myplayplanet.wsk.event.TeamRemovememberArenaEvent;
 import net.myplayplanet.wsk.util.AsyncUtil;
 import org.bukkit.event.EventHandler;
@@ -61,12 +62,17 @@ public class Sidebar implements Listener {
         if (event.getNewState() == ArenaState.SHOOTING) {
             setWorker(new FullInformationSidebar());
             timer = new SidebarTimer(this);
-            timer.runTaskTimer(JavaPlugin.getPlugin(WSK.class), 1 ,20);
+            timer.runTaskTimer(JavaPlugin.getPlugin(WSK.class), 1, 20);
         } else if (event.getNewState() == ArenaState.SPECTATE) {
             setWorker(new FullInformationSidebar());
             if (!timer.isCancelled())
                 timer.cancel();
         }
+        updateLater();
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onTeamMemberDie(TeamMemberDieEvent event) {
         updateLater();
     }
 

@@ -31,7 +31,7 @@ public class FullInformationSidebar implements ObjectiveWorker {
         if (arena.getState() != ArenaState.SPECTATE) {
             objective.getScore(" ").setScore(teamCount * 4 + 3);
             objective.getScore("§6" + nextState).setScore(teamCount * 4 + 2);
-            objective.getScore("§8»  §c" + toMinutes(arena.getTimer().getSeconds()) + " §7Minuten").setScore(teamCount * 4 + 1);
+            objective.getScore("§8» §c" + toMinutes(arena.getTimer().getSeconds()) + " §7Minuten").setScore(teamCount * 4 + 1);
         }
 
 
@@ -46,11 +46,14 @@ public class FullInformationSidebar implements ObjectiveWorker {
             Team team = arena.getTeams().get(i);
             int teamSize = (int) team.getMembers().stream().filter(WSKPlayer::isAlive).count();
             String color = team.getProperties().getColorCode();
+            int points = team.calculatePoints();
+            if(arena.getState() == ArenaState.SPECTATE)
+                points = team.getPoints();
 
             objective.getScore(color + "Mitglieder §8» §7" + teamSize).setScore(currentScoreIndex--);
             objective.getScore(color + "Beschädigt §8» §8(§7" + df.format(team.getPercentDamage()) + "%§8/§7"
                     + df.format(team.getMaxPercentage()) + "%§8)").setScore(currentScoreIndex--);
-            objective.getScore(color + "Punkte  §8» §7" + team.calculatePoints()).setScore(currentScoreIndex--);
+            objective.getScore(color + "Punkte  §8» §7" + points).setScore(currentScoreIndex--);
             empty.append(" ");
         }
     }

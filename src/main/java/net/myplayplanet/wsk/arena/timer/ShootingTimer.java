@@ -23,6 +23,8 @@ public class ShootingTimer extends Timer {
         } else if (seconds == 1) {
             Bukkit.broadcastMessage(WSK.PREFIX + "§cIn 1 Sekunde ist das Entern erlaubt");
         } else if (seconds == 0) {
+            // Last, precise calculation of blocks
+            arena.getTeams().forEach(team -> team.getShip().calculateBlocks());
             Bukkit.getPluginManager().callEvent(new ArenaStateChangeEvent(arena.getState(), ArenaState.ENTER, arena));
         }
         super.run();

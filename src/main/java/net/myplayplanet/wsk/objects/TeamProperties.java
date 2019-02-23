@@ -2,11 +2,13 @@ package net.myplayplanet.wsk.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 @Getter
 @AllArgsConstructor
+@ToString
 public class TeamProperties {
 
     private String name;

@@ -10,7 +10,6 @@ import net.myplayplanet.wsk.commands.WSKCommand;
 import net.myplayplanet.wsk.listener.ArenaListener;
 import net.myplayplanet.wsk.listener.PlayerListener;
 import net.myplayplanet.wsk.objects.WSKPlayer;
-import net.myplayplanet.wsk.objects.scoreboard.ScoreboardManager;
 import net.myplayplanet.wsk.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

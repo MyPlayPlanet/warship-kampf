@@ -60,8 +60,8 @@ public class Ship {
         });
     }
 
-    private void calculateBlocks() {
-        if(team.getArena().getState() != ArenaState.SHOOTING)
+    public void calculateBlocks() {
+        if (team.getArena().getState() != ArenaState.SHOOTING)
             return;
         ForkJoinPool.commonPool().execute(() -> {
             if (Bukkit.getOnlinePlayers().size() <= 0)
@@ -71,6 +71,23 @@ public class Ship {
                 @Override
                 public void run() {
                     storage = filter(locs).size();
+                }
+            }.runTask(JavaPlugin.getPlugin(WSK.class));
+        });
+    }
+
+    public void calculateBlocks(Runnable finishedCallback) {
+        if (team.getArena().getState() != ArenaState.SHOOTING)
+            return;
+        ForkJoinPool.commonPool().execute(() -> {
+            if (Bukkit.getOnlinePlayers().size() <= 0)
+                return;
+            Set<Location> locs = getLocs();
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    storage = filter(locs).size();
+                    finishedCallback.run();
                 }
             }.runTask(JavaPlugin.getPlugin(WSK.class));
         });
@@ -86,7 +103,7 @@ public class Ship {
                 public void run() {
                     initBlocks = filter(locs).size();
                     Bukkit.getConsoleSender().sendMessage(WSK.PREFIX + "Initial blocks @" + team.getProperties().getName() + ": " + initBlocks);
-                    finishedCallback.run();
+                    calculateBlocks(finishedCallback);
                 }
             }.runTask(JavaPlugin.getPlugin(WSK.class));
         });

@@ -4,16 +4,23 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.Setter;
 import net.myplayplanet.wsk.arena.timer.Timer;
+import net.myplayplanet.wsk.event.TeamDrawEvent;
+import net.myplayplanet.wsk.event.TeamLoseEvent;
+import net.myplayplanet.wsk.event.TeamWinEvent;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.scoreboard.ScoreboardManager;
 import net.myplayplanet.wsk.util.ColorConverter;
 import net.myplayplanet.wsk.util.Logger;
 import net.myplayplanet.wsk.util.RegionUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +46,11 @@ public class Arena {
         // init teams
         teams = arenaConfig.getTeams().stream().map(tp -> new Team(tp, this)).collect(Collectors.toList());
 
+        if (teams.size() < 2) {
+            Logger.ERROR.log("Not enough teams set");
+            throw new IllegalStateException("There must be 2 teams or more");
+        }
+
         gameWorld = new GameWorld(arenaConfig.getWorld(), this);
         gameWorld.load();
 
@@ -58,6 +70,36 @@ public class Arena {
             Logger.ERROR.log("World could not be loaded");
 
         scoreboardManager = new ScoreboardManager(this);
+    }
+
+    /**
+     * Determines winning team and then executes stop(winningTeam);
+     */
+    public void stop() {
+        List<Team> localList = new ArrayList<>(teams);
+        localList.forEach(Team::setPoints);
+        localList.sort(Team::compareTo);
+        if (localList.get(0).getPoints() == localList.get(1).getPoints())
+            stop(null);
+        stop(localList.get(0));
+    }
+
+    public void stop(Team winningTeam) {
+        timer = null;
+
+        if (winningTeam != null) {
+            Bukkit.getPluginManager().callEvent(new TeamWinEvent(this, winningTeam));
+            teams.stream().filter(team -> team == winningTeam).forEach(team -> Bukkit.getPluginManager().callEvent(new TeamLoseEvent(this, team)));
+        } else {
+            teams.forEach(team -> Bukkit.getPluginManager().callEvent(new TeamDrawEvent(this, team)));
+        }
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.getInventory().clear();
+            player.setGameMode(GameMode.SPECTATOR);
+            player.teleport(getArenaConfig().getSpectatorSpawn());
+            player.getActivePotionEffects().clear();
+        }
     }
 
     public Team getTeam(String name) {

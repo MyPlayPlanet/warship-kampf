@@ -8,6 +8,6 @@ public interface ObjectiveWorker {
     void editObjective(Arena arena, Objective objective);
 
     default int toMinutes(int seconds) {
-        return (int) Math.floor(seconds / 60);
+        return Math.round(seconds / 60);
     }
 }

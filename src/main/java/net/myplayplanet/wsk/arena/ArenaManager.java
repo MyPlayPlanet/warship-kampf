@@ -1,6 +1,7 @@
 package net.myplayplanet.wsk.arena;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.WSK;
 
@@ -11,6 +12,7 @@ public class ArenaManager {
 
     private final WSK wsk;
     private final File arenaFolder;
+    @Setter
     private Arena currentArena;
 
     public ArenaManager(WSK wsk) {
