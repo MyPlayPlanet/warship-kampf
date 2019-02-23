@@ -63,7 +63,7 @@ public class Ship {
     public void calculateBlocks() {
         if (team.getArena().getState() != ArenaState.SHOOTING)
             return;
-        ForkJoinPool.commonPool().execute(() -> {
+        AsyncUtil.executeDependOnConfig(() -> {
             if (Bukkit.getOnlinePlayers().size() <= 0)
                 return;
             Set<Location> locs = getLocs();
@@ -79,7 +79,7 @@ public class Ship {
     public void calculateBlocks(Runnable finishedCallback) {
         if (team.getArena().getState() != ArenaState.SHOOTING)
             return;
-        ForkJoinPool.commonPool().execute(() -> {
+        AsyncUtil.executeDependOnConfig(() -> {
             if (Bukkit.getOnlinePlayers().size() <= 0)
                 return;
             Set<Location> locs = getLocs();
@@ -94,7 +94,7 @@ public class Ship {
     }
 
     public void setInitBlock(Runnable finishedCallback) {
-        ForkJoinPool.commonPool().execute(() -> {
+        AsyncUtil.executeDependOnConfig(() -> {
             if (Bukkit.getOnlinePlayers().size() <= 0)
                 return;
             Set<Location> locs = getLocs();
@@ -110,7 +110,7 @@ public class Ship {
     }
 
     public void replaceObsidianAndBedrock() {
-        ForkJoinPool.commonPool().execute(() -> {
+        AsyncUtil.executeDependOnConfig(() -> {
             if (Bukkit.getOnlinePlayers().size() <= 0)
                 return;
             Set<Location> locs = getLocs();

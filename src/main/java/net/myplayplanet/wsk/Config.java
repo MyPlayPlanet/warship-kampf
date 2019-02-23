@@ -35,6 +35,8 @@ public class Config {
 
         cfg.addDefault("restart_after_fight", true);
 
+        cfg.addDefault("count_blocks_async", true);
+
         try {
             cfg.save(configFile);
         } catch (IOException e) {
@@ -65,5 +67,9 @@ public class Config {
 
     public static boolean isRestartAfterFight() {
         return cfg.getBoolean("restart_after_fight", true);
+    }
+
+    public static boolean isCountBlocksAsync() {
+        return cfg.getBoolean("count_blocks_async", true);
     }
 }

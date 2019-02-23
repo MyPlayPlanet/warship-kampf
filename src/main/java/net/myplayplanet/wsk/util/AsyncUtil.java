@@ -1,5 +1,6 @@
 package net.myplayplanet.wsk.util;
 
+import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.WSK;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -25,6 +26,13 @@ public class AsyncUtil {
                     runnable.run();
                 }
             }.runTask(JavaPlugin.getPlugin(WSK.class));
+
+    }
+
+    public static void executeDependOnConfig(Runnable runnable) {
+        if (Config.isCountBlocksAsync())
+            ForkJoinPool.commonPool().execute(runnable);
+        else runnable.run();
     }
 
     public static void runSync(Runnable runnable) {
