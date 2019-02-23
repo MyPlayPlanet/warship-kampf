@@ -1,6 +1,8 @@
 package net.myplayplanet.wsk.util;
 
+import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.flags.StateFlag;
@@ -11,7 +13,9 @@ import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.event.ArenaStateChangeEvent;
+import net.myplayplanet.wsk.objects.Team;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -93,5 +97,37 @@ public class RegionUtil implements Listener {
             region.setFlag(Flags.ITEM_PICKUP, StateFlag.State.ALLOW);
             region.setFlag(Flags.ITEM_DROP, StateFlag.State.DENY);
         }
+    }
+
+    public static boolean isInShip(Team team, Location location) {
+        CuboidRegion region = new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()),
+                BlockProcessor.getVec(team.getProperties().getPos2()));
+        if(region.contains(BlockProcessor.getVec(location)))
+            return true;
+        return false;
+    }
+
+    public static boolean isInLargeShipArea(Team team, Location location) {
+        CuboidRegion region = new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()),
+                BlockProcessor.getVec(team.getProperties().getPos2()));
+
+        region.setPos1(region.getMinimumPoint().add(-16, 0, -16));
+        region.setPos2(region.getMaximumPoint().add(16, 0, 16));
+
+        if(region.contains(BlockProcessor.getVec(location)))
+            return true;
+        return false;
+    }
+
+    public static boolean isInTinyShipArea(Team team, Location location) {
+        CuboidRegion region = new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()),
+                BlockProcessor.getVec(team.getProperties().getPos2()));
+
+        region.setPos1(region.getMinimumPoint().add(-5, 0, -5));
+        region.setPos2(region.getMaximumPoint().add(5, 0, 5));
+
+        if(region.contains(BlockProcessor.getVec(location)))
+            return true;
+        return false;
     }
 }
