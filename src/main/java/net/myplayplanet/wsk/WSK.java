@@ -72,6 +72,10 @@ public class WSK extends JavaPlugin {
         Logger.NORMAL.log("WSK v" + getDescription().getVersion() + " by Butzlabben was successfully enabled");
     }
 
+    public static WSK getInstance() {
+        return instance;
+    }
+
     @Override
     public void onDisable() {
         if (arenaManager.getCurrentArena() != null)

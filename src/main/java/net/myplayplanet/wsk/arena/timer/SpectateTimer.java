@@ -1,8 +1,12 @@
 package net.myplayplanet.wsk.arena.timer;
 
+import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
+import net.myplayplanet.wsk.arena.ArenaManager;
 import org.bukkit.Bukkit;
+
+import java.io.File;
 
 public class SpectateTimer extends Timer {
 
@@ -18,7 +22,12 @@ public class SpectateTimer extends Timer {
         } else if (seconds == 1) {
             Bukkit.broadcastMessage(WSK.PREFIX + "§cDie Arena schließt in 1 Sekunde");
         } else if (seconds == 0) {
-            Bukkit.broadcastMessage(WSK.PREFIX + "§cDie Arena schließt");
+            if (Config.isRestartAfterFight())
+                Bukkit.spigot().restart();
+            else {
+                ArenaManager manager = WSK.getInstance().getArenaManager();
+                manager.setCurrentArena(new Arena(new File(manager.getArenaFolder(), Config.getDefaultArena())));
+            }
 
         }
 
