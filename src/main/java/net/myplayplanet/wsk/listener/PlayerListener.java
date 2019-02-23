@@ -106,7 +106,7 @@ public class PlayerListener implements Listener {
 
         Arena arena = wsk.getArenaManager().getCurrentArena();
 
-        if (!arena.getState().isInGame())
+        if (!arena.getState().isInGame() && arena.getState() != ArenaState.PRERUNNING)
             return;
         if (player.getTeam() == null)
             return;
@@ -121,7 +121,7 @@ public class PlayerListener implements Listener {
 
         Arena arena = wsk.getArenaManager().getCurrentArena();
 
-        boolean canMove = event.isCancelled();
+        boolean canMove = true;
 
         if (arena.getState() == ArenaState.IDLE)
             return;
@@ -147,6 +147,6 @@ public class PlayerListener implements Listener {
             }
         }
 
-        event.setCancelled(canMove);
+        event.setCancelled(!canMove);
     }
 }

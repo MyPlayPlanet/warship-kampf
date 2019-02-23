@@ -111,8 +111,12 @@ public class RegionUtil implements Listener {
         CuboidRegion region = new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()),
                 BlockProcessor.getVec(team.getProperties().getPos2()));
 
-        region.setPos1(region.getMinimumPoint().add(-16, 0, -16));
-        region.setPos2(region.getMaximumPoint().add(16, 0, 16));
+
+        Vector min = region.getMinimumPoint();
+        Vector max = region.getMaximumPoint();
+
+        region.setPos1(min.add(-16, 0, -16));
+        region.setPos2(max.add(16, 0, 16));
 
         if(region.contains(BlockProcessor.getVec(location)))
             return true;
@@ -123,8 +127,11 @@ public class RegionUtil implements Listener {
         CuboidRegion region = new CuboidRegion(BlockProcessor.getVec(team.getProperties().getPos1()),
                 BlockProcessor.getVec(team.getProperties().getPos2()));
 
-        region.setPos1(region.getMinimumPoint().add(-5, 0, -5));
-        region.setPos2(region.getMaximumPoint().add(5, 0, 5));
+        Vector min = region.getMinimumPoint();
+        Vector max = region.getMaximumPoint();
+
+        region.setPos1(min.add(-5, 0, -5));
+        region.setPos2(max.add(5, 0, 5));
 
         if(region.contains(BlockProcessor.getVec(location)))
             return true;
