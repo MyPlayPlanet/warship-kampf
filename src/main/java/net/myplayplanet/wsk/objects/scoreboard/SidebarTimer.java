@@ -22,6 +22,7 @@ public class SidebarTimer extends BukkitRunnable {
             } else {
                 seconds = 15;
                 sidebar.setWorker(new FullInformationSidebar());
+                sidebar.getArena().getTeams().forEach(team -> team.getShip().calculateBlocks(() -> sidebar.updateScoreboard()));
             }
 
             sidebar.updateScoreboard();
@@ -29,6 +30,8 @@ public class SidebarTimer extends BukkitRunnable {
             ++state;
             if (state >= teamCount)
                 state = -1;
+        } else if (seconds == 8 && state == 0) {
+            sidebar.getArena().getTeams().forEach(team -> team.getShip().calculateBlocks(() -> sidebar.updateScoreboard()));
         }
         seconds--;
     }

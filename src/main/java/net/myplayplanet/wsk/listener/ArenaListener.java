@@ -4,16 +4,20 @@ import lombok.AllArgsConstructor;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
+import net.myplayplanet.wsk.arena.timer.EnterAllTimer;
+import net.myplayplanet.wsk.arena.timer.EnterTimer;
 import net.myplayplanet.wsk.arena.timer.PrerunningTimer;
 import net.myplayplanet.wsk.arena.timer.ShootingTimer;
 import net.myplayplanet.wsk.event.*;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import net.myplayplanet.wsk.role.Role;
+import net.myplayplanet.wsk.util.InitialCalculator;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -56,17 +60,39 @@ public class ArenaListener implements Listener {
             wsk.getServer().getPluginManager().registerEvents(remover, wsk);
             remover.start();
 
-            arena.getTeams().forEach(team -> team.getShip().setInitBlock(arena.getScoreboardManager().getSidebar()::updateScoreboard));
+            InitialCalculator calculator = new InitialCalculator(arena);
+            arena.getTeams().forEach(team -> team.getShip().setInitBlock(() -> calculator.readyTeam(team)));
 
             arena.setTimer(new ShootingTimer(arena));
         } else if (state == ArenaState.ENTER) {
-
-            arena.setTimer(new PrerunningTimer(arena));
+            arena.setTimer(new EnterTimer(arena));
+        } else if (state == ArenaState.ENTER_ALL) {
+            arena.setTimer(new EnterAllTimer(arena));
+        } else if (state == ArenaState.SPECTATE) {
+            arena.stop();
         }
 
         // Run timer if game is running
-        if (state.isInGame())
+        if (state.isInGame() && arena.getTimer() != null)
             arena.getTimer().runTaskTimer(JavaPlugin.getPlugin(WSK.class), 0, 20);
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    public void onMemberDie(TeamMemberDieEvent event) {
+        Team team = event.getTeam();
+        event.getPlayer().setDead(true);
+        if (event.getPlayer().isCaptain())
+            team.addPoints(-100);
+
+        event.getArena().getTeams().stream().filter(t -> t != team).forEach((t) -> {
+            if (event.getPlayer().isCaptain())
+                t.addPoints(400);
+            else
+                t.addPoints(300);
+        });
+
+        if (team.getAliveMembers().size() == 0)
+            Bukkit.getPluginManager().callEvent(new ArenaStateChangeEvent(event.getArena().getState(), ArenaState.SPECTATE, event.getArena()));
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
@@ -116,5 +142,12 @@ public class ArenaListener implements Listener {
 
         player.getPlayer().teleport(team.getProperties().getSpawn());
         player.setRole(Role.GUNNER);
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    public void onTeamWin(TeamWinEvent event) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.sendTitle(event.getTeam().getProperties().getFullname() + " §7hat gewonnen", "", 3 * 20, 5 * 20, 3 * 20);
+        }
     }
 }

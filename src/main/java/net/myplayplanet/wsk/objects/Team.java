@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
@@ -18,7 +19,8 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Getter
-public class Team implements Iterable<WSKPlayer> {
+@ToString
+public class Team implements Iterable<WSKPlayer>, Comparable<Team> {
 
     private List<WSKPlayer> members = new ArrayList<>();
     private final TeamProperties properties;
@@ -42,8 +44,16 @@ public class Team implements Iterable<WSKPlayer> {
 
     public int calculatePoints() {
         int points = this.points;
-        points += pointsPerPercentage * getPercentDamage();
+        for (Team team : arena.getTeams()) {
+            if (this == team)
+                continue;
+            points += team.calculatePointsForDamage();
+        }
         return points;
+    }
+
+    public int calculatePointsForDamage() {
+        return (int) (pointsPerPercentage * getPercentDamage());
     }
 
     public void setCalculations() {
@@ -62,12 +72,14 @@ public class Team implements Iterable<WSKPlayer> {
                 factor = Config.getMinFactor();
             if (factor > Config.getMaxFactor())
                 factor = Config.getMaxFactor();
+
+
             if (foreigenInitBlocks < initBlocks) {
                 maxPercentage = 20;
-                pointsPerPercentage = Math.round(100 / factor);
+                pointsPerPercentage = 100;
             } else {
                 maxPercentage = Math.round(20 / factor);
-                pointsPerPercentage = 100;
+                pointsPerPercentage = Math.round(100 * factor);
             }
         });
     }
@@ -154,11 +166,31 @@ public class Team implements Iterable<WSKPlayer> {
         }
     }
 
+    /**
+     * Calculates points and sets them to the field "points"
+     */
+    public void setPoints() {
+        points = calculatePoints();
+    }
+
+    public void addPoints(int points) {
+        setPoints(this.points + points);
+    }
+
     public WSKPlayer getCaptain() {
         return members.stream().filter(WSKPlayer::isCaptain).collect(Collectors.toList()).get(0);
     }
 
     public Iterator<WSKPlayer> iterator() {
         return members.iterator();
+    }
+
+    public List<WSKPlayer> getAliveMembers() {
+        return members.stream().filter(WSKPlayer::isAlive).collect(Collectors.toList());
+    }
+
+    @Override
+    public int compareTo(Team team) {
+        return Integer.compare(team.getPoints(), this.getPoints());
     }
 }

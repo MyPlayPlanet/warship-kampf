@@ -33,6 +33,8 @@ public class Config {
         cfg.addDefault("factor.min", 0.4);
         cfg.addDefault("factor.max", 1);
 
+        cfg.addDefault("restart_after_fight", true);
+
         try {
             cfg.save(configFile);
         } catch (IOException e) {
@@ -59,5 +61,9 @@ public class Config {
 
     public static boolean isAutoRemoveShip() {
         return cfg.getBoolean("auto_remove_ship", false);
+    }
+
+    public static boolean isRestartAfterFight() {
+        return cfg.getBoolean("restart_after_fight", true);
     }
 }
