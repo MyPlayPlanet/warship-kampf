@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.WSK;
+import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.util.AsyncUtil;
 import net.myplayplanet.wsk.util.BlockProcessor;
 import org.bukkit.Bukkit;
@@ -60,6 +61,8 @@ public class Ship {
     }
 
     private void calculateBlocks() {
+        if(team.getArena().getState() != ArenaState.SHOOTING)
+            return;
         ForkJoinPool.commonPool().execute(() -> {
             if (Bukkit.getOnlinePlayers().size() <= 0)
                 return;

@@ -56,9 +56,7 @@ public class ArenaListener implements Listener {
             wsk.getServer().getPluginManager().registerEvents(remover, wsk);
             remover.start();
 
-            arena.getTeams().forEach(team -> team.getShip().setInitBlock(() -> {
-
-            }));
+            arena.getTeams().forEach(team -> team.getShip().setInitBlock(arena.getScoreboardManager().getSidebar()::updateScoreboard));
 
             arena.setTimer(new ShootingTimer(arena));
         } else if (state == ArenaState.ENTER) {

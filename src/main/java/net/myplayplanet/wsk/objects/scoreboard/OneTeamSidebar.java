@@ -18,6 +18,9 @@ public class OneTeamSidebar implements ObjectiveWorker {
         String color = team.getProperties().getColorCode();
 
         for (WSKPlayer player : team.getMembers()) {
+            // Do not display player if he already died
+            if (player.isDead())
+                continue;
             objective.getScore(color + player.getPlayer().getName()).setScore((int) Math.ceil(player.getPlayer().getHealth()));
         }
     }

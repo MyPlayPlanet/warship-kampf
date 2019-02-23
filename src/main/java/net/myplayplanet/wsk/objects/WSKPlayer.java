@@ -23,7 +23,8 @@ public class WSKPlayer {
     private Team team;
     private final UUID uuid;
     private Role role;
-    boolean captain;
+    private boolean captain;
+    private boolean dead;
 
     public Player getPlayer() {
         return Bukkit.getPlayer(uuid);
@@ -49,6 +50,10 @@ public class WSKPlayer {
         UUID uuid = player.getUniqueId();
         if (!instances.containsKey(uuid))
             instances.put(uuid, new WSKPlayer(uuid));
+    }
+
+    public boolean isAlive() {
+        return !isDead();
     }
 
     public static List<WSKPlayer> getPlayers() {
