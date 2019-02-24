@@ -29,11 +29,11 @@ public class ArenaCommand {
 
         Arena arena = wsk.getArenaManager().getCurrentArena();
 
-        sender.sendMessage(WSK.PREFIX + "===[ §6" + arena.getArenaConfig().getName() + " §e]===");
+        sender.sendMessage(WSK.PREFIX + "===[ §6" + arena.getArenaConfig().getName() + " §7]===");
         sender.sendMessage(WSK.PREFIX + "Status: §c" + arena.getState());
 
         arena.getTeams().forEach((team) -> {
-            sender.sendMessage(WSK.PREFIX + "=== " + team.getProperties().getFullname() + " §e===");
+            sender.sendMessage(WSK.PREFIX + "=== " + team.getProperties().getFullname() + " §7===");
             if (team.getMembers().size() > 0) {
                 sender.sendMessage(WSK.PREFIX + "Kapitän: §c" + team.getCaptain().getPlayer().getName());
                 sender.sendMessage(WSK.PREFIX + "Teamgröße: §c" + team.getMembers().size());

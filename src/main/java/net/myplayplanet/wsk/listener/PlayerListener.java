@@ -142,8 +142,8 @@ public class PlayerListener implements Listener {
         }
         if (arena.getState() == ArenaState.SPECTATE || player.getTeam() == null) {
             for (Team team : arena.getTeams()) {
-                if (!RegionUtil.isInTinyShipArea(player.getTeam(), event.getFrom()) &&
-                        RegionUtil.isInTinyShipArea(player.getTeam(), event.getTo())) {
+                if (!RegionUtil.isInTinyShipArea(team, event.getFrom()) &&
+                        RegionUtil.isInTinyShipArea(team, event.getTo())) {
                     canMove = false;
                     break;
                 }

@@ -2,10 +2,16 @@ package net.myplayplanet.wsk.commands;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.myplayplanet.commandframework.CommandArgs;
 import net.myplayplanet.commandframework.api.Command;
 import net.myplayplanet.commandframework.api.Completer;
 import net.myplayplanet.wsk.WSK;
+import net.myplayplanet.wsk.arena.Arena;
+import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import org.bukkit.Bukkit;
@@ -25,6 +31,7 @@ public class TeamCommand {
     @Command(name = "wsk.team")
     public void teamCommand(CommandArgs args) {
         CommandSender sender = args.getSender(CommandSender.class);
+
 
         if (sender.hasPermission("wsk.team.captain"))
             sender.sendMessage(WSK.PREFIX + "/wsk team captain - Setzt jemanden zum Captain");
@@ -142,6 +149,162 @@ public class TeamCommand {
             wskPlayer.getTeam().removeMember(wskPlayer);
 
         team.addMember(WSKPlayer.getPlayer(player));
-        sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " zu " + team.getProperties().getColorCode() + team.getProperties().getName() + " §ehinzugefügt");
+        sender.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " zu " + team.getProperties().getColorCode() + team.getProperties().getName() + " §7hinzugefügt");
+    }
+
+    @Command(name = "wsk.team.invite", usage = "/wsk team invite <Spieler>", inGameOnly = true, description = "Lädt jemanden in dein Team ein")
+    public void inviteCommand(CommandArgs args) {
+        Player player = args.getSender(Player.class);
+
+        if (args.length() < 1) {
+            player.sendMessage(WSK.PREFIX + "§c/wsk team invite <Spieler>");
+            return;
+        }
+
+        Player toInvite = Bukkit.getPlayerExact(args.getArgument(0));
+        if (toInvite == null || !toInvite.isOnline()) {
+            player.sendMessage(WSK.PREFIX + "§cDieser Spieler ist nicht online");
+            return;
+        }
+
+        Arena arena = wsk.getArenaManager().getCurrentArena();
+        WSKPlayer wskPlayer = WSKPlayer.getPlayer(player);
+        if (!wskPlayer.isCaptain()) {
+            player.sendMessage(WSK.PREFIX + "§cDu bist kein Kapitän");
+            return;
+        }
+
+        if (arena.getState() != ArenaState.SETUP) {
+            player.sendMessage(WSK.PREFIX + "§cDu kannst das gerade nicht tun");
+            return;
+        }
+
+        Team team = wskPlayer.getTeam();
+        if (arena.getInvitationManager().isInvited(toInvite.getUniqueId(), team)) {
+            player.sendMessage(WSK.PREFIX + "§cDieser Spieler wurde bereits eingeladen");
+            return;
+        }
+
+        if (WSKPlayer.getPlayer(toInvite).getTeam() != null) {
+            player.sendMessage(WSK.PREFIX + "§cDieser Spieler ist bereits in einem Team");
+            return;
+        }
+
+        arena.getInvitationManager().invite(toInvite.getUniqueId(), team);
+        toInvite.sendMessage(WSK.PREFIX + "Du wurdest zu " + team.getProperties().getFullname() + " §7eingeladen");
+
+        TextComponent accept = new TextComponent("Annehmen");
+        accept.setColor(ChatColor.GREEN);
+        accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/wsk team accept " + team.getProperties().getName()));
+
+        TextComponent decline = new TextComponent("Ablehnen");
+        decline.setColor(ChatColor.RED);
+        decline.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/wsk team decline " + team.getProperties().getName()));
+
+
+        toInvite.sendMessage(combine(combine(TextComponent.fromLegacyText(WSK.PREFIX),
+                inBrackets(accept)), inBrackets(decline)));
+
+        player.sendMessage(WSK.PREFIX + "Du hast " + toInvite.getName() + " eingeladen");
+    }
+
+    @Command(name = "wsk.team.accept", usage = "/wsk team accept <Team>", inGameOnly = true, description = "Nimmt eine Einladung an")
+    public void acceptCommand(CommandArgs args) {
+        Player player = args.getSender(Player.class);
+
+        if (args.length() < 1) {
+            player.sendMessage(WSK.PREFIX + "§c//wsk team accept <Team>");
+            return;
+        }
+        Arena arena = wsk.getArenaManager().getCurrentArena();
+        WSKPlayer wskPlayer = WSKPlayer.getPlayer(player);
+        Team team = arena.getTeam(args.getArgument(0));
+
+        if (team == null) {
+            player.sendMessage(WSK.PREFIX + "§cUnbekanntes Team");
+            return;
+        }
+
+        if (!arena.getInvitationManager().isInvited(player.getUniqueId(), team)) {
+            player.sendMessage(WSK.PREFIX + "§cDu hast keine Einladung von diesem Team");
+            return;
+        }
+
+        if (arena.getState() != ArenaState.SETUP) {
+            player.sendMessage(WSK.PREFIX + "§cDu kannst das gerade nicht tun");
+            return;
+        }
+
+        arena.getInvitationManager().removeInvite(player.getUniqueId(), team);
+
+        if (team.getCaptain() != null) {
+            team.getCaptain().getPlayer().sendMessage(WSK.PREFIX + player.getName() + " hat deine Einladung angenommen");
+        }
+
+        team.addMember(wskPlayer);
+    }
+
+
+    @Command(name = "wsk.team.decline", usage = "/wsk team decline <Team>", inGameOnly = true, description = "Nimmt eine Einladung an")
+    public void declineCommand(CommandArgs args) {
+        Player player = args.getSender(Player.class);
+
+        if (args.length() < 1) {
+            player.sendMessage(WSK.PREFIX + "§c//wsk team decline <Team>");
+            return;
+        }
+        Arena arena = wsk.getArenaManager().getCurrentArena();
+        Team team = arena.getTeam(args.getArgument(0));
+
+        if (team == null) {
+            player.sendMessage(WSK.PREFIX + "§cUnbekanntes Team");
+            return;
+        }
+
+        if (!arena.getInvitationManager().isInvited(player.getUniqueId(), team)) {
+            player.sendMessage(WSK.PREFIX + "§cDu hast keine Einladung von diesem Team");
+            return;
+        }
+
+        if (arena.getState() != ArenaState.SETUP) {
+            player.sendMessage(WSK.PREFIX + "§cDu kannst das gerade nicht tun");
+            return;
+        }
+
+        arena.getInvitationManager().removeInvite(player.getUniqueId(), team);
+
+        if (team.getCaptain() != null) {
+            team.getCaptain().getPlayer().sendMessage(WSK.PREFIX + player.getName() + " hat deine Einladung abgelehnt");
+        }
+        player.sendMessage(WSK.PREFIX + "Du hast die Einladung von " + team.getProperties().getFullname() + " §7abgelehnt");
+    }
+
+
+    private BaseComponent[] inBrackets(TextComponent component) {
+        BaseComponent[] firstBracket = TextComponent.fromLegacyText("§8[");
+        BaseComponent[] lastBracket = TextComponent.fromLegacyText("§8] ");
+        return combine(combine(firstBracket, component), lastBracket);
+    }
+
+    private BaseComponent[] combine(BaseComponent[] components, BaseComponent singleComponent) {
+        BaseComponent[] newComponents = new BaseComponent[components.length + 1];
+        System.arraycopy(components, 0, newComponents, 0, components.length);
+        newComponents[components.length] = singleComponent;
+        return newComponents;
+    }
+
+
+    private BaseComponent[] combine(BaseComponent singleComponent, BaseComponent[] components) {
+        BaseComponent[] newComponents = new BaseComponent[components.length + 1];
+        System.arraycopy(components, 0, newComponents, 1, components.length);
+        newComponents[0] = singleComponent;
+        return newComponents;
+    }
+
+    private BaseComponent[] combine(BaseComponent[] components, BaseComponent[] otherComponents) {
+        BaseComponent[] newComponents = new BaseComponent[components.length + otherComponents.length];
+        System.arraycopy(components, 0, newComponents, 0, components.length);
+        System.arraycopy(otherComponents, 0, newComponents, components.length, otherComponents.length);
+        return newComponents;
     }
 }

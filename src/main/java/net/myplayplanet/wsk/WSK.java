@@ -25,10 +25,8 @@ public class WSK extends JavaPlugin {
     private CommandFramework framework;
     private static WSK instance;
     @Getter
-    private static boolean fawe;
-    @Getter
     private ArenaManager arenaManager;
-    public static final String PREFIX = "§8[§6WSK§8] §e";
+    public static final String PREFIX = "§8[§6WSK§8] §7";
 
     @Override
     public void onEnable() {
@@ -37,8 +35,6 @@ public class WSK extends JavaPlugin {
         // Load config
         Logger.BOOT.log("Loading config...");
         Config.load();
-
-        fawe = Bukkit.getPluginManager().getPlugin("FastAsyncWorldEdit") != null;
 
         Logger.BOOT.log("Registering commands");
         framework = new CommandFramework(this);

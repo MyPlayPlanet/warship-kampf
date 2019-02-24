@@ -39,6 +39,7 @@ public class Arena {
     private Timer timer;
     private RegionUtil util;
     private ScoreboardManager scoreboardManager;
+    private InvitationManager invitationManager = new InvitationManager(this);
 
     public Arena(File config) {
         Preconditions.checkArgument(config.exists(), "config does not exist");

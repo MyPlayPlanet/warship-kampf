@@ -17,16 +17,7 @@ public class AsyncUtil {
     }
 
     public static void executeDependOnFawe(Runnable runnable) {
-        if (WSK.isFawe())
-            executeAsync(runnable);
-        else
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    runnable.run();
-                }
-            }.runTask(JavaPlugin.getPlugin(WSK.class));
-
+        executeAsync(runnable);
     }
 
     public static void executeDependOnConfig(Runnable runnable) {

@@ -99,7 +99,7 @@ public class ArenaListener implements Listener {
     public void onCaptainSet(TeamCaptainSetArenaEvent event) {
         WSKPlayer player = event.getPlayer();
         Team team = event.getTeam();
-        Bukkit.broadcastMessage(WSK.PREFIX + team.getProperties().getColorCode() + player.getPlayer().getName() + " §eist nun Kapitän von " +
+        Bukkit.broadcastMessage(WSK.PREFIX + team.getProperties().getColorCode() + player.getPlayer().getName() + " §7ist nun Kapitän von " +
                 team.getProperties().getName());
 
         player.setRole(Role.CAPTAIN);
@@ -109,7 +109,7 @@ public class ArenaListener implements Listener {
     public void onCaptainRemove(TeamCaptainRemoveArenaEvent event) {
         WSKPlayer player = event.getPlayer();
         Team team = event.getTeam();
-        Bukkit.broadcastMessage(WSK.PREFIX + team.getProperties().getColorCode() + player.getPlayer().getName() + " §eist nun nicht mehr Kapitän von " +
+        Bukkit.broadcastMessage(WSK.PREFIX + team.getProperties().getColorCode() + player.getPlayer().getName() + " §7ist nun nicht mehr Kapitän von " +
                 team.getProperties().getName());
 
         player.setRole(Role.GUNNER);
@@ -138,7 +138,7 @@ public class ArenaListener implements Listener {
 
         event.getArena().getScoreboardManager().playerAddToTeam(team, player);
 
-        player.getPlayer().setDisplayName(team.getProperties().getColorCode() + player.getPlayer().getName() + "§r");
+        player.getPlayer().setDisplayName(team.getProperties().getColorCode() + player.getPlayer().getName() + "§7");
 
         player.getPlayer().teleport(team.getProperties().getSpawn());
         player.setRole(Role.GUNNER);
