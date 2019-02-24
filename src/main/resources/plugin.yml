@@ -19,6 +19,7 @@ permissions:
     children:
       - wsk.team.*
       - wsk.arena.*
+      - wsk.bypass.*
 
   wsk.arena.*:
     default: op
@@ -38,6 +39,17 @@ permissions:
   wsk.arena.draw:
     default: op
   wsk.arena.win:
+    default: op
+
+  wsk.bypass.*:
+    default: op
+    children:
+      - wsk.bypass.move
+      - wsk.bypass.build
+
+  wsk.bypass.move:
+    default: op
+  wsk.bypass.build:
     default: op
 
   wsk.team.*:

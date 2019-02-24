@@ -105,6 +105,9 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onBuild(BlockPlaceEvent event) {
+        if (event.getPlayer().hasPermission("wsk.bypass.build"))
+            return;
+
         WSKPlayer player = WSKPlayer.getPlayer(event.getPlayer());
 
         Arena arena = wsk.getArenaManager().getCurrentArena();
@@ -126,6 +129,9 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
+        if (event.getPlayer().hasPermission("wsk.bypass.move"))
+            return;
+
         WSKPlayer player = WSKPlayer.getPlayer(event.getPlayer());
 
         Arena arena = wsk.getArenaManager().getCurrentArena();

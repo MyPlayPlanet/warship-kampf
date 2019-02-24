@@ -20,6 +20,10 @@ This is a plugin to manage simple warship fights, as MrCreativeIV invented them.
 - /wsk team put
 - /wsk team remove
 - /wsk team captain
+- /wsk team leave
+- /wsk team invite
+- /wsk team accept
+- /wsk team decline
 - /wsk setup load
 - /wsk setup save
 - /wsk setup name
@@ -34,3 +38,4 @@ This is a plugin to manage simple warship fights, as MrCreativeIV invented them.
 - /wsk arena stop
 - /wsk arena draw
 - /wsk arena win
+- /wsf role

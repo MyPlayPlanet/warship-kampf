@@ -245,8 +245,28 @@ public class TeamCommand {
         team.addMember(wskPlayer);
     }
 
+    @Command(name = "wsk.team.leave", usage = "/wsk team leave", inGameOnly = true, description = "Verlasse dein Team")
+    public void leaveCommand(CommandArgs args) {
+        Player player = args.getSender(Player.class);
 
-    @Command(name = "wsk.team.decline", usage = "/wsk team decline <Team>", inGameOnly = true, description = "Nimmt eine Einladung an")
+        Arena arena = wsk.getArenaManager().getCurrentArena();
+
+        if (arena.getState() != ArenaState.SETUP) {
+            player.sendMessage(WSK.PREFIX + "§cDu kannst das gerade nicht tun");
+            return;
+        }
+
+        WSKPlayer wskPlayer = WSKPlayer.getPlayer(player);
+        if (wskPlayer.getTeam() == null) {
+            player.sendMessage(WSK.PREFIX + "§cDu bist gerade in keinem Team");
+            return;
+        }
+        player.sendMessage(WSK.PREFIX + "Du hast dein Team verlassen");
+        wskPlayer.getTeam().removeMember(wskPlayer);
+    }
+
+
+    @Command(name = "wsk.team.decline", usage = "/wsk team decline <Team>", inGameOnly = true, description = "Lehnt eine Einladung ab")
     public void declineCommand(CommandArgs args) {
         Player player = args.getSender(Player.class);
 
