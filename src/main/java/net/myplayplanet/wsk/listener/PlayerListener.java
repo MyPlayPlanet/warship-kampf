@@ -114,8 +114,14 @@ public class PlayerListener implements Listener {
         if (player.getTeam() == null)
             return;
 
-        if (!RegionUtil.isInLargeShipArea(player.getTeam(), event.getBlockPlaced().getLocation()))
-            event.setBuild(false);
+        boolean build = false;
+        for (Team team : arena.getTeams()) {
+            if (RegionUtil.isInLargeShipArea(team, event.getBlockPlaced().getLocation())) {
+                build = true;
+                break;
+            }
+        }
+        event.setBuild(build);
     }
 
     @EventHandler

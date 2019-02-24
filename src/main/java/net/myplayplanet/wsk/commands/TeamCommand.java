@@ -240,6 +240,7 @@ public class TeamCommand {
         if (team.getCaptain() != null) {
             team.getCaptain().getPlayer().sendMessage(WSK.PREFIX + player.getName() + " hat deine Einladung angenommen");
         }
+        player.sendMessage(WSK.PREFIX + "Du hast die Einladung zu " + team.getProperties().getFullname() + " §7angenommen");
 
         team.addMember(wskPlayer);
     }
