@@ -96,8 +96,11 @@ public class PlayerListener implements Listener {
         if (player.isDead())
             return;
 
-        if (player.getTeam() != null)
+        if (player.getTeam() != null) {
             Bukkit.getPluginManager().callEvent(new TeamMemberDieEvent(wsk.getArenaManager().getCurrentArena(), player.getTeam(), player));
+            event.setDeathMessage(player.getPlayer().getDisplayName() + " §7ist gestorben");
+        } else
+            event.setDeathMessage("");
     }
 
     @EventHandler

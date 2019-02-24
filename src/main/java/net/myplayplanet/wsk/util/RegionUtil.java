@@ -29,7 +29,6 @@ public class RegionUtil implements Listener {
 
     public RegionUtil(Arena arena) {
 
-
         RegionManager manager = WorldGuard.getInstance().getPlatform().getRegionContainer()
                 .get(new BukkitWorld(arena.getGameWorld().getWorld()));
 

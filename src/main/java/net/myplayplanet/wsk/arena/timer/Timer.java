@@ -16,4 +16,13 @@ public abstract class Timer extends BukkitRunnable {
     public void run() {
         seconds--;
     }
+
+    public boolean isRunning() {
+        try {
+            getTaskId();
+        } catch (IllegalStateException e) {
+            return false;
+        }
+        return true;
+    }
 }

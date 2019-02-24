@@ -73,7 +73,7 @@ public class ArenaListener implements Listener {
         }
 
         // Run timer if game is running
-        if (state.isInGame() && arena.getTimer() != null)
+        if (state.isInGame() && arena.getTimer() != null && !arena.getTimer().isRunning())
             arena.getTimer().runTaskTimer(JavaPlugin.getPlugin(WSK.class), 0, 20);
     }
 
