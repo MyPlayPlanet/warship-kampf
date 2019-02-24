@@ -1,5 +1,6 @@
 package net.myplayplanet.wsk.role;
 
+import lombok.Getter;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import net.myplayplanet.wsk.util.ColorConverter;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.ForkJoinPool;
 
+@Getter
 public abstract class AbstractRole {
 
     /*
@@ -27,6 +29,11 @@ public abstract class AbstractRole {
 
     // Permanent effects a player has
     protected HashSet<PotionEffect> permanentEffects = new HashSet<>();
+
+    protected boolean canEnter = false;
+    protected boolean canTnt = false;
+    protected boolean canRedstone = false;
+    protected boolean canEnterAtAll = true;
 
     protected abstract void setInventory();
 

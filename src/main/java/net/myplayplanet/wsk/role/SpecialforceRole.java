@@ -10,6 +10,13 @@ import org.bukkit.potion.PotionEffectType;
 
 public class SpecialforceRole extends AbstractRole {
 
+    public SpecialforceRole() {
+        canEnter = true;
+        canEnterAtAll = true;
+        canRedstone = false;
+        canTnt = false;
+    }
+
     @Override
     protected void setInventory() {
         addItem(0, new ItemStack(Material.STONE_SWORD));

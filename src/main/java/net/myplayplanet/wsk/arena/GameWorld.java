@@ -62,7 +62,7 @@ public class GameWorld {
 
     public void delete() {
         synchronized (lock) {
-            File file = new File(worldName);
+            File file = new File(Bukkit.getWorldContainer(), worldName);
             FileUtils.deleteQuietly(file);
             if (file.exists() || file.isDirectory()) {
                 Logger.ERROR.log("Could not delete old world!");
@@ -75,7 +75,7 @@ public class GameWorld {
     public void load() {
         synchronized (lock) {
             File newFile = new File("plugins/WSK/arenas/" + templateName);
-            File file = new File(worldName);
+            File file = new File(Bukkit.getWorldContainer(), worldName);
 
             try {
                 FileUtils.copyDirectory(newFile, file);

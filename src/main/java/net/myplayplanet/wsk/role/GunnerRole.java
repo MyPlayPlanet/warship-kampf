@@ -5,6 +5,13 @@ import org.bukkit.inventory.ItemStack;
 
 public class GunnerRole extends AbstractRole {
 
+    public GunnerRole() {
+        canEnter = false;
+        canEnterAtAll = true;
+        canRedstone = false;
+        canTnt = true;
+    }
+
     @Override
     protected void setInventory() {
         addItem(0, new ItemStack(Material.WOODEN_SWORD));

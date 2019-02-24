@@ -10,6 +10,13 @@ import org.bukkit.potion.PotionEffectType;
 
 public class CaptainRole extends AbstractRole {
 
+    public CaptainRole() {
+        canEnter = true;
+        canEnterAtAll = true;
+        canRedstone = true;
+        canTnt = true;
+    }
+
     @Override
     protected void setInventory() {
         ItemStack mainWeapon = new ItemStack(Material.GOLDEN_SWORD);
@@ -61,5 +68,16 @@ public class CaptainRole extends AbstractRole {
         addItem(33, lever);
         addItem(34, wooden_plate);
         addItem(35, wooden_button);
+
+        ItemStack is1 = new ItemStack(Material.IRON_BOOTS);
+        is1.addEnchantment(Enchantment.DEPTH_STRIDER, 1);
+        addItem(36, is1);
+
+        is1 = new ItemStack(Material.IRON_LEGGINGS);
+        addItem(37, is1);
+
+        addItem(38, new ItemStack(Material.DIAMOND_CHESTPLATE));
+
+        addItem(39, new ItemStack(Material.IRON_HELMET));
     }
 }
