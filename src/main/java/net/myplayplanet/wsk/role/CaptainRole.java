@@ -12,7 +12,6 @@ public class CaptainRole extends AbstractRole {
 
     public CaptainRole() {
         canEnter = true;
-        canEnterAtAll = true;
         canRedstone = true;
         canTnt = true;
     }

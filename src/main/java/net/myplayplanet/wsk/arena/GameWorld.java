@@ -74,7 +74,7 @@ public class GameWorld {
 
     public void load() {
         synchronized (lock) {
-            File newFile = new File("plugins/WSK/arenas/" + templateName);
+            File newFile = new File(WSK.getInstance().getDataFolder(), "arenas/" + templateName);
             File file = new File(Bukkit.getWorldContainer(), worldName);
 
             try {

@@ -11,6 +11,7 @@ import net.myplayplanet.wsk.objects.WSKPlayer;
 import net.myplayplanet.wsk.util.RegionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -124,6 +125,8 @@ public class PlayerListener implements Listener {
                 break;
             }
         }
+        if (event.getBlockPlaced().getType() == Material.TNT && !player.getRole().getRole().isCanTnt())
+            build = false;
         event.setBuild(build);
     }
 
@@ -143,9 +146,11 @@ public class PlayerListener implements Listener {
 
         if (player.getTeam() != null && arena.getState() != ArenaState.SPECTATE) {
 
-            // TODO role check
-            if (arena.getState() == ArenaState.ENTER)
+            if (arena.getState() == ArenaState.ENTER && player.getRole().getRole().isCanEnter())
                 return;
+            if (arena.getState() == ArenaState.ENTER_ALL && player.getRole().getRole().isCanEnterAtAll())
+                return;
+
 
             if (RegionUtil.isInLargeShipArea(player.getTeam(), event.getFrom()) && !RegionUtil.isInLargeShipArea(player.getTeam(), event.getTo())) {
                 event.getPlayer().sendMessage(WSK.PREFIX + "§cDu darfst noch nicht entern");

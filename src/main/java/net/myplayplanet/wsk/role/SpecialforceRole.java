@@ -12,7 +12,6 @@ public class SpecialforceRole extends AbstractRole {
 
     public SpecialforceRole() {
         canEnter = true;
-        canEnterAtAll = true;
         canRedstone = false;
         canTnt = false;
     }

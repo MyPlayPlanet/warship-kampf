@@ -7,7 +7,6 @@ public class GunnerRole extends AbstractRole {
 
     public GunnerRole() {
         canEnter = false;
-        canEnterAtAll = true;
         canRedstone = false;
         canTnt = true;
     }
