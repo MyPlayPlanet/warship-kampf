@@ -1,6 +1,8 @@
 # WarShip-Kampf
 This is a plugin to manage simple warship fights, as MrCreativeIV invented them. 
 
+[![Build Status](https://travis-ci.org/Butzlabben/warship-kampf.svg?branch=master)](https://travis-ci.org/Butzlabben/warship-kampf)
+
 # Installation
 1. Stop your server
 2. Move the jar in the plugins folder
