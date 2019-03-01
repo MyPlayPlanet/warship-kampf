@@ -208,6 +208,44 @@ public class TeamCommand {
         player.sendMessage(WSK.PREFIX + "Du hast " + toInvite.getName() + " eingeladen");
     }
 
+    @Command(name = "wsk.team.kick", usage = "/wsk team kick <Spieler>", inGameOnly = true, description = "Wirft jemanden aus deinem Team")
+    public void kickCommand(CommandArgs args) {
+        Player player = args.getSender(Player.class);
+
+        if (args.getArgumentCount() != 1) {
+            player.sendMessage(WSK.PREFIX + "§c/wsk team kick <Spieler>");
+            return;
+        }
+
+        Player toKick = Bukkit.getPlayerExact(args.getArgument(0));
+        if (toKick == null || !toKick.isOnline()) {
+            player.sendMessage(WSK.PREFIX + "§cDieser Spieler ist nicht online");
+            return;
+        }
+
+        WSKPlayer kicker = WSKPlayer.getPlayer(player);
+        if (!kicker.isCaptain()) {
+            player.sendMessage(WSK.PREFIX + "§cDu bist kein Kapitän");
+            return;
+        }
+
+        WSKPlayer kicked = WSKPlayer.getPlayer(toKick);
+
+        if (wsk.getArenaManager().getCurrentArena().getState().isInGame()) {
+            player.sendMessage(WSK.PREFIX + "§cDer Kampf läuft bereits");
+            return;
+        }
+
+        if (kicked.getTeam() != kicker.getTeam()) {
+            player.sendMessage(WSK.PREFIX + "§cDieser Spieler ist nicht in deinem Team");
+            return;
+        }
+
+        kicked.getTeam().removeMember(kicked);
+        player.sendMessage(WSK.PREFIX + "Du hast " + player.getName() + " aus deinem Team geworfen");
+        toKick.sendMessage(WSK.PREFIX + "Du wurdest aus " + kicker.getTeam().getProperties().getFullname() + " §7geworfen");
+    }
+
     @Command(name = "wsk.team.accept", usage = "/wsk team accept <Team>", inGameOnly = true, description = "Nimmt eine Einladung an")
     public void acceptCommand(CommandArgs args) {
         Player player = args.getSender(Player.class);
