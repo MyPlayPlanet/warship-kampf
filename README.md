@@ -4,20 +4,20 @@ This is a plugin to manage simple warship fights, as MrCreativeIV invented them.
 [![Build Status](https://travis-ci.org/Butzlabben/warship-kampf.svg?branch=master)](https://travis-ci.org/Butzlabben/warship-kampf) [![](https://jitpack.io/v/Butzlabben/warship-kampf.svg)](https://jitpack.io/#Butzlabben/warship-kampf)
 
 
-# Installation
+## Installation
 1. Stop your server
 2. Move the jar in the plugins folder
 3. Start the server
 4. Create a region in WorldGuard named "arena"
 5. Set up your arena with the "/ws setup" command
 
-# Dependencies
+## Dependencies
 - WorldGuard
 - FastAsyncWorldEdit
 - Serverversion >= 1.13
 - **IMPORTANT: THIS PLUGIN DOES NOT WORK WITH WORLDEDIT. PLEASE USE ONLY FAWE** 
 
-# Commands
+## Commands
 - /wsk
 - /wsk team
 - /wsk team put
@@ -43,7 +43,7 @@ This is a plugin to manage simple warship fights, as MrCreativeIV invented them.
 - /wsk arena win
 - /wsf role
 
-# API
+## API
 To interact with ease with WSK, just use the net.myplayplanet.wsk.api.WskAPI class
 With this class it is easy to manage fights.
 
