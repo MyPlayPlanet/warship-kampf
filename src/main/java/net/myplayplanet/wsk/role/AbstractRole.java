@@ -17,6 +17,34 @@ import java.util.concurrent.ForkJoinPool;
 @Getter
 public abstract class AbstractRole {
 
+    protected final ItemStack bow = new ItemStack(Material.BOW);
+    protected final ItemStack stone_pickaxe = new ItemStack(Material.STONE_PICKAXE);
+    protected final ItemStack iron_pickaxe = new ItemStack(Material.IRON_PICKAXE);
+    protected final ItemStack wooden_pickaxe = new ItemStack(Material.WOODEN_PICKAXE);
+    protected final ItemStack piston = new ItemStack(Material.PISTON, 64);
+    protected final ItemStack stickyPiston = new ItemStack(Material.STICKY_PISTON, 64);
+    protected final ItemStack redstone = new ItemStack(Material.REDSTONE, 64);
+    protected final ItemStack redstoneTorch = new ItemStack(Material.REDSTONE_TORCH, 64);
+    protected final ItemStack redstoneRepeater = new ItemStack(Material.REPEATER, 64);
+    protected final ItemStack redstoneComparator = new ItemStack(Material.COMPARATOR, 64);
+    protected final ItemStack wooden_plate = new ItemStack(Material.OAK_PRESSURE_PLATE, 64);
+    protected final ItemStack wooden_button = new ItemStack(Material.OAK_BUTTON, 64);
+    protected final ItemStack slime = new ItemStack(Material.SLIME_BLOCK, 64);
+    protected final ItemStack redstoneBlock = new ItemStack(Material.REDSTONE_BLOCK, 64);
+    protected final ItemStack observer = new ItemStack(Material.OBSERVER, 64);
+    protected final ItemStack lever = new ItemStack(Material.LEVER, 64);
+
+    // New redstone stuff
+    protected final ItemStack strings = new ItemStack(Material.STRING, 64);
+    protected final ItemStack lamps = new ItemStack(Material.REDSTONE_LAMP, 64);
+    protected final ItemStack dropper = new ItemStack(Material.DROPPER, 64);
+    protected final ItemStack trapdoor = new ItemStack(Material.IRON_TRAPDOOR, 64);
+
+    protected final ItemStack concrete = new ItemStack(Material.WHITE_CONCRETE, 64);
+    protected final ItemStack tnt = new ItemStack(Material.TNT, 64);
+    protected final ItemStack air = new ItemStack(Material.AIR, 1);
+    protected final ItemStack arrows = new ItemStack(Material.ARROW, 16);
+
     /*
     Help for indexing:
     0-8: Hotbar, from left to right
@@ -77,32 +105,4 @@ public abstract class AbstractRole {
         im.setUnbreakable(true);
         wooden_pickaxe.setItemMeta(im);
     }
-
-    protected ItemStack bow = new ItemStack(Material.BOW);
-    protected ItemStack stone_pickaxe = new ItemStack(Material.STONE_PICKAXE);
-    protected ItemStack iron_pickaxe = new ItemStack(Material.IRON_PICKAXE);
-    protected ItemStack wooden_pickaxe = new ItemStack(Material.WOODEN_PICKAXE);
-    protected ItemStack piston = new ItemStack(Material.PISTON, 64);
-    protected ItemStack stickyPiston = new ItemStack(Material.STICKY_PISTON, 64);
-    protected ItemStack redstone = new ItemStack(Material.REDSTONE, 64);
-    protected ItemStack redstoneTorch = new ItemStack(Material.REDSTONE_TORCH, 64);
-    protected ItemStack redstoneRepeater = new ItemStack(Material.REPEATER, 64);
-    protected ItemStack redstoneComparator = new ItemStack(Material.COMPARATOR, 64);
-    protected ItemStack wooden_plate = new ItemStack(Material.OAK_PRESSURE_PLATE, 64);
-    protected ItemStack wooden_button = new ItemStack(Material.OAK_BUTTON, 64);
-    protected ItemStack slime = new ItemStack(Material.SLIME_BLOCK, 64);
-    protected ItemStack redstoneBlock = new ItemStack(Material.REDSTONE_BLOCK, 64);
-    protected ItemStack observer = new ItemStack(Material.OBSERVER, 64);
-    protected ItemStack lever = new ItemStack(Material.LEVER, 64);
-
-    // New redstone stuff
-    protected ItemStack strings = new ItemStack(Material.STRING, 64);
-    protected ItemStack lamps = new ItemStack(Material.REDSTONE_LAMP, 64);
-    protected ItemStack dropper = new ItemStack(Material.DROPPER, 64);
-    protected ItemStack trapdoor = new ItemStack(Material.IRON_TRAPDOOR, 64);
-
-    protected ItemStack concrete = new ItemStack(Material.WHITE_CONCRETE, 64);
-    protected ItemStack tnt = new ItemStack(Material.TNT, 64);
-    protected ItemStack air = new ItemStack(Material.AIR, 1);
-    protected ItemStack arrows = new ItemStack(Material.ARROW, 16);
 }
