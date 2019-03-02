@@ -87,6 +87,11 @@ public class Arena {
         stop(localList.get(0));
     }
 
+    /**
+     * Stops the fight, locks the arena, clears inventories, ...
+     *
+     * @param winningTeam team which should win. If winningTeam is null, then it will be a draw
+     */
     public void stop(Team winningTeam) {
         timer = new SpectateTimer(this);
 

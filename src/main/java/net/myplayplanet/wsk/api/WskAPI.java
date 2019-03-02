@@ -3,8 +3,12 @@ package net.myplayplanet.wsk.api;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
 import net.myplayplanet.wsk.WSK;
+import net.myplayplanet.wsk.arena.Arena;
+import net.myplayplanet.wsk.arena.ArenaState;
+import net.myplayplanet.wsk.event.ArenaStateChangeEvent;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,6 +22,26 @@ public class WskAPI {
 
     private WskAPI() {
         wsk = JavaPlugin.getPlugin(WSK.class);
+    }
+
+    /**
+     * Starts the fight in the current arena
+     *
+     * @throws IllegalArgumentException if arena is not in setup state
+     */
+    public void startFight() {
+        Arena arena = wsk.getArenaManager().getCurrentArena();
+        Preconditions.checkArgument(arena.getState() == ArenaState.SETUP, "arena must be in setup state");
+        Bukkit.getPluginManager().callEvent(new ArenaStateChangeEvent(arena.getState(), ArenaState.PRERUNNING, arena));
+    }
+
+    /**
+     * Returns an object of the current arena
+     *
+     * @return current arena
+     */
+    public Arena getCurrentArena() {
+        return wsk.getArenaManager().getCurrentArena();
     }
 
     /**
