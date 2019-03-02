@@ -47,7 +47,7 @@ public class WskAPI {
     /**
      * Get all Teams which are available in the current arena
      *
-     * @return all available teams
+     * @return all available teams from the current arena
      */
     public List<Team> getTeams() {
         return wsk.getArenaManager().getCurrentArena().getTeams();
