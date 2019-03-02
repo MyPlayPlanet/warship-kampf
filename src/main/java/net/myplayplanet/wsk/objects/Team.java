@@ -88,7 +88,7 @@ public class Team implements Iterable<WSKPlayer>, Comparable<Team> {
         Objects.requireNonNull(player);
         Preconditions.checkArgument(player.getTeam() == null, "Player must not be in a team");
 
-        TeamAddmemberArenaEvent event = new TeamAddmemberArenaEvent(arena, this, player);
+        TeamAddMemberArenaEvent event = new TeamAddMemberArenaEvent(arena, this, player);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
@@ -112,7 +112,7 @@ public class Team implements Iterable<WSKPlayer>, Comparable<Team> {
         Objects.requireNonNull(player);
         Preconditions.checkArgument(members.contains(player), "player must be member of team");
 
-        TeamRemovememberArenaEvent event = new TeamRemovememberArenaEvent(arena, this, player);
+        TeamRemoveMemberArenaEvent event = new TeamRemoveMemberArenaEvent(arena, this, player);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;

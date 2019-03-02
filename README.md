@@ -41,3 +41,18 @@ This is a plugin to manage simple warship fights, as MrCreativeIV invented them.
 - /wsk arena draw
 - /wsk arena win
 - /wsf role
+
+# API
+To interact with ease with WSK, just use the net.myplayplanet.wsk.api.WskAPI class
+With this class it is easy to manage fights.
+
+There are some events, which will be useful for interfering with WSK:
+- ArenaStateChangeEvent
+- TeamAddMemberArenaEvent
+- TeamCaptainRemoveArenaEvent
+- TeamCaptainSetArenaEvent
+- TeamDrawEvent
+- TeamLoseEvent
+- TeamMemberDieEvent
+- TeamRemoveMemberEvent
+- TeamWinEvent

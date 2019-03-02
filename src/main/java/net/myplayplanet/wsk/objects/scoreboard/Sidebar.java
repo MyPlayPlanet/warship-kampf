@@ -7,9 +7,9 @@ import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.event.ArenaStateChangeEvent;
-import net.myplayplanet.wsk.event.TeamAddmemberArenaEvent;
+import net.myplayplanet.wsk.event.TeamAddMemberArenaEvent;
 import net.myplayplanet.wsk.event.TeamMemberDieEvent;
-import net.myplayplanet.wsk.event.TeamRemovememberArenaEvent;
+import net.myplayplanet.wsk.event.TeamRemoveMemberArenaEvent;
 import net.myplayplanet.wsk.util.AsyncUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -48,12 +48,12 @@ public class Sidebar implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onTeamAddMember(TeamAddmemberArenaEvent event) {
+    public void onTeamAddMember(TeamAddMemberArenaEvent event) {
         updateLater();
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onTeamRemoveMember(TeamRemovememberArenaEvent event) {
+    public void onTeamRemoveMember(TeamRemoveMemberArenaEvent event) {
         updateLater();
     }
 

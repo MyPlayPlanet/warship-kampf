@@ -7,15 +7,15 @@ import net.myplayplanet.wsk.objects.WSKPlayer;
 import org.bukkit.event.HandlerList;
 
 /**
- * Event gets fired when a player gets removed from a team
+ * Event gets fired when a player gets added to a team
  */
 @Getter
-public class TeamRemovememberArenaEvent extends ArenaEvent {
+public class TeamAddMemberArenaEvent extends ArenaEvent {
 
     private final Team team;
     private final WSKPlayer player;
 
-    public TeamRemovememberArenaEvent(Arena arena, Team team, WSKPlayer player) {
+    public TeamAddMemberArenaEvent(Arena arena, Team team, WSKPlayer player) {
         super(arena);
         this.team = team;
         this.player = player;
@@ -31,4 +31,5 @@ public class TeamRemovememberArenaEvent extends ArenaEvent {
     public final static HandlerList getHandlerList() {
         return handlers;
     }
+
 }

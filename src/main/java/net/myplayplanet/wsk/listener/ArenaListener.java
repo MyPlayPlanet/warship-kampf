@@ -119,7 +119,7 @@ public class ArenaListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public void onMemberRemove(TeamRemovememberArenaEvent event) {
+    public void onMemberRemove(TeamRemoveMemberArenaEvent event) {
         WSKPlayer player = event.getPlayer();
         if (event.getArena().getScoreboardManager().getScoreboard().getPlayerTeam(player.getPlayer()) != null)
             event.getArena().getScoreboardManager().getScoreboard().getPlayerTeam(player.getPlayer()).removePlayer(player.getPlayer());
@@ -132,7 +132,7 @@ public class ArenaListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public void onMemberAdd(TeamAddmemberArenaEvent event) {
+    public void onMemberAdd(TeamAddMemberArenaEvent event) {
         WSKPlayer player = event.getPlayer();
         Team team = event.getTeam();
 
