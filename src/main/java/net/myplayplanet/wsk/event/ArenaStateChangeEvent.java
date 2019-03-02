@@ -5,6 +5,10 @@ import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Event gets fired if the state of a arena changes.
+ * Useful for observing if the fights stops, starts, etc.
+ */
 @Getter
 public class ArenaStateChangeEvent extends ArenaEvent {
 

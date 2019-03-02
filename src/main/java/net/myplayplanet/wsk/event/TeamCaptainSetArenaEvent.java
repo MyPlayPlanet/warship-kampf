@@ -6,7 +6,9 @@ import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import org.bukkit.event.HandlerList;
 
-// Gets fired when captain gets set of a team
+/**
+ * Event gets fired when a new captain gets set to a team
+ */
 @Getter
 public class TeamCaptainSetArenaEvent extends ArenaEvent {
 

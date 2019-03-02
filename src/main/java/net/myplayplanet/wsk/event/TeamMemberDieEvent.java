@@ -6,6 +6,9 @@ import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Event gets fired when a member of a team dies
+ */
 @Getter
 public class TeamMemberDieEvent extends ArenaEvent {
 

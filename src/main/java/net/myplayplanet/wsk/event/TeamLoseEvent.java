@@ -5,6 +5,9 @@ import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.objects.Team;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Event gets fired if a team loses
+ */
 @Getter
 public class TeamLoseEvent extends ArenaEvent {
 

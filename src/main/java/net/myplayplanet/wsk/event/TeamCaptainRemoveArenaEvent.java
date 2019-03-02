@@ -6,7 +6,9 @@ import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import org.bukkit.event.HandlerList;
 
-// Gets fired when the captain of a team gets removed
+/**
+ * Event gets fired when the captain of a team gets removed
+ */
 @Getter
 public class TeamCaptainRemoveArenaEvent extends ArenaEvent {
 

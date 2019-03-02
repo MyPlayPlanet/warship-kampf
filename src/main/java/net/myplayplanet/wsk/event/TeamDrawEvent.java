@@ -5,6 +5,9 @@ import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.objects.Team;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Event gets fired if two teams fight a draw
+ */
 @Getter
 public class TeamDrawEvent extends ArenaEvent {
 
