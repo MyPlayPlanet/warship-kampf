@@ -10,6 +10,9 @@ import java.io.File;
 @Getter
 public class ArenaManager {
 
+
+    private static ArenaManager instance;
+
     private final WSK wsk;
     private final File arenaFolder;
     @Setter
@@ -23,16 +26,10 @@ public class ArenaManager {
         arenaFolder = new File(wsk.getDataFolder(), "arenas");
 
         if (!Config.isSetup())
-            currentArena = new Arena(new File(arenaFolder, Config.getDefaultArena()));
+            loadArena(Config.getDefaultArena());
     }
 
-    // STATIC SINGLETON
-
-    private static ArenaManager instance;
-
-
-//    public static ArenaManager getInstance() {
-//        return instance;
-//
-//    }
+    public void loadArena(String name) {
+        currentArena = new Arena(new File(arenaFolder, name));
+    }
 }

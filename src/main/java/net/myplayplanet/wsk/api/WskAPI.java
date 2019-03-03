@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
+import net.myplayplanet.wsk.arena.ArenaManager;
 import net.myplayplanet.wsk.arena.ArenaState;
 import net.myplayplanet.wsk.event.ArenaStateChangeEvent;
 import net.myplayplanet.wsk.objects.Team;
@@ -79,5 +80,22 @@ public class WskAPI {
         WSKPlayer wskPlayer = WSKPlayer.getPlayer(player);
         Preconditions.checkArgument(wskPlayer.getTeam() != null, "player must be in a team");
         wskPlayer.getTeam().removeMember(wskPlayer);
+    }
+
+    /**
+     * Loads a specific arena. Unloads the old arena if one was loaded
+     *
+     * @param name of the config file in plugins/WSK/arenas/
+     *             May not end with ".json"
+     */
+    public void loadArena(String name) {
+        ArenaManager manager = wsk.getArenaManager();
+        if (manager.getCurrentArena() != null)
+            manager.getCurrentArena().getGameWorld().unloadCompletely();
+
+        if (!name.endsWith(".json"))
+            name = name + ".json";
+
+        manager.loadArena(name);
     }
 }
