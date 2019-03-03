@@ -1,6 +1,7 @@
 # WarShip-Kampf
 This is a plugin to manage simple warship fights, as MrCreativeIV invented them. 
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4fa41f00eb01485ebf33e221b2c54d2f)](https://app.codacy.com/app/Butzlabben/warship-kampf?utm_source=github.com&utm_medium=referral&utm_content=Butzlabben/warship-kampf&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/Butzlabben/warship-kampf.svg?branch=master)](https://travis-ci.org/Butzlabben/warship-kampf) [![](https://jitpack.io/v/Butzlabben/warship-kampf.svg)](https://jitpack.io/#Butzlabben/warship-kampf)
 ## Installation
 1. Stop your server
