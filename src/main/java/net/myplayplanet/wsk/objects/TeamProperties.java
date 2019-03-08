@@ -17,6 +17,7 @@ public class TeamProperties {
 
     private Vector pos1;
     private Vector pos2;
+    private Vector pasteLocation;
 
     public String getFullname() {
         return colorCode + name;

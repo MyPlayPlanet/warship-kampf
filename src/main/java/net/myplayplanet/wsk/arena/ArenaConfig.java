@@ -29,9 +29,9 @@ public class ArenaConfig {
 
     private List<TeamProperties> teams = Arrays.asList(
             new TeamProperties("Team1", "\u00A7c", new Location(null, 0, 0, 0),
-                    new Vector(0, 0, 0), new Vector(0, 0, 0)),
+                    new Vector(0, 0, 0), new Vector(0, 0, 0), new Vector(0, 0, 0)),
             new TeamProperties("Team2", "\u00A79", new Location(null, 0, 0, 0),
-                    new Vector(0, 0, 0), new Vector(0, 0, 0)));
+                    new Vector(0, 0, 0), new Vector(0, 0, 0), new Vector(0, 0, 0)));
 
     private Vector pos1 = new Vector();
     private Vector pos2 = new Vector();

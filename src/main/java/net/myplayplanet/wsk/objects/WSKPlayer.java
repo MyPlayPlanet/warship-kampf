@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.myplayplanet.wsk.role.Role;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -28,6 +29,10 @@ public class WSKPlayer {
 
     public Player getPlayer() {
         return Bukkit.getPlayer(uuid);
+    }
+
+    public OfflinePlayer getOfflinePlayer() {
+        return Bukkit.getOfflinePlayer(uuid);
     }
 
     public boolean isInTeam() {
