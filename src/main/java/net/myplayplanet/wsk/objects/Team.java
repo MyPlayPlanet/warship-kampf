@@ -166,6 +166,14 @@ public class Team implements Iterable<WSKPlayer>, Comparable<Team> {
         }
     }
 
+    public boolean isTeam2() {
+        return arena.getTeams().indexOf(this) == 1;
+    }
+
+    public boolean isTeam1() {
+        return arena.getTeams().indexOf(this) == 0;
+    }
+
     /**
      * Calculates points and sets them to the field "points"
      */
