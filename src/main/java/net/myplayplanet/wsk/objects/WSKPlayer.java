@@ -44,7 +44,7 @@ public class WSKPlayer {
     private static HashMap<UUID, WSKPlayer> instances = new HashMap<>();
 
     public static WSKPlayer getPlayer(Player player) {
-        return instances.get(player.getUniqueId());
+        return getPlayer(player.getUniqueId());
     }
 
     public static void handle(PlayerJoinEvent event) {
@@ -53,8 +53,16 @@ public class WSKPlayer {
 
     public static void add(Player player) {
         UUID uuid = player.getUniqueId();
+        add(uuid);
+    }
+
+    public static void add(UUID uuid) {
         if (!instances.containsKey(uuid))
             instances.put(uuid, new WSKPlayer(uuid));
+    }
+
+    public static WSKPlayer getPlayer(UUID uuid) {
+        return instances.get(uuid);
     }
 
     public boolean isAlive() {
