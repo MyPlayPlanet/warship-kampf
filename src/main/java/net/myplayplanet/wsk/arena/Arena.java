@@ -129,4 +129,12 @@ public class Arena {
     protected void finalize() throws Throwable {
         gameWorld.finalize();
     }
+
+    public Team getTeam1() {
+        return teams.get(0);
+    }
+
+    public Team getTeam2() {
+        return teams.get(1);
+    }
 }
