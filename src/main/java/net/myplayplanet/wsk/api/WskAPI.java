@@ -18,6 +18,7 @@ import java.util.List;
 @Getter
 public class WskAPI {
 
+    @Getter
     private static WskAPI instance = new WskAPI();
     private final WSK wsk;
 

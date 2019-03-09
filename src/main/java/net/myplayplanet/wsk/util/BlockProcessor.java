@@ -63,6 +63,10 @@ public class BlockProcessor {
         return new Location(w, v.getX(), v.getY(), v.getZ());
     }
 
+    public static Location getLoc(org.bukkit.util.Vector v, World w) {
+        return new Location(w, v.getX(), v.getY(), v.getZ());
+    }
+
     public static Vector getVec(Location loc) {
         return new Vector(loc.getX(), loc.getY(), loc.getZ());
     }
