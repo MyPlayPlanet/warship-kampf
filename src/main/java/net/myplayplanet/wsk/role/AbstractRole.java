@@ -1,6 +1,7 @@
 package net.myplayplanet.wsk.role;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import net.myplayplanet.wsk.util.ColorConverter;
@@ -53,14 +54,20 @@ public abstract class AbstractRole {
     18-26: Mid row, from left to right
     27-35: Bottom row, from left to right
      */
+    @Setter
     protected HashMap<Integer, ItemStack> invItems = new HashMap<>();
 
     // Permanent effects a player has
+    @Setter
     protected HashSet<PotionEffect> permanentEffects = new HashSet<>();
 
+    @Setter
     protected boolean canEnter = false;
+    @Setter
     protected boolean canTnt = false;
+    @Setter
     protected boolean canRedstone = false;
+    @Setter
     protected boolean canEnterAtAll = true;
 
     protected abstract void setInventory();
