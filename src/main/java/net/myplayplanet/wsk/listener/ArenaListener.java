@@ -11,7 +11,6 @@ import net.myplayplanet.wsk.arena.timer.ShootingTimer;
 import net.myplayplanet.wsk.event.*;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
-import net.myplayplanet.wsk.role.Role;
 import net.myplayplanet.wsk.util.InitialCalculator;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -102,7 +101,7 @@ public class ArenaListener implements Listener {
         Bukkit.broadcastMessage(WSK.PREFIX + team.getProperties().getColorCode() + player.getPlayer().getName() + " §7ist nun Kapitän von " +
                 team.getProperties().getName());
 
-        player.setRole(Role.CAPTAIN);
+        player.setRole(event.getArena().getRole("Kapitän"));
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
@@ -112,7 +111,7 @@ public class ArenaListener implements Listener {
         Bukkit.broadcastMessage(WSK.PREFIX + team.getProperties().getColorCode() + player.getPlayer().getName() + " §7ist nun nicht mehr Kapitän von " +
                 team.getProperties().getName());
 
-        player.setRole(Role.GUNNER);
+        player.setRole(event.getArena().getRole("Kanonier"));
 
         // Set ship to water
         team.getShip().resetShip();
@@ -141,7 +140,7 @@ public class ArenaListener implements Listener {
         player.getPlayer().setDisplayName(team.getProperties().getColorCode() + player.getPlayer().getName() + "§7");
 
         player.getPlayer().teleport(team.getProperties().getSpawn());
-        player.setRole(Role.GUNNER);
+        player.setRole(event.getArena().getRole("Kanonier"));
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)

@@ -1,15 +1,11 @@
 package net.myplayplanet.wsk.role;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
 @Getter
-public enum Role {
-
-    CAPTAIN(new CaptainRole()),
-    GUNNER(new GunnerRole()),
-    SPECIALFORCE(new SpecialforceRole());
-
-    final AbstractRole role;
+@RequiredArgsConstructor
+public class Role {
+    private final String name;
+    private final AbstractRole role;
 }

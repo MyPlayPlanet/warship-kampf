@@ -5,6 +5,7 @@ import net.myplayplanet.commandframework.CommandArgs;
 import net.myplayplanet.commandframework.api.Command;
 import net.myplayplanet.commandframework.api.Completer;
 import net.myplayplanet.wsk.WSK;
+import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import net.myplayplanet.wsk.role.Role;
 import org.bukkit.Bukkit;
@@ -12,7 +13,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,14 +44,16 @@ public class WSKCommand {
             return;
         }
 
+
         WSKPlayer wskPlayer = WSKPlayer.getPlayer(player);
         if (wskPlayer.getTeam() == null) {
             sender.sendMessage(WSK.PREFIX + "§cSpieler ist nicht online");
             return;
         }
 
+        Arena arena = wsk.getArenaManager().getCurrentArena();
         try {
-            Role role = Role.valueOf(args.getArgument(1).toUpperCase());
+            Role role = arena.getRole(args.getArgument(1));
             wskPlayer.setRole(role);
 
             sender.sendMessage(WSK.PREFIX + "Rolle gesetzt");
@@ -64,8 +66,9 @@ public class WSKCommand {
     @Completer(name = "wsk.role")
     public List<String> complete(CommandArgs args) {
         List<String> completions = new ArrayList<>();
+        Arena arena = wsk.getArenaManager().getCurrentArena();
         if (args.length() > 1)
-            completions.addAll(Arrays.asList(Role.values()).stream().map(r -> r.name()).collect(Collectors.toList()));
+            completions.addAll(arena.getRoles().stream().map((role) -> role.getName()).collect(Collectors.toList()));
         return completions;
     }
 }

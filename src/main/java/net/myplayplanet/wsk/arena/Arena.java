@@ -11,6 +11,10 @@ import net.myplayplanet.wsk.event.TeamLoseEvent;
 import net.myplayplanet.wsk.event.TeamWinEvent;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.scoreboard.ScoreboardManager;
+import net.myplayplanet.wsk.role.CaptainRole;
+import net.myplayplanet.wsk.role.GunnerRole;
+import net.myplayplanet.wsk.role.Role;
+import net.myplayplanet.wsk.role.SpecialforceRole;
 import net.myplayplanet.wsk.util.ColorConverter;
 import net.myplayplanet.wsk.util.Logger;
 import net.myplayplanet.wsk.util.RegionUtil;
@@ -24,6 +28,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
@@ -40,6 +45,7 @@ public class Arena {
     private RegionUtil util;
     private ScoreboardManager scoreboardManager;
     private InvitationManager invitationManager = new InvitationManager(this);
+    private List<Role> roles;
 
     public Arena(File config) {
         Preconditions.checkArgument(config.exists(), "config does not exist");
@@ -53,6 +59,11 @@ public class Arena {
             Logger.ERROR.log("Not enough teams set");
             throw new IllegalStateException("There must be 2 teams or more");
         }
+
+        roles = new ArrayList<>();
+        roles.add(new Role("Kapitän", new CaptainRole()));
+        roles.add(new Role("Kanonier", new GunnerRole()));
+        roles.add(new Role("Spezialeinheit", new SpecialforceRole()));
 
         gameWorld = new GameWorld(arenaConfig.getWorld(), this);
         gameWorld.load();
@@ -136,5 +147,13 @@ public class Arena {
 
     public Team getTeam2() {
         return teams.get(1);
+    }
+
+    public Role getRole(String name) {
+        Role role = null;
+        Optional<Role> optionalRole = roles.stream().filter(r -> r.getName().equalsIgnoreCase(name)).findFirst();
+        if (optionalRole.isPresent())
+            role = optionalRole.get();
+        return role;
     }
 }
