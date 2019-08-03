@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: net.myplayplanet:CommandFramework:2.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/myplayplanet/CommandFramework/2.0.0-SNAPSHOT/CommandFramework-2.0.0-20190701.145919-15.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/net/myplayplanet/CommandFramework/2.0.0-SNAPSHOT/CommandFramework-2.0.0-20190701.145919-15-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/myplayplanet/CommandFramework/2.0.0-SNAPSHOT/CommandFramework-2.0.0-20190701.145919-15-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
