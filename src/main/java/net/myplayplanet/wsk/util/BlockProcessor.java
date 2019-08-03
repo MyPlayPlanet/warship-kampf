@@ -7,36 +7,52 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.data.BlockData;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class BlockProcessor {
 
-    public static Set<Location> filter(Set<Location> locs, Set<Material> toRemove) {
-        Set<Location> l;
-        l = locs.stream().filter(loc -> !toRemove.contains(loc.getBlock().getType())).collect(Collectors.toSet());
-        return l;
-    }
 
     // Only return locs with this materials
-    public static Set<Location> toHave(Set<Location> locs, Set<Material> toHave) {
+    public static Set<Location> remain(Set<Location> locs, Set<Material> remain) {
         Set<Location> l;
-        l = locs.stream().filter(loc -> toHave.contains(loc.getBlock().getType())).collect(Collectors.toSet());
+        l = locs.stream().filter(loc -> remain.contains(loc.getBlock().getType())).collect(Collectors.toSet());
         return l;
     }
 
-    public static Set<Location> filter(Set<Location> locs, Material material) {
+    public static Set<Location> remain(Set<Location> locs, Material remain) {
         Set<Location> l;
-        l = locs.stream().filter(loc -> loc.getBlock().getType() == material).collect(Collectors.toSet());
+        l = locs.stream().filter(loc -> loc.getBlock().getType() == remain).collect(Collectors.toSet());
+        return l;
+    }
+
+    public static Set<Location> remain(Set<Location> locs, Predicate<BlockData> remainer) {
+        Set<Location> l;
+        l = locs.stream().filter(loc -> remainer.test(loc.getBlock().getBlockData())).collect(Collectors.toSet());
+        return l;
+    }
+
+
+    public static Set<Location> remove(Set<Location> locs, Set<Material> remove) {
+        Set<Location> l;
+        l = locs.stream().filter(loc -> !remove.contains(loc.getBlock().getType())).collect(Collectors.toSet());
+        return l;
+    }
+
+    public static Set<Location> remove(Set<Location> locs, Material material) {
+        Set<Location> l;
+        l = locs.stream().filter(loc -> loc.getBlock().getType() != material).collect(Collectors.toSet());
         return l;
     }
 
     @SuppressWarnings("deprecation")
-    public static Set<Location> filter(Set<Location> locs, byte data) {
+    public static Set<Location> remove(Set<Location> locs, Predicate<BlockData> remover) {
         Set<Location> l;
-        l = locs.stream().filter(loc -> loc.getBlock().getData() == data).collect(Collectors.toSet());
+        l = locs.stream().filter(loc -> !remover.test(loc.getBlock().getBlockData())).collect(Collectors.toSet());
         return l;
     }
 

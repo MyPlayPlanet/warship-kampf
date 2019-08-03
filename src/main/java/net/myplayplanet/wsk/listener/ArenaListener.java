@@ -90,7 +90,7 @@ public class ArenaListener implements Listener {
                 t.addPoints(300);
         });
 
-        if (team.getAliveMembers().size() == 0)
+        if (team.getAliveMembers().size() == 0 || event.getPlayer().isCaptain())
             Bukkit.getPluginManager().callEvent(new ArenaStateChangeEvent(event.getArena().getState(), ArenaState.SPECTATE, event.getArena()));
     }
 

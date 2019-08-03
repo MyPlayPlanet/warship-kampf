@@ -6,18 +6,15 @@ import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
 import org.bukkit.event.HandlerList;
 
-/**
- * Event gets fired when a player gets added to a team
- */
 @Getter
-public class TeamAddMemberArenaEvent extends ArenaEvent {
+public class PlayerEnterEvent extends ArenaEvent {
 
-    private final Team team;
+    private final Team boardedTeam;
     private final WSKPlayer player;
 
-    public TeamAddMemberArenaEvent(Arena arena, Team team, WSKPlayer player) {
+    public PlayerEnterEvent(Arena arena, Team boardedTeam, WSKPlayer player) {
         super(arena);
-        this.team = team;
+        this.boardedTeam = boardedTeam;
         this.player = player;
     }
 

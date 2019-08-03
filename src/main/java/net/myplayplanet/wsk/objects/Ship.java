@@ -116,7 +116,7 @@ public class Ship {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    Set<Location> filtered = BlockProcessor.toHave(locs, new HashSet<Material>() {{
+                    Set<Location> filtered = BlockProcessor.remain(locs, new HashSet<Material>() {{
                         add(Material.OBSIDIAN);
                         add(Material.BEDROCK);
                     }});
@@ -127,13 +127,13 @@ public class Ship {
         });
     }
 
-    private Set<Location> getLocs() {
+    public Set<Location> getLocs() {
         return BlockProcessor.getLocs(BlockProcessor
                 .getVec(team.getProperties().getPos1()), BlockProcessor.getVec(team.getProperties().getPos2()), team.getArena().getGameWorld().getWorld());
     }
 
     private Set<Location> filter(Set<Location> locs) {
-        return BlockProcessor.filter(locs, new HashSet<Material>() {
+        return BlockProcessor.remove(locs, new HashSet<Material>() {
             {
                 add(Material.WATER);
                 add(Material.AIR);

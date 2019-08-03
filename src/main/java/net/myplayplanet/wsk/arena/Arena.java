@@ -156,4 +156,8 @@ public class Arena {
             role = optionalRole.get();
         return role;
     }
+
+    public Team getEnemyTeam(Team team) {
+        return teams.stream().filter(t -> !t.equals(team)).findFirst().get();
+    }
 }

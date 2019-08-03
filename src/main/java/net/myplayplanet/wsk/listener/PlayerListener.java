@@ -5,6 +5,7 @@ import net.myplayplanet.wsk.Config;
 import net.myplayplanet.wsk.WSK;
 import net.myplayplanet.wsk.arena.Arena;
 import net.myplayplanet.wsk.arena.ArenaState;
+import net.myplayplanet.wsk.event.PlayerEnterEvent;
 import net.myplayplanet.wsk.event.TeamMemberDieEvent;
 import net.myplayplanet.wsk.objects.Team;
 import net.myplayplanet.wsk.objects.WSKPlayer;
@@ -143,6 +144,14 @@ public class PlayerListener implements Listener {
 
         if (arena.getState() == ArenaState.IDLE)
             return;
+
+        if (arena.getState().isInGame() && player.isInTeam()) {
+            Team enemyTeam = arena.getEnemyTeam(player.getTeam());
+
+            if (!RegionUtil.isInTinyShipArea(enemyTeam, event.getFrom()) && RegionUtil.isInTinyShipArea(enemyTeam, event.getTo())) {
+                Bukkit.getPluginManager().callEvent(new PlayerEnterEvent(arena, enemyTeam, player));
+            }
+        }
 
         if (player.getTeam() != null && arena.getState() != ArenaState.SPECTATE) {
 
