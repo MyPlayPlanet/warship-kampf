@@ -74,7 +74,7 @@ public class WSK extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (arenaManager.getCurrentArena() != null)
+        if (arenaManager != null && arenaManager.getCurrentArena() != null)
             arenaManager.getCurrentArena().getGameWorld().unloadCompletely();
     }
 }

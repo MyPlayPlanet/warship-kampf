@@ -70,10 +70,9 @@ public class Arena {
 
         World world = Bukkit.getWorld(arenaConfig.getWorld());
         if (world != null) {
-            arenaConfig.getSpawn().setWorld(Bukkit.getWorld(arenaConfig.getWorld()));
-            arenaConfig.getSpectatorSpawn().setWorld(Bukkit.getWorld(arenaConfig.getWorld()));
+            arenaConfig.setLoadedWorld(Bukkit.getWorld(arenaConfig.getWorld()));
 
-            teams.forEach(t -> t.getProperties().getSpawn().setWorld(world));
+            teams.forEach(t -> t.getProperties().setLoadedWorld(world));
 
             // Set spawn blocks
             teams.forEach((team) -> team.getProperties().getSpawn().getBlock().getRelative(BlockFace.DOWN)

@@ -35,7 +35,7 @@ public class Config {
 
         cfg.addDefault("restart_after_fight", true);
 
-        cfg.addDefault("count_blocks_async", true);
+        cfg.addDefault("count_blocks_async", false);
 
         try {
             cfg.save(configFile);
