@@ -47,6 +47,7 @@ net\myplayplanet\wsk\objects\scoreboard\Sidebar.class
 net\myplayplanet\wsk\util\ColorConverter.class
 net\myplayplanet\wsk\arena\timer\SpectateTimer.class
 net\myplayplanet\wsk\WSK.class
+net\myplayplanet\wsk\api\PlayerQueue.class
 net\myplayplanet\wsk\event\TeamMemberDieEvent.class
 net\myplayplanet\wsk\arena\Invite.class
 net\myplayplanet\wsk\commands\WSKCommand.class

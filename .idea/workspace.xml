@@ -5,20 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="84f89bb7-3308-4b25-8be8-fdf3aa3fbbe2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/myplayplanet/wsk/api/PlayerQueue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WSK.iml" beforeDir="false" afterPath="$PROJECT_DIR$/WSK.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/myplayplanet/wsk/api/WskAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/myplayplanet/wsk/api/WskAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/myplayplanet/wsk/objects/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/myplayplanet/wsk/objects/Ship.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/myplayplanet/wsk/util/BlockProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/myplayplanet/wsk/util/BlockProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/myplayplanet/wsk/util/RegionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/myplayplanet/wsk/util/RegionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/WSK-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/WSK-1.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/net/myplayplanet/wsk/objects/Ship.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/net/myplayplanet/wsk/objects/Ship.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/net/myplayplanet/wsk/util/BlockProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/net/myplayplanet/wsk/util/BlockProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/net/myplayplanet/wsk/util/RegionUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/net/myplayplanet/wsk/util/RegionUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/net/myplayplanet/wsk/api/WskAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/net/myplayplanet/wsk/api/WskAPI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/original-WSK-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-WSK-1.0.jar" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -97,7 +90,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553984355440" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AutoWGK" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -164,14 +157,7 @@
       <workItem from="1565536445348" duration="7768000" />
       <workItem from="1565605674294" duration="593000" />
       <workItem from="1566245980918" duration="40000" />
-      <workItem from="1567867235185" duration="1252000" />
-    </task>
-    <task id="LOCAL-00028" summary="Fixed NPE in ArenaListener:94&#10;Adjusted some things in RegionUtil">
-      <created>1550415890339</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1550415890340</updated>
+      <workItem from="1567867235185" duration="2335000" />
     </task>
     <task id="LOCAL-00029" summary="Removed unwanted files&#10;Added points field to Team">
       <created>1550416521083</created>
@@ -509,7 +495,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565541239606</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Added offline support for WskAPI#addPlayerToTeam and adjusted worldedit interaction">
+      <created>1567868555021</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1567868555021</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TodoView">
@@ -552,7 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added &quot;/wsk team leave&quot; command&#10;Added bypass permissions for move and build" />
     <MESSAGE value="Added armor to captainrole" />
     <MESSAGE value="Added armor to captainrole&#10;Improved GameWorld" />
     <MESSAGE value="Added abilities to AbstractRole" />
@@ -577,7 +569,8 @@
     <MESSAGE value="Changed role framework" />
     <MESSAGE value="Added event" />
     <MESSAGE value="Fixed 1.14 issues" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed 1.14 issues" />
+    <MESSAGE value="Added offline support for WskAPI#addPlayerToTeam and adjusted worldedit interaction" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added offline support for WskAPI#addPlayerToTeam and adjusted worldedit interaction" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

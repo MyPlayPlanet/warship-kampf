@@ -86,7 +86,8 @@
             <groupId>com.boydti</groupId>
             <artifactId>fawe-api</artifactId>
             <version>1.14-33</version>
-            <systemPath>C:/Users/Daniel/Desktop/Server 1.14/plugins/FastAsyncWorldEdit-bukkit-1.14-33.jar</systemPath>
+            <!-- A jar must be used because of compiling errors at the normal maven dependency -->
+            <systemPath>${project.basedir}/lib/FastAsyncWorldEdit-bukkit-1.14-33.jar</systemPath>
             <scope>system</scope>
         </dependency>
 

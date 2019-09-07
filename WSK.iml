@@ -40,7 +40,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.boydti:fawe-api:1.14-33">
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/Server 1.14/plugins/FastAsyncWorldEdit-bukkit-1.14-33.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/FastAsyncWorldEdit-bukkit-1.14-33.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
