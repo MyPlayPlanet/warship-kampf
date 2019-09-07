@@ -21,9 +21,12 @@ public class WskAPI {
     @Getter
     private static WskAPI instance = new WskAPI();
     private final WSK wsk;
+    private final PlayerQueue playerQueue;
 
     private WskAPI() {
         wsk = JavaPlugin.getPlugin(WSK.class);
+        playerQueue = new PlayerQueue();
+        Bukkit.getPluginManager().registerEvents(playerQueue, wsk);
     }
 
     /**
@@ -32,6 +35,7 @@ public class WskAPI {
      * @throws IllegalArgumentException if arena is not in setup state
      */
     public void startFight() {
+        Preconditions.checkState(wsk.isEnabled(), "WSK must be enabled");
         Arena arena = wsk.getArenaManager().getCurrentArena();
         Preconditions.checkArgument(arena.getState() == ArenaState.SETUP, "arena must be in setup state");
         Bukkit.getPluginManager().callEvent(new ArenaStateChangeEvent(arena.getState(), ArenaState.PRERUNNING, arena));
@@ -43,6 +47,7 @@ public class WskAPI {
      * @return current arena
      */
     public Arena getCurrentArena() {
+        Preconditions.checkState(wsk.isEnabled(), "WSK must be enabled");
         return wsk.getArenaManager().getCurrentArena();
     }
 
@@ -52,6 +57,8 @@ public class WskAPI {
      * @return all available teams from the current arena
      */
     public List<Team> getTeams() {
+        Preconditions.checkState(wsk.isEnabled(), "WSK must be enabled");
+
         return wsk.getArenaManager().getCurrentArena().getTeams();
     }
 
@@ -63,8 +70,16 @@ public class WskAPI {
      * @throws IllegalArgumentException if player is in a team
      */
     public void addPlayerToTeam(Player player, Team team) {
+        Preconditions.checkState(wsk.isEnabled(), "WSK must be enabled");
+
         Preconditions.checkNotNull(player);
         Preconditions.checkNotNull(team);
+
+        if (!player.isOnline()) {
+            playerQueue.getHashMap().put(player.getUniqueId(), () -> addPlayerToTeam(player, team));
+            return;
+        }
+
         WSKPlayer wskPlayer = WSKPlayer.getPlayer(player);
         Preconditions.checkArgument(wskPlayer.getTeam() == null, "player must not be in a team");
         team.addMember(wskPlayer);
@@ -77,6 +92,8 @@ public class WskAPI {
      * @throws IllegalArgumentException if player is not in a team
      */
     public void removePlayerFromHisTeam(Player player) {
+        Preconditions.checkState(wsk.isEnabled(), "WSK must be enabled");
+
         Preconditions.checkNotNull(player);
         WSKPlayer wskPlayer = WSKPlayer.getPlayer(player);
         Preconditions.checkArgument(wskPlayer.getTeam() != null, "player must be in a team");
@@ -90,6 +107,8 @@ public class WskAPI {
      *             May not end with ".json"
      */
     public void loadArena(String name) {
+        Preconditions.checkState(wsk.isEnabled(), "WSK must be enabled");
+
         ArenaManager manager = wsk.getArenaManager();
         if (manager.getCurrentArena() != null)
             manager.getCurrentArena().getGameWorld().unloadCompletely();

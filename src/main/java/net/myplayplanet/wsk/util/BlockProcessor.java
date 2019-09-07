@@ -1,6 +1,5 @@
 package net.myplayplanet.wsk.util;
 
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
@@ -56,26 +55,26 @@ public class BlockProcessor {
         return l;
     }
 
-    public static Set<Location> getLocs(Vector v1, Vector v2, World w) {
+    public static Set<Location> getLocs(BlockVector3 v1, BlockVector3 v2, World w) {
         CuboidRegion cr = new CuboidRegion(v1, v2);
         Set<Location> locs = new HashSet<>();
-        for (Vector v : cr) {
+        for (BlockVector3 v : cr) {
             locs.add(getLoc(v, w));
         }
         return locs;
     }
 
     public static Set<Location> getLocs(Location l1, Location l2) {
-        CuboidRegion cr = new CuboidRegion(getVec(l1).toBlockPoint(), getVec(l2).toBlockPoint());
+        CuboidRegion cr = new CuboidRegion(getVec(l1), getVec(l2));
         Set<Location> locs = new HashSet<>();
         World w = l1.getWorld();
-        for (Vector v : cr) {
+        for (BlockVector3 v : cr) {
             locs.add(getLoc(v, w));
         }
         return locs;
     }
 
-    public static Location getLoc(Vector v, World w) {
+    public static Location getLoc(BlockVector3 v, World w) {
         return new Location(w, v.getX(), v.getY(), v.getZ());
     }
 
@@ -83,12 +82,12 @@ public class BlockProcessor {
         return new Location(w, v.getX(), v.getY(), v.getZ());
     }
 
-    public static Vector getVec(Location loc) {
-        return new Vector(loc.getX(), loc.getY(), loc.getZ());
+    public static BlockVector3 getVec(Location loc) {
+        return BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
     }
 
-    public static Vector getVec(org.bukkit.util.Vector loc) {
-        return new Vector(loc.getX(), loc.getY(), loc.getZ());
+    public static BlockVector3 getVec(org.bukkit.util.Vector loc) {
+        return BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
     }
 
     public static BlockVector3 getBlockVector(org.bukkit.util.Vector loc) {

@@ -85,8 +85,9 @@
         <dependency>
             <groupId>com.boydti</groupId>
             <artifactId>fawe-api</artifactId>
-            <version>latest</version>
-            <scope>provided</scope>
+            <version>1.14-33</version>
+            <systemPath>C:/Users/Daniel/Desktop/Server 1.14/plugins/FastAsyncWorldEdit-bukkit-1.14-33.jar</systemPath>
+            <scope>system</scope>
         </dependency>
 
         <dependency>
